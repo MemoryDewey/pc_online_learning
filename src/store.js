@@ -24,7 +24,6 @@ export default new Vuex.Store({
     },
     mutations: {
         login: (state, payload) => {
-            state.effectiveTime = payload.time;
             state.isTeacher = payload.level === 1;
             state.loginState = true;
         },

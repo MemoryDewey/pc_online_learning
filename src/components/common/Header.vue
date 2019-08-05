@@ -259,7 +259,6 @@
                 this.loginState = response.status === 1;
                 if (this.loginState) {
                     this.$store.commit('login', {
-                        time: response.effectiveTime,
                         level: response.level
                     });
                     if (response.data.avatarUrl !== null) {

@@ -119,6 +119,7 @@
     import {videoPlayer} from 'vue-video-player'
     import 'videojs-contrib-hls'
     import {Message} from 'element-ui'
+    import {getInfo, getVideo} from "../../../api/course";
 
     export default {
         name: "Video",
@@ -190,12 +191,9 @@
             },
             //获取课程信息
             async getInfo() {
-                let response = await this.$axios.post('/api/course/information', {
-                    courseID: this.$route.params.courseID
-                });
-                if (response.data.status === 0) console.log(response.data.msg);
-                else {
-                    let course = response.data.course;
+                let response = await getInfo({courseID: this.$route.params.courseID});
+                if (response) {
+                    let course = response.course;
                     this.courseRate = course.info['favorableRate'] * 100;
                     this.applyCount = course.info.applyCount;
                     this.courseName = course.info.courseName;
@@ -210,9 +208,15 @@
             },
             //获取视频
             async getVideo() {
-                let response = await this.$axios.get(`/api/course/information/chapter?courseID=${this.$route.params.courseID}`);
-                if (response.data.status === 1) {
-                    this.courseChapter = response.data.data;
+                let response = await getVideo({courseID: this.$route.params.courseID});
+                if (response) {
+                    this.courseChapter = response.data;
+                    for(let chapter of this.courseChapter){
+                        let i = 1;
+                        for(let v of chapter.video){
+                            v.number = i++;
+                        }
+                    }
                     if ((this.courseChapter.length === 0 || this.$route.params.live)
                         && this.$route.params.videoID === undefined) return;
                     else this.replay = true;
@@ -225,7 +229,7 @@
                         this.wareUrl = `/course-ware?courseID=${this.$route.params.courseID}&wareID=${ware}`;
                         this.exercise = {videoID: this.videoID, videoName: this.videoName}
                     }
-                } else console.log(response.data.msg);
+                }
             },
             //获取直播课程信息
             async getLive() {
@@ -431,6 +435,7 @@
 
                     .selected, .video-item:hover {
                         color: #409eff;
+
                         .video-item-number {
                             background-color: #409eff;
                         }
@@ -481,19 +486,23 @@
                     box-sizing: border-box;
                     background-color: #232323;
                     text-align: left;
+
                     .course-info {
                         max-width: 850px;
                     }
+
                     .course-title {
                         font-size: 22px;
                         line-height: 32px;
                         color: white;
                     }
+
                     .course-hints {
                         margin-top: 4px;
                         font-size: 12px;
                         line-height: 16px;
                     }
+
                     .line-item {
                         display: inline-block;
                         margin-right: 32px;

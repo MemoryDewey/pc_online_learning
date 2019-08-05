@@ -144,7 +144,7 @@
                                                                    :icon="setFileIcon(file.type)"></font-awesome-icon>
                                                 <p class="study-item-title">
                                                     <span :title="file.name" class="text">{{file.name}}</span>
-                                                    <span class="duration">({{file.type}}, {{file.size}})</span>
+                                                    <span class="duration">({{file.type}}, {{setFileSize(file.size)}})</span>
                                                 </p>
                                             </a>
                                         </div>
@@ -408,6 +408,11 @@
                 if (response) this.courseChapter = response.data;
                 response = await getFile({courseID: this.$route.params.courseID});
                 if (response) this.courseFile = response.data;
+            },
+            //处理文件大小显示
+            setFileSize(size) {
+                return size > 1024 * 1024 ? `${(size / (1024 * 1024)).toFixed(2)}MB` :
+                    `${(size / 1024).toFixed(2)}KB`
             },
             //获取其他信息
             async getClass() {

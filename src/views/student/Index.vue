@@ -115,6 +115,7 @@
     import Header from '../../components/common/Header'
     import Footer from '../../components/common/Footer'
     import Project from "../teacher/Project";
+    import {getIndexCourse} from "../../api/course";
 
     export default {
         name: "index",
@@ -148,10 +149,10 @@
         },
         async created() {
             try {
-                let course = await this.$axios.get('/api/course/index-show');
+                let course = await getIndexCourse();
+                this.freeCourse = course.freeCourse;
+                this.chargeCourse = course.chargeCourse;
                 let project = await this.$axios.get('/api/project/query/getindexproject');
-                this.freeCourse = course.data.freeCourse;
-                this.chargeCourse = course.data.chargeCourse;
                 this.project = project.data.sqlres;
             } catch (e) {
                 console.log(e);

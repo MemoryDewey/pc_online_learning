@@ -61,13 +61,13 @@
         </div>
         <!--评论列表 S-->
         <div class="comment-list">
-            <div class="comment-list-item clearfix" v-for="comment in comments">
+            <div class="comment-list-item clearfix" v-for="comment in comments" :key="comment.id">
                 <div class="comment-list-item-avatar">
-                    <img :src="`${comment.avatarUrl}`" alt="">
+                    <img :src="`${comment.UserInformation.avatarUrl}`" alt="">
                 </div>
                 <div class="comment-list-item-body">
                     <div class="user-info">
-                        <a>{{comment.nickname}}</a>
+                        <a>{{comment.UserInformation.nickname}}</a>
                         <div class="user-info-rating">
                             <div class="stars">
                                 <font-awesome-icon icon="star" v-if="comment.star>=1"></font-awesome-icon>
@@ -142,7 +142,7 @@
 
 <script>
     import {Message} from 'element-ui'
-    import {getClass, addComment, getComment} from "../../../api/course";
+    import {getClass, addComment, getComment, getCommentCount} from "../../../api/course";
 
     export default {
         name: "InfoComment",
@@ -198,28 +198,32 @@
             async getComment(page, filter) {
                 let response = await getComment({courseID: this.$route.params.courseID, page, filter});
                 if (response) {
-                    this.commentCount = response.count;
                     this.comments = response.comments;
-                    let count = response.count;
-                    this.$emit('getCommentCount', count.all);
-                    switch (filter) {
-                        case 0:
-                            this.commentPage = count.all % 5 === 0 ?
-                                Math.floor(count.all / 5) : Math.floor(count.all / 5) + 1;
-                            break;
-                        case 1:
-                            this.commentPage = count['good'] % 5 === 0 ?
-                                Math.floor(count['good'] / 5) : Math.floor(count['good'] / 5) + 1;
-                            break;
-                        case 2:
-                            this.commentPage = count['mid'] % 5 === 0 ?
-                                Math.floor(count['mid'] / 5) : Math.floor(count['mid'] / 5) + 1;
-                            break;
-                        case 3:
-                            this.commentPage = count['bad'] % 5 === 0 ?
-                                Math.floor(count['bad'] / 5) : Math.floor(count['bad'] / 5) + 1;
-                            break;
-                    }
+                }
+            },
+            //获取评论总数
+            async getCommentCount(filter){
+                let response = await getCommentCount({courseID: this.$route.params.courseID});
+                let count = response.count;
+                this.commentCount = response.count;
+                this.$emit('getCommentCount', count.all);
+                switch (filter) {
+                    case 0:
+                        this.commentPage = count.all % 5 === 0 ?
+                            Math.floor(count.all / 5) : Math.floor(count.all / 5) + 1;
+                        break;
+                    case 1:
+                        this.commentPage = count['good'] % 5 === 0 ?
+                            Math.floor(count['good'] / 5) : Math.floor(count['good'] / 5) + 1;
+                        break;
+                    case 2:
+                        this.commentPage = count['mid'] % 5 === 0 ?
+                            Math.floor(count['mid'] / 5) : Math.floor(count['mid'] / 5) + 1;
+                        break;
+                    case 3:
+                        this.commentPage = count['bad'] % 5 === 0 ?
+                            Math.floor(count['bad'] / 5) : Math.floor(count['bad'] / 5) + 1;
+                        break;
                 }
             },
             //课程评论页面分页
@@ -254,6 +258,7 @@
                         this.dialogVisible = false;
                         Message.success(response.msg);
                         this.courseRate = response.rate * 10;
+                        this.getCommentCount();
                         this.getComment(1, 0);
                         this.setRateStars();
                     }
@@ -266,6 +271,7 @@
             },
             commentFilter(val) {
                 this.getComment(1, val);
+                this.getCommentCount(val);
                 this.pageCurrent = 1;
             },
             comment: {
@@ -278,6 +284,7 @@
             },
         },
         created() {
+            this.getCommentCount(0);
             this.getComment(1, 0);
         }
     }

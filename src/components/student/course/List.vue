@@ -237,11 +237,15 @@
         },
         watch: {
             async '$route.query'(to) {
-                let response;
-                this.searchCourseCount();
                 this.getPageCount();
-                response = await getList(this.$route.query);
+                let response = await getList(this.$route.query);
                 if (response) this.courses = response.course;
+                this.changeUrl(to);
+            },
+            async '$route.params'(to){
+                this.searchCourseCount();
+                let res = await getList(this.$route.params);
+                if(res)this.courses = res.course;
                 this.changeUrl(to);
             }
         },

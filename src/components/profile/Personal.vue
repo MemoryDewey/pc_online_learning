@@ -83,7 +83,7 @@
             <tr>
                 <td class="setting-title">邮箱</td>
                 <td v-if="informationForm.email === ''">
-                    <a class="btn btn-normal" @click="openDialog('email')">点击绑定</a>
+                    <a class="btn btn-normal" @click="openEmailDialog">点击绑定</a>
                 </td>
                 <td v-else>
                     <div class="set-up">
@@ -104,54 +104,27 @@
                         <div>{{informationForm.mobile}}</div>
                         <font-awesome-icon icon="check"></font-awesome-icon>
                         <span>已验证</span>
-                        <a class="change-bind" @click="openDialog('mobile')">更换绑定的手机号</a>
+                        <a class="change-bind" @click="openDialog">更换绑定的手机号</a>
                     </div>
                 </td>
             </tr>
             </tbody>
         </table>
         <input class="btn setting-save" value="保存" @click="saveInformation" type="button"></input>
-        <!--对话框 S-->
+        <!--更换手机号对话框 S-->
         <el-dialog :show-close="false" :visible.asnc="dialogFormVisible" top="20vh" width="400px">
             <!--对话框标题 S-->
-            <div slot="title" class="dialog-title">
-                {{dialogFormInfo.title}}
+            <div slot="title" class="dialog-title">绑定手机号
                 <button class="close" @click="dialogFormVisible = false">×</button>
             </div>
             <!--对话框标题 E-->
-            <!--绑定邮箱 S-->
-            <form v-if="dialogFormInfo.bindEmail.show">
-                <div class="input-area">
-                    <label class="first">
-                        <input type="text" placeholder="邮箱" @keyup="verifyDialogInput('bindEmail')"
-                               v-model="dialogForm.account">
-                        </input>
-                        <font-awesome-icon icon="envelope"></font-awesome-icon>
-                        <font-awesome-icon icon="check-circle" v-if="dialogFormInfo.bindEmail.success" class="check"
-                                           style="color: #67c23a"></font-awesome-icon>
-                        <font-awesome-icon v-if="dialogFormInfo.bindEmail.error" icon="times-circle" class="check"
-                                           style="color: red"></font-awesome-icon>
-                    </label>
-                </div>
-                <div class="input-area">
-                    <label class="second">
-                        <input v-model="dialogForm.verifyCode" type="text" placeholder="验证码"></input>
-                        <font-awesome-icon icon="shield-alt"></font-awesome-icon>
-                        <a :class="{'btn-send':true,disable:!dialogFormInfo.bindEmail.sendButton}"
-                           @click="sendVerifyCode('bindEmail')"
-                        >{{dialogFormInfo.sendButtonText}}</a>
-                    </label>
-                </div>
-            </form>
-            <!--绑定邮箱 E-->
             <!--更换手机号 S-->
-            <el-steps :active="stepsActive" finish-status="success" align-center
-                      v-if="dialogFormInfo.changeMobile.show">
+            <el-steps :active="stepsActive" finish-status="success" align-center>
                 <el-step title="安全验证"></el-step>
                 <el-step title="修改手机"></el-step>
                 <el-step title="完成"></el-step>
             </el-steps>
-            <form v-if="!dialogFormInfo.bindEmail.show">
+            <form v-if="stepsActive <= 2">
                 <div class="input-area">
                     <label class="first" v-if="dialogFormInfo.oldMobile.show">
                         <input type="text" placeholder="原手机号" @keyup="verifyDialogInput('oldMobile')"
@@ -176,30 +149,71 @@
                     <label class="second">
                         <input v-model="dialogForm.verifyCode" type="text" placeholder="验证码"></input>
                         <font-awesome-icon icon="shield-alt"></font-awesome-icon>
-                        <a :class="{'btn-send':true,disable:!dialogFormInfo.changeMobile.sendButton}"
-                           @click="sendVerifyCode('changeMobile')"
-                        >{{dialogFormInfo.sendButtonText}}</a>
+                        <a :class="{'btn-send':true,disable:(!dialogFormInfo.sendButton || dialogFormInfo.oldMobile.sending)}"
+                           @click="sendVerifyCode('stepOne')"
+                           v-if="dialogFormInfo.oldMobile.show"
+                        >{{dialogFormInfo.oldMobile.sendButtonText}}</a>
+                        <a :class="{'btn-send':true,disable:!dialogFormInfo.sendButton || dialogFormInfo.newMobile.sending}"
+                           @click="sendVerifyCode('stepTwo')"
+                           v-if="dialogFormInfo.newMobile.show"
+                        >{{dialogFormInfo.newMobile.sendButtonText}}</a>
                     </label>
                 </div>
             </form>
             <!--更换手机号 E-->
             <!--对话框底部 S-->
-            <div v-if="dialogFormInfo.bindEmail.show" slot="footer" class="dialog-footer">
-                <a class="btn btn-confirm" @click="bindEmailSubmit">确定</a>
-            </div>
-            <div v-if="dialogFormInfo.changeMobile.show" slot="footer" class="dialog-footer">
+            <div slot="footer" class="dialog-footer">
                 <a class="btn btn-confirm" @click="changeMobileSubmit">下一步</a>
             </div>
             <!--对话框底部 E-->
         </el-dialog>
-        <!--对话框 E-->
+        <!--更换手机号对话框 E-->
+        <!--绑定邮箱对话框 S-->
+        <el-dialog :show-close="false" :visible.asnc="emailDialog" top="20vh" width="400px">
+            <!--对话框标题 S-->
+            <div slot="title" class="dialog-title">绑定邮箱
+                <button class="close" @click="emailDialog = false">×</button>
+            </div>
+            <!--对话框标题 E-->
+            <!--绑定邮箱 S-->
+            <form>
+                <div class="input-area">
+                    <label class="first">
+                        <input type="text" placeholder="邮箱" @keyup="verifyEmailInput"
+                               v-model="emailDialogInfo.account">
+                        </input>
+                        <font-awesome-icon icon="envelope"></font-awesome-icon>
+                        <font-awesome-icon icon="check-circle" v-if="emailDialogInfo.success" class="check"
+                                           style="color: #67c23a"></font-awesome-icon>
+                        <font-awesome-icon v-if="emailDialogInfo.error" icon="times-circle" class="check"
+                                           style="color: red"></font-awesome-icon>
+                    </label>
+                </div>
+                <div class="input-area">
+                    <label class="second">
+                        <input v-model="dialogForm.verifyCode" type="text" placeholder="验证码"></input>
+                        <font-awesome-icon icon="shield-alt"></font-awesome-icon>
+                        <a :class="{'btn-send':true,disable:(!emailDialogInfo.sendButton || emailDialogInfo.sending)}"
+                           @click="sendVerifyCode('bindEmail')"
+                        >{{emailDialogInfo.sendButtonText}}</a>
+                    </label>
+                </div>
+            </form>
+            <!--绑定邮箱 E-->
+            <!--对话框底部 S-->
+            <div slot="footer" class="dialog-footer">
+                <a class="btn btn-confirm" @click="bindEmailSubmit">确定</a>
+            </div>
+            <!--对话框底部 E-->
+        </el-dialog>
+        <!--绑定邮箱对话框 E-->
     </div>
 </template>
 
 <script>
     import {Message, MessageBox} from 'element-ui'
-    import {sendEmail, sendMessage} from "../../api/passport";
-    import {changePhone, addEmail, deleteEmail, getPersonalInfo, updatePersonal} from "../../api/profile"
+    import {sendEmail, sendMessage, changePhone, addEmail, deleteEmail} from "../../api/passport";
+    import {getPersonalInfo, updatePersonal} from "../../api/profile"
 
     export default {
         name: "Personal",
@@ -213,14 +227,22 @@
                     nickname: false, realName: false
                 },
                 dialogFormVisible: false,
+                phoneDialog: false,
+                emailDialog: false,
                 stepsActive: 0,
                 dialogFormInfo: {
-                    bindEmail: {show: false, success: false, error: false, sendButton: false},
-                    changeMobile: {show: false, sendButton: false},
-                    oldMobile: {show: false, success: false, error: false},
-                    newMobile: {show: false, success: false, error: false},
-                    title: '',
-                    sendButtonText: '发送验证码',
+                    sendButton: false,
+                    oldMobile: {
+                        show: false, success: false, error: false, sending: false, sendButtonText: '发送验证码'
+                    },
+                    newMobile: {
+                        show: false, success: false, error: false, sending: false, sendButtonText: '发送验证码'
+                    }
+                },
+                emailDialogInfo: {
+                    success: false, error: false, sendButton: false,
+                    account: '', verifyCode: '', sendButtonText: '发送验证码',
+                    sending: false
                 },
                 dialogForm: {
                     account: '',
@@ -275,49 +297,72 @@
                 })
             },
             /* 打开对话框 */
-            openDialog(option) {
+            openDialog() {
                 this.dialogFormVisible = true;
                 this.dialogForm.account = '';
                 this.dialogForm.verifyCode = '';
-                if (option === 'email') {
-                    this.dialogFormInfo.title = '绑定邮箱';
-                    this.dialogFormInfo.bindEmail = {
-                        show: true, success: false, error: false, sendButton: false
-                    };
-                    this.dialogFormInfo.changeMobile.show = false;
-                } else if (option === 'mobile') {
-                    this.dialogFormInfo.title = '更换手机号';
-                    this.dialogFormInfo.bindEmail.show = false;
-                    this.dialogFormInfo.changeMobile.show = true;
-                    this.dialogFormInfo.oldMobile.show = this.stepsActive === 0;
-                }
+                this.dialogFormInfo.oldMobile.success = false;
+                this.dialogFormInfo.oldMobile.error = false;
+                this.dialogFormInfo.newMobile.success = false;
+                this.dialogFormInfo.newMobile.error = false;
+                this.dialogFormInfo.oldMobile.show = this.stepsActive === 0;
             },
-            /* 验证邮箱/手机号是否合法 */
+            /* 打开绑定邮箱对话框 */
+            openEmailDialog() {
+                this.emailDialog = true;
+                this.emailDialogInfo.success = false;
+                this.emailDialogInfo.error = false;
+                this.emailDialogInfo.account = '';
+                this.emailDialogInfo.verifyCode = '';
+            },
+            /* 手机号是否合法 */
             verifyDialogInput(option) {
-                const regMail = /^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/;
                 const regMobile = /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3-8])|(18[0-9])|166|198|199|(147))\d{8}$/;
-                let pass = option === 'bindEmail' ? this.dialogForm.account.match(regMail) : this.dialogForm.account.match(regMobile);
-                if (option === 'bindEmail') this.dialogFormInfo.bindEmail.sendButton = pass;
-                else this.dialogFormInfo.changeMobile.sendButton = pass;
+                let pass = this.dialogForm.account.match(regMobile);
+                this.dialogFormInfo.sendButton = pass;
                 this.dialogFormInfo[option].success = pass;
                 this.dialogFormInfo[option].error = !pass;
             },
+            /* 验证邮箱是否合法 */
+            verifyEmailInput() {
+                const regMail = /^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/;
+                let pass = this.emailDialogInfo.account.match(regMail);
+                this.emailDialogInfo.sendButton = pass;
+                this.emailDialogInfo.success = pass;
+                this.emailDialogInfo.error = !pass;
+            },
             /* 发送验证码 */
             async sendVerifyCode(option) {
-                this.dialogFormInfo[option].sendButton = false;
+                if (option === 'bindEmail') this.emailDialogInfo.sending = true;
+                else if (option === 'stepOne') this.dialogFormInfo.oldMobile.sending = true;
+                else if (option === 'stepTwo') this.dialogFormInfo.newMobile.sending = true;
                 let times = 60;   //按钮点击间隔
                 let self = this;
                 let timer = await setInterval(() => {
-                    self.dialogFormInfo.sendButtonText = "重新发送(" + times + "s)";
+                    if (option === 'bindEmail')
+                        self.emailDialogInfo.sendButtonText = "重新发送(" + times + "s)";
+                    else if (option === 'stepOne')
+                        self.dialogFormInfo.oldMobile.sendButtonText = "重新发送(" + times + "s)";
+                    else if (option === 'stepTwo')
+                        this.dialogFormInfo.newMobile.sendButtonText = "重新发送(" + times + "s)";
                     times--;
                     if (times < 0) window.clearInterval(timer);
                 }, 1000);
                 setTimeout(() => {
-                    self.dialogFormInfo.sendButtonText = "发送验证码";
-                    self.dialogFormInfo[option].sendButton = true;
+                    if (option === 'bindEmail') {
+                        self.emailDialogInfo.sending = true;
+                        self.emailDialogInfo.sendButtonText = "发送验证码";
+                    } else if (option === 'stepOne') {
+                        self.dialogFormInfo.oldMobile.sending = true;
+                        self.dialogFormInfo.oldMobile.sendButtonText = "发送验证码";
+                    } else if (option === 'stepTwo') {
+                        self.dialogFormInfo.newMobile.sending = true;
+                        this.dialogFormInfo.newMobile.sendButtonText = "发送验证码";
+                    }
                 }, 61000);
                 let data = {account: this.dialogForm.account, option: "change"};
-                let res = (this.dialogFormInfo.changeMobile.show) ? await sendMessage(data) : await sendEmail(data);
+                if (option === 'bindEmail') data = {account: this.emailDialogInfo.account, option: "change"};
+                let res = (option === 'bindEmail') ? await sendEmail(data) : await sendMessage(data);
                 if (res) Message.success(res.msg);
             },
             /* 绑定邮箱 */
@@ -354,7 +399,6 @@
                         if (this.stepsActive === 0) {
                             this.dialogForm.account = '';
                             this.dialogForm.verifyCode = '';
-                            this.dialogFormInfo.changeMobile.sendButton = true;
                             this.dialogFormInfo.oldMobile.show = false;
                             this.dialogFormInfo.newMobile.show = true;
                         } else if (this.stepsActive === 1) {
@@ -464,8 +508,8 @@
             cursor: pointer;
 
             img {
-                width: 100%;
-                height: 100%;
+                width: 100px;
+                height: 100px;
                 border: 1px solid #ddd;
                 border-radius: 50%;
                 vertical-align: middle;
@@ -676,8 +720,4 @@
         }
 
     }
-</style>
-<!--用来修改Element-UI样式-->
-<style>
-
 </style>

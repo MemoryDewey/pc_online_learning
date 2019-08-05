@@ -95,7 +95,7 @@
                 //输入错误时显示的CSS
                 warn: {"input-warn": true},
                 //图片验证码url
-                imageVerifyUrl: "/api/image-captcha"
+                imageVerifyUrl: "/api/passport/image-captcha"
             }
         },
         methods: {
@@ -137,7 +137,7 @@
             },
             //更换验证码图片
             changeImage() {
-                this.imageVerifyUrl = `/api/image-captcha?${Math.random()}`;
+                this.imageVerifyUrl = `/api/passport/image-captcha?${Math.random()}`;
             }
         },
         mounted() {
