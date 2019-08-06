@@ -46,9 +46,7 @@
                         </div>
                     </div>
                     <div class="bottom clearfix" v-if="!exerciseFinished">
-                        <label>
-                            <input class="info-button setting-save" value="提交" @click="submitExercise"></input>
-                        </label>
+                        <a class="info-button setting-save" @click="submitExercise">提交</a>
                     </div>
                 </div>
             </div>
@@ -58,7 +56,7 @@
 
 <script>
     import {Message, MessageBox} from 'element-ui'
-    import {getExam, addExam} from '../../../api/course'
+    import {addExam, getExercise} from '../../../api/course'
 
     export default {
         name: "CourseExercise",
@@ -88,8 +86,8 @@
                 this.courseExercise = [];
                 this.radio = [];
                 if (videoID !== undefined) {
-                    let response = await getExam({
-                        exam: {type: 'exercise', id: videoID},
+                    let response = await getExercise({
+                        videoID,
                         courseID: this.$route.params.courseID
                     });
                     if (response) if (response.exam !== false) {
@@ -104,7 +102,7 @@
                                 question: response.exam[i],
                             })
                         }
-                        for (let i = 0; i < this.courseExercise.length; i++) this.radio.push(0);
+                        for (let i = 0; i < this.courseExercise.length; i++) this.radio.push();
                     } else this.hasExercise = false;
                 }
             },

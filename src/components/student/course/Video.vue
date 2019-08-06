@@ -119,7 +119,7 @@
     import {videoPlayer} from 'vue-video-player'
     import 'videojs-contrib-hls'
     import {Message} from 'element-ui'
-    import {getInfo, getVideo} from "../../../api/course";
+    import {getInfo, getVideo, getLive} from "../../../api/course";
 
     export default {
         name: "Video",
@@ -211,9 +211,9 @@
                 let response = await getVideo({courseID: this.$route.params.courseID});
                 if (response) {
                     this.courseChapter = response.data;
-                    for(let chapter of this.courseChapter){
+                    for (let chapter of this.courseChapter) {
                         let i = 1;
-                        for(let v of chapter.video){
+                        for (let v of chapter.video) {
                             v.number = i++;
                         }
                     }
@@ -234,13 +234,13 @@
             //获取直播课程信息
             async getLive() {
                 if (this.live.exist) {
-                    let response = await this.$axios.post(`/api/course/information/live`, {courseID: this.$route.params.courseID});
-                    if (response.data.status === 1) {
-                        if (response.data.live) {
-                            this.live.title = response.data.title;
-                            if (response.data.state) {
+                    let response = await getLive({courseID: this.$route.params.courseID});
+                    if (response.status === 1) {
+                        if (response.live) {
+                            this.live.title = response.title;
+                            if (response.state) {
                                 this.live.state = true;
-                                this.playerOptions.sources[0].src = response.data.streamName;
+                                this.playerOptions.sources[0].src = response.streamName;
                             }
                         }
                     }

@@ -84,7 +84,7 @@
             async getExam(courseID) {
                 this.courseExam = [];
                 this.radio = [];
-                let response = await getExam({exam: {type: 'exam', id: courseID}, courseID});
+                let response = await getExam({courseID});
                 if (response) {
                     if (response.exam !== false) {
                         this.hasExam = true;

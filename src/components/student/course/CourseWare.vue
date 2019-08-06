@@ -63,7 +63,7 @@
         created() {
             let courseID = this.$route.query.courseID;
             let wareID = this.$route.query.wareID;
-            this.pdfUrl = `${process.env.VUE_APP_BASE_API}/course/course-ware?courseID=${courseID}&wareID=${wareID}`;
+            this.pdfUrl = `${process.env.VUE_APP_BASE_API}/course/information/course-ware?courseID=${courseID}&wareID=${wareID}`;
         }
     }
 </script>

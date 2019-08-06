@@ -11,17 +11,18 @@ export const getIndexCourse = () => get('/course/list/index-show');
 export const getInfo = params => get('/course/information', params);
 export const applyFree = data => post('/course/information/apply-free', data);
 export const applyCharge = data => post('/course/information/getPaymentID', data);
-export const examCheck = params => post('/course/information/exam-check', params);
+export const examCheck = params => get('/examine/exam-check', params);
 export const getLive = data => post('/course/information/live', data);
 export const getVideo = params => get('/course/information/video', params);
 export const getFile = params => get('/course/information/file', params);
 export const getClass = data => post('/course/information/class', data);
-export const getExamTime = params => get('/course/information/exam-time', params);
+export const getExamTime = params => get('/examine/exam-time', params);
 
 export const getComment = params => get('/course/information/comment', params);
 export const getCommentCount = params => get('/course/information/comment/count', params);
 export const addComment = data => post('/course/information/comment', data);
 
-export const getExam = data => post('/course/exam', data);
-export const addExam = data => post('/course/exam-add', data);
+export const getExam = data => post('/examine/exam', data);
+export const getExercise = data => post('/examine/exercise',data);
+export const addExam = data => post('/examine/add', data);
 
