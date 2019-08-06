@@ -340,7 +340,7 @@
                     type: 'warning'
                 }).then(async () => {
                     let response = await cancelApply({applyID});
-                    if (response){
+                    if (response) {
                         Message.success(response.msg);
                         this.getAttendApply(1);
                     }

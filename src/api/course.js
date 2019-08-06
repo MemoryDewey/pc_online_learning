@@ -23,6 +23,6 @@ export const getCommentCount = params => get('/course/information/comment/count'
 export const addComment = data => post('/course/information/comment', data);
 
 export const getExam = data => post('/examine/exam', data);
-export const getExercise = data => post('/examine/exercise',data);
+export const getExercise = data => post('/examine/exercise', data);
 export const addExam = data => post('/examine/add', data);
 

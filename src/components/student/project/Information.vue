@@ -453,7 +453,7 @@
         created() {
             this.myTotalOption = TotalOption;
             getProjectDetail({projectID: this.$route.params.projectID}).then((response) => {
-                if (response){
+                if (response) {
                     this.project = response.sqlres;
                     this.memberInfo = response.sqlres.ProjectMembers;
                     this.rewardInfo = response.sqlres.ProjectRewards;

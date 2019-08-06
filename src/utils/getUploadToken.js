@@ -1,8 +1,9 @@
 import {accessKey, secretKey} from './config/qiniu'
+
 const qiniu = require('qiniu');
 const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 const options = {
-  scope: 'image-busket',
+    scope: 'image-busket',
 };
 const putPolicy = new qiniu.rs.PutPolicy(options);
 const uploadToken = putPolicy.uploadToken(mac);

@@ -9,6 +9,9 @@
                         <el-option label="课程" value="2"></el-option>
                     </el-select>
                     <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+                    <i class="el-icon-close el-input__icon" slot="suffix" style="cursor: pointer"
+                       @click="getStudent(1, '0', null)">
+                    </i>
                 </el-input>
             </div>
         </div>
@@ -47,7 +50,7 @@
                     <div class="flex-cell score">{{student.score}}</div>
                     <div class="flex-cell operating">
                         <a class="btn-operate mark"
-                           @click="setStudentScore(student.courseID,student.userID,student.examID)">期末总评</a>
+                           @click="">颁发证书</a>
                         <a class="btn-operate delete"
                            @click="deleteStudent(student.courseID,student.userID)">删除成员</a>
                     </div>
@@ -98,9 +101,7 @@
         getStudent,
         getCourse,
         addStudent,
-        deleteStudent,
-        getStudentScore,
-        setStudentScore
+        deleteStudent
     } from '../../../api/course-manage'
 
     export default {
@@ -195,28 +196,6 @@
                 }).catch(() => {
                     Message.info('已取消操作')
                 })
-            },
-            //给学生打平时成绩
-            async setStudentScore(courseID, userID, examID) {
-                if (examID === null)
-                    Message.warning('该课程暂无考试，无法进行总评');
-                else {
-                    let res = await getStudentScore({courseID, userID});
-                    MessageBox.confirm(`学生的平时成绩为${res.score}，确认加入总成绩吗？`, '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        type: 'warning'
-                    }).then(() => {
-                        setStudentScore({courseID, userID}).then(res => {
-                            if (res) {
-                                Message.success(res.msg);
-                                this.getStudent(1, '0', null);
-                            }
-                        })
-                    }).catch(() => {
-                        Message.info('已取消操作')
-                    })
-                }
             }
         },
         async created() {

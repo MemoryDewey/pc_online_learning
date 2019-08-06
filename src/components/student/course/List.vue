@@ -242,10 +242,10 @@
                 if (response) this.courses = response.course;
                 this.changeUrl(to);
             },
-            async '$route.params'(to){
+            async '$route.params'(to) {
                 this.searchCourseCount();
                 let res = await getList(this.$route.params);
-                if(res)this.courses = res.course;
+                if (res) this.courses = res.course;
                 this.changeUrl(to);
             }
         },

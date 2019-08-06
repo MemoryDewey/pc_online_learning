@@ -58,8 +58,8 @@
 
     export default {
         name: "Exam",
-        data(){
-            return{
+        data() {
+            return {
                 count: 1,
                 courses: [],
             }
@@ -68,7 +68,7 @@
             //获取课程信息
             async getExam(page) {
                 let response = await getExam({page});
-                if (response){
+                if (response) {
                     this.count = response.count % 4 === 0 ? Math.floor(response.count / 4) :
                         Math.floor(response.count / 4) + 1;
                     this.courses = response.course;

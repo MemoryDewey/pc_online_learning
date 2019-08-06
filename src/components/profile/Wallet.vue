@@ -135,7 +135,7 @@
             async getPayment(page) {
                 let response = await getPaymentRecord({page});
                 let responseCount = await getPaymentCount();
-                if (response){
+                if (response) {
                     this.recordCount = responseCount.count % 10 === 0 ?
                         Math.floor(responseCount.count / 10) : Math.floor(responseCount.count / 10) + 1;
                     this.paymentRecords = response.sqlres;
@@ -150,7 +150,7 @@
                     type: 'warning'
                 }).then(async () => {
                     let response = await cancelApply({applyID});
-                    if (response){
+                    if (response) {
                         Message.success(response.msg);
                         this.getAttendApply(1);
                     }

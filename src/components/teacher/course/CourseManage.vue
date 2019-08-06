@@ -5,6 +5,9 @@
             <div class="search-area">
                 <el-input v-model="searchContent" placeholder="请输入课程名" class="input-with-select">
                     <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+                    <i class="el-icon-close el-input__icon" slot="suffix" style="cursor: pointer"
+                       @click="getCourse(1,'')">
+                    </i>
                 </el-input>
             </div>
         </div>
@@ -183,9 +186,13 @@
 </template>
 
 <script>
-    import moment from 'moment'
     import {Message, MessageBox} from 'element-ui'
-    import {getCourseInfo, deleteCourse, recoverCourse} from "../../../api/course-manage";
+    import {
+        getCourseInfo,
+        deleteCourse,
+        recoverCourse,
+        updateCourseInfo,
+    } from "../../../api/course-manage";
     import {getCourseType, getCourseSystem} from "../../../api/course";
 
     export default {
@@ -286,28 +293,28 @@
                     await getCourseInfo({page}) :
                     await getCourseInfo({page, search});
                 if (res) {
-                    let data = res.course;
+                    let courses = res.course;
                     this.pageSum = res.count % 8 === 0 ?
                         Math.floor(res.count / 8) : Math.floor(res.count / 8) + 1;
-                    for (let i = 0; i < data.length; i++) {
+                    for (let course of courses) {
                         this.tableData.push({
-                            cid: data[i].courseID,
-                            cname: data[i].courseName,
-                            sid: data[i].systemID,
-                            sname: data[i]['CourseSystem.systemName'],
-                            tid: data[i].typeID,
-                            tname: data[i]['CourseType.typeName'],
-                            arra: data[i]['CourseDetail.courseArrange'],
-                            summ: data[i]['CourseDetail.courseSummary'],
-                            targ: data[i]['CourseDetail.courseTarget'],
-                            desc: data[i]['courseDescription'],
-                            ftime: moment(data[i]['CourseDetail.finishTime']).format('YYYY-MM-DD'),
-                            stime: moment(data[i]['CourseDetail.startTime']).format('YYYY-MM-DD'),
-                            cimg: data[i]['courseImage'],
-                            price: data[i].price,
-                            live: data[i].courseForm === 'L',
-                            cover: data[i].courseImage,
-                            delete: data[i].delete === 0
+                            cid: course.courseID,
+                            cname: course.courseName,
+                            sid: course.systemID,
+                            sname: course['CourseSystem']['systemName'],
+                            tid: course.typeID,
+                            tname: course['CourseType']['typeName'],
+                            arra: course['CourseDetail']['courseArrange'],
+                            summ: course['CourseDetail']['courseSummary'],
+                            targ: course['CourseDetail']['courseTarget'],
+                            desc: course['courseDescription'],
+                            ftime: course['CourseDetail']['finishTime'],
+                            stime: course['CourseDetail']['startTime'],
+                            cimg: course['courseImage'],
+                            price: course.price,
+                            live: course.courseForm === 'L',
+                            cover: course.courseImage,
+                            delete: course.delete === 0
                         })
                     }
                 }
@@ -399,7 +406,7 @@
                         if (this.imageSubmit) this.$refs.upload.submit();
                         else {
                             let res = await updateCourseInfo(this.ruleForm);
-                            this.handleSuccess(res);
+                            if(res) this.handleSuccess(res);
                         }
                     } else return false;
                 });
@@ -427,12 +434,12 @@
             },
             /* 添加/更改提交成功后执行 */
             handleSuccess(res) {
-                if (res) {
+                if (res.status === 1) {
                     Message.success(res.msg);
                     this.dialogVisible = false;
                     this.resetForm('ruleForm');
                     this.getCourse(1, '');
-                }
+                }else Message.error(res.msg);
             },
             /* 删除课程 */
             deleteCourse(courseID) {

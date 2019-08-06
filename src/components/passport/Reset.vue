@@ -231,7 +231,8 @@
                             setTimeout(() => {
                                 this.$router.push('/passport/login');
                             }, 1000);
-                        }});
+                        }
+                    });
                 }
             }
         },

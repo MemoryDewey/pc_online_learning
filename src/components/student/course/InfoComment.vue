@@ -202,7 +202,7 @@
                 }
             },
             //获取评论总数
-            async getCommentCount(filter){
+            async getCommentCount(filter) {
                 let response = await getCommentCount({courseID: this.$route.params.courseID});
                 let count = response.count;
                 this.commentCount = response.count;

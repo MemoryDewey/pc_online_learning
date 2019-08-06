@@ -35,6 +35,7 @@
     @import "assets/css/profile-teacher-manage";
     @import "assets/css/passport";
     @import "assets/css/comment";
+
     #app {
         font-family: "Arial", "Hiragino Sans GB", "Microsoft YaHei", \5fae\8f6f\96c5\9ed1, "Helvetica", "sans-serif";
         -webkit-font-smoothing: antialiased;

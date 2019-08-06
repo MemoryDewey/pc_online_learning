@@ -187,7 +187,7 @@
                 }).then(async () => {
                     try {
                         let response = await agreeApply({applyID});
-                        if (response){
+                        if (response) {
                             Message.success(response.msg);
                             this.getAttendApply(1);
                         }
@@ -206,7 +206,7 @@
                     type: 'warning'
                 }).then(async () => {
                     let response = await rejectApply({applyID});
-                    if (response){
+                    if (response) {
                         Message.success('操作成功!');
                         this.getAttendApply(1);
                     }

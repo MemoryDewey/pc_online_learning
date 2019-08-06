@@ -2,12 +2,10 @@ import {get, post} from '../utils/request';
 
 export const getStudent = params => get('/teacher/course/student', params);
 export const addStudent = data => post('/teacher/course/student/add', data);
-export const getStudentScore = data => post('/teacher/course/student/get-score', data);
-export const setStudentScore = data => post('/teacher/course/student/update-score', data);
 export const deleteStudent = data => post('/teacher/course/student/delete', data);
 
 
-export const getCourse = () => get('/teacher/course/teacher');
+export const getCourse = () => get('/teacher/course');
 export const getCourseInfo = params => get('/teacher/course/info', params);
 export const updateCourseInfo = data => post('/teacher/course/info/update', data);
 export const deleteCourse = data => post('/teacher/course/info/delete', data);

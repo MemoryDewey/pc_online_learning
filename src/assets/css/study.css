@@ -1,860 +1,1022 @@
 .study-main a {
-  color: #333;
-  cursor: pointer;
-  text-decoration: none;
+    color: #333;
+    cursor: pointer;
+    text-decoration: none;
 }
+
 .study-main a:hover {
-  color: #409eff;
-  text-decoration: none;
+    color: #409eff;
+    text-decoration: none;
 }
+
 .study-main li {
-  clear: none;
-  list-style: none;
+    clear: none;
+    list-style: none;
 }
+
 .study-main .study-all {
-  min-height: 700px;
-  padding-left: 15px;
-  padding-right: 15px;
-  clear: both;
+    min-height: 700px;
+    padding-left: 15px;
+    padding-right: 15px;
+    clear: both;
 }
+
 .study-main .study-all .study-content {
-  zoom: 1;
-  width: 1200px;
-  margin-right: auto;
-  margin-left: auto;
+    zoom: 1;
+    width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
 }
+
 .study-main .study-all .study-content .charge {
-  color: #e85308;
+    color: #e85308;
 }
+
 .study-main .study-all .study-content .free {
-  color: #67c23a;
+    color: #67c23a;
 }
+
 .study-main .study-all .study-content .content-left {
-  width: 940px;
-  float: left;
+    width: 940px;
+    float: left;
 }
+
 .study-main .study-all .study-content .content-left .search-bar {
-  padding: 20px 0;
+    padding: 20px 0;
 }
+
 .study-main .study-all .study-content .content-left .search-bar span {
-  color: #409eff;
-  font-style: normal;
+    color: #409eff;
+    font-style: normal;
 }
+
 .study-main .study-all .study-content .content-left .search-bar .keywords {
-  border: 1px dotted #409eff;
-  height: 23px;
-  line-height: 23px;
-  padding: 0 26px 0 8px;
-  position: relative;
-  float: left;
+    border: 1px dotted #409eff;
+    height: 23px;
+    line-height: 23px;
+    padding: 0 26px 0 8px;
+    position: relative;
+    float: left;
 }
+
 .study-main .study-all .study-content .content-left .search-bar .keywords .button-clear {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 23px;
-  width: 20px;
-  font-size: 16px;
-  line-height: 22px;
-  text-align: center;
-  color: #409eff;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 23px;
+    width: 20px;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    color: #409eff;
 }
+
 .study-main .study-all .study-content .content-left .search-bar .keywords .search-result {
-  height: 25px;
-  line-height: 25px;
-  margin-left: 20px;
-  float: left;
+    height: 25px;
+    line-height: 25px;
+    margin-left: 20px;
+    float: left;
 }
+
 .study-main .study-all .study-content .content-left .study-header .nav-menu {
-  width: 940px;
-  background-color: #fafafa;
-  margin-top: 15px;
-  font-size: 16px;
+    width: 940px;
+    background-color: #fafafa;
+    margin-top: 15px;
+    font-size: 16px;
 }
+
 .study-main .study-all .study-content .content-left .study-header .nav-menu a {
-  color: #333;
-  cursor: pointer;
-  text-decoration: none;
+    color: #333;
+    cursor: pointer;
+    text-decoration: none;
 }
+
 .study-main .study-all .study-content .content-left .study-header .nav-menu a:hover {
-  color: #409eff;
-  text-decoration: none;
+    color: #409eff;
+    text-decoration: none;
 }
+
 .study-main .study-all .study-content .content-left .study-header .nav-menu li {
-  clear: none;
-  list-style: none;
+    clear: none;
+    list-style: none;
 }
+
 .study-main .study-all .study-content .content-left .study-header .nav-menu .first-row ul {
-  padding-bottom: 23px;
-  padding-left: 5px;
-  margin: 0;
-  display: table;
+    padding-bottom: 23px;
+    padding-left: 5px;
+    margin: 0;
+    display: table;
 }
+
 .study-main .study-all .study-content .content-left .study-header .nav-menu .first-row li {
-  padding-top: 23px;
-  width: 180px;
-  height: 30px;
-  line-height: 30px;
-  float: left;
-  margin-right: 7px;
+    padding-top: 23px;
+    width: 180px;
+    height: 30px;
+    line-height: 30px;
+    float: left;
+    margin-right: 7px;
 }
+
 .study-main .study-all .study-content .content-left .study-header .nav-menu .first-row .name {
-  display: inline-block;
-  padding: 0 20px;
-  width: 120px;
-  overflow: hidden;
+    display: inline-block;
+    padding: 0 20px;
+    width: 120px;
+    overflow: hidden;
 }
+
 .study-main .study-all .study-content .content-left .study-header .nav-menu .first-row .name i {
-  margin-right: 8px;
-  top: 1px;
-  position: relative;
+    margin-right: 8px;
+    top: 1px;
+    position: relative;
 }
+
 .study-main .study-all .study-content .content-left .study-header .nav-menu .first-row .current {
-  background-color: #409eff;
-  color: #ffffff;
-  pointer-events: none;
+    background-color: #409eff;
+    color: #ffffff;
+    pointer-events: none;
 }
+
 .study-main .study-all .study-content .content-left .study-header .nav-menu .second-row {
-  border-top: 1px solid #ddd;
-  margin: 0 55px;
-  font-size: 14px;
+    border-top: 1px solid #ddd;
+    margin: 0 55px;
+    font-size: 14px;
 }
+
 .study-main .study-all .study-content .content-left .study-header .nav-menu .second-row ul {
-  display: table;
-  margin: 0;
-  padding: 0;
+    display: table;
+    margin: 0;
+    padding: 0;
 }
+
 .study-main .study-all .study-content .content-left .study-header .nav-menu .second-row li {
-  height: 50px;
-  line-height: 50px;
-  float: left;
-  margin-right: 40px;
+    height: 50px;
+    line-height: 50px;
+    float: left;
+    margin-right: 40px;
 }
+
 .study-main .study-all .study-content .content-left .study-header .nav-menu .second-row .current {
-  color: #409eff;
-  pointer-events: none;
-  display: inline-block;
+    color: #409eff;
+    pointer-events: none;
+    display: inline-block;
 }
+
 .study-main .study-all .study-content .content-left .study-body {
-  margin-top: 45px;
-  width: 940px;
-  zoom: 1;
+    margin-top: 45px;
+    width: 940px;
+    zoom: 1;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag {
-  padding: 10px 5px;
-  border: 1px solid #ddd;
-  outline: none;
-  overflow: hidden;
+    padding: 10px 5px;
+    border: 1px solid #ddd;
+    outline: none;
+    overflow: hidden;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag .left {
-  float: left;
+    float: left;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag .left ul {
-  padding-left: 32px;
-  margin: 0;
+    padding-left: 32px;
+    margin: 0;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag .right {
-  float: right;
+    float: right;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag .right ul {
-  padding-right: 35px;
-  margin: 0;
+    padding-right: 35px;
+    margin: 0;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag .right li:last-child {
-  padding: 0 0 0 15px;
+    padding: 0 0 0 15px;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag .right .sort-item {
-  padding-right: 0;
-  position: relative;
-  float: left;
-  color: #222;
-  cursor: pointer;
+    padding-right: 0;
+    position: relative;
+    float: left;
+    color: #222;
+    cursor: pointer;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag .right .sort-item i {
-  color: transparent;
+    color: transparent;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag .right .sort-item .up,
 .study-main .study-all .study-content .content-left .study-body .study-tag .right .sort-item .down {
-  display: block;
-  position: absolute;
-  left: 60px;
-  margin: 0 2px;
-  width: 0;
-  height: 0;
-  border: 5px dashed rgba(0, 0, 0, 0);
+    display: block;
+    position: absolute;
+    left: 60px;
+    margin: 0 2px;
+    width: 0;
+    height: 0;
+    border: 5px dashed rgba(0, 0, 0, 0);
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag .right .sort-item .active {
-  border-color: #00a1d6 rgba(0, 0, 0, 0) !important;
+    border-color: #00a1d6 rgba(0, 0, 0, 0) !important;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag .right .sort-item .up {
-  top: 0;
-  padding: 0;
-  border-top: none;
-  border-bottom: 5px solid #ddd;
+    top: 0;
+    padding: 0;
+    border-top: none;
+    border-bottom: 5px solid #ddd;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag .right .sort-item .down {
-  bottom: 0;
-  border-top: 5px solid #ddd;
-  border-bottom: none;
+    bottom: 0;
+    border-top: 5px solid #ddd;
+    border-bottom: none;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag li {
-  color: #333;
-  padding: 0 15px;
-  font-size: 14px;
-  line-height: 14px;
-  cursor: pointer;
-  border-right: 1px solid #e6e6e6;
-  float: left;
+    color: #333;
+    padding: 0 15px;
+    font-size: 14px;
+    line-height: 14px;
+    cursor: pointer;
+    border-right: 1px solid #e6e6e6;
+    float: left;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag li:last-child {
-  border-right: none;
+    border-right: none;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag li:last-child i {
-  font-size: 12px;
+    font-size: 12px;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag li a:hover {
-  color: #409eff;
+    color: #409eff;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag li svg {
-  margin-left: 5px;
-  position: relative;
-  font-size: 10px;
+    margin-left: 5px;
+    position: relative;
+    font-size: 10px;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-tag li .cur {
-  color: #409eff;
+    color: #409eff;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list {
-  background-color: #fff;
-  margin-top: 30px;
+    background-color: #fff;
+    margin-top: 30px;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .no-study {
-  text-align: center;
-  margin: 200px 0;
+    text-align: center;
+    margin: 200px 0;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .no-study .message {
-  display: inline-block;
-  padding-left: 50px;
-  width: 200px;
+    display: inline-block;
+    padding-left: 50px;
+    width: 200px;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .no-study .message svg {
-  color: #409eff;
-  font-size: 25px;
-  margin-right: 8px;
-  float: left;
+    color: #409eff;
+    font-size: 25px;
+    margin-right: 8px;
+    float: left;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .no-study .message .text {
-  color: #999;
-  text-align: left;
-  font-size: 18px;
-  line-height: 25px;
+    color: #999;
+    text-align: left;
+    font-size: 18px;
+    line-height: 25px;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item {
-  z-index: 9;
-  margin-bottom: 0;
-  height: 150px;
-  padding: 20px 0 20px 0;
-  border-bottom: 1px solid #e6e6e6;
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-  cursor: pointer;
-  position: relative;
-  background-color: #fff;
+    z-index: 9;
+    margin-bottom: 0;
+    height: 150px;
+    padding: 20px 0 20px 0;
+    border-bottom: 1px solid #e6e6e6;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    cursor: pointer;
+    position: relative;
+    background-color: #fff;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .left {
-  position: relative;
-  float: left;
-  width: 225px;
-  margin-right: -225px;
+    position: relative;
+    float: left;
+    width: 225px;
+    margin-right: -225px;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .left .c-img {
-  overflow: hidden;
-  float: left;
+    overflow: hidden;
+    float: left;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .left .c-img img {
-  transition: all 0.5s ease-in-out 0s;
-  vertical-align: top;
-  border: 0;
-  width: 265px;
-  height: 150px;
+    transition: all 0.5s ease-in-out 0s;
+    vertical-align: top;
+    border: 0;
+    width: 265px;
+    height: 150px;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right {
-  float: right;
-  width: 100%;
+    float: right;
+    width: 100%;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info {
-  margin-left: 280px;
-  height: 150px;
-  position: relative;
-  text-align: left;
+    margin-left: 280px;
+    height: 150px;
+    position: relative;
+    text-align: left;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .title {
-  margin-top: 0;
-  line-height: 20px;
-  font-size: 16px;
-  height: 20px;
-  overflow: hidden;
+    margin-top: 0;
+    line-height: 20px;
+    font-size: 16px;
+    height: 20px;
+    overflow: hidden;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .title .text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 640px;
-  display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 640px;
+    display: inline-block;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .title .price {
-  padding: 3px 5px;
-  height: 14px;
-  line-height: 14px;
-  vertical-align: top;
-  font-size: 14px;
-  margin-left: 15px;
-  display: inline-block;
-  pointer-events: none;
+    padding: 3px 5px;
+    height: 14px;
+    line-height: 14px;
+    vertical-align: top;
+    font-size: 14px;
+    margin-left: 15px;
+    display: inline-block;
+    pointer-events: none;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .teacher {
-  margin-top: 10px;
-  font-size: 12px;
-  line-height: 15px;
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 15px;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .teacher a {
-  color: #999;
+    color: #999;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .teacher a:hover {
-  color: #409ef0;
+    color: #409ef0;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .description {
-  font-size: 13px;
-  color: #666;
-  position: relative;
-  text-align: left;
-  line-height: 22px;
-  height: 44px;
-  overflow: hidden;
-  margin: 15px 10px 20px 0;
+    font-size: 13px;
+    color: #666;
+    position: relative;
+    text-align: left;
+    line-height: 22px;
+    height: 44px;
+    overflow: hidden;
+    margin: 15px 10px 20px 0;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .description:hover {
-  color: #55b929;
+    color: #55b929;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .detail {
-  margin-top: 0 !important;
-  font-size: 12px;
-  line-height: 15px;
+    margin-top: 0 !important;
+    font-size: 12px;
+    line-height: 15px;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .detail .hot {
-  font-size: 13px;
-  line-height: 15px;
-  background: transparent !important;
-  color: #999;
-  margin-right: 20px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+    font-size: 13px;
+    line-height: 15px;
+    background: transparent !important;
+    color: #999;
+    margin-right: 20px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .detail svg {
-  margin-right: 5px;
+    margin-right: 5px;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .detail .praise {
-  margin-right: 45px;
-  margin-top: 0;
-  display: inline-block;
-  color: #e85308;
-  background: transparent !important;
-  font-size: 14px;
-  line-height: 15px;
+    margin-right: 45px;
+    margin-top: 0;
+    display: inline-block;
+    color: #e85308;
+    background: transparent !important;
+    font-size: 14px;
+    line-height: 15px;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item:hover {
-  background-color: #f5f5f5;
+    background-color: #f5f5f5;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item:hover .left .c-img img {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-sort-page {
-  margin: 40px 0 40px 0;
+    margin: 40px 0 40px 0;
 }
+
 .study-main .study-all .study-content .content-left .study-body .study-sort-page li,
 .study-main .study-all .study-content .content-left .study-body .study-sort-page button {
-  height: 35px;
-  width: 66px;
-  font-size: 16px;
-  border-radius: 3px;
+    height: 35px;
+    width: 66px;
+    font-size: 16px;
+    border-radius: 3px;
 }
+
 .study-main .study-all .study-content .content-right {
-  margin-top: 64px;
-  width: 240px;
-  border: 0 solid #ececec;
-  float: right;
-  padding: 10px 0;
-  background-color: #f7f8f9;
-  margin-bottom: 60px;
+    margin-top: 64px;
+    width: 240px;
+    border: 0 solid #ececec;
+    float: right;
+    padding: 10px 0;
+    background-color: #f7f8f9;
+    margin-bottom: 60px;
 }
+
 .study-main .study-all .study-content .content-right .top {
-  font-size: 16px;
-  height: 36px;
-  line-height: 32px;
-  border-bottom: 1px solid #dfdee0;
-  margin: 0 10px;
-  font-weight: 400;
+    font-size: 16px;
+    height: 36px;
+    line-height: 32px;
+    border-bottom: 1px solid #dfdee0;
+    margin: 0 10px;
+    font-weight: 400;
 }
+
 .study-main .study-all .study-content .content-right .study-card-list {
-  margin-left: 0;
-  margin-right: 0;
-  font-size: 14px;
-  list-style: none outside none;
-  padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 14px;
+    list-style: none outside none;
+    padding: 0;
 }
+
 .study-main .study-all .study-content .content-right .study-card-item {
-  margin-top: 20px;
-  width: 220px;
-  padding: 7px 7px 9px 9px;
-  position: relative;
-  cursor: pointer;
+    margin-top: 20px;
+    width: 220px;
+    padding: 7px 7px 9px 9px;
+    position: relative;
+    cursor: pointer;
 }
+
 .study-main .study-all .study-content .content-right .study-card-item:hover {
-  border: #ddd;
-  box-shadow: 1px 1px 2px 1px #ececec;
+    border: #ddd;
+    box-shadow: 1px 1px 2px 1px #ececec;
 }
+
 .study-main .study-all .study-content .content-right .study-card-item .item-img-link {
-  position: relative;
-  display: block;
-  margin-bottom: 6px;
+    position: relative;
+    display: block;
+    margin-bottom: 6px;
 }
+
 .study-main .study-all .study-content .content-right .study-card-item .item-img-link img {
-  width: 220px;
-  height: 124px;
-  border: 0;
-  vertical-align: middle;
+    width: 220px;
+    height: 124px;
+    border: 0;
+    vertical-align: middle;
 }
+
 .study-main .study-all .study-content .content-right .study-card-item .item-title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 40px;
-  font-size: 14px;
-  margin-bottom: 8px;
-  position: relative;
-  margin-top: 0;
-  text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 40px;
+    font-size: 14px;
+    margin-bottom: 8px;
+    position: relative;
+    margin-top: 0;
+    text-align: left;
 }
+
 .study-main .study-all .study-content .content-right .study-card-item .item-title .item-title-link {
-  color: #333;
-  word-wrap: break-word;
-  white-space: pre-wrap;
+    color: #333;
+    word-wrap: break-word;
+    white-space: pre-wrap;
 }
+
 .study-main .study-all .study-content .content-right .study-card-item .item-title .item-title-link:hover {
-  color: #409eff;
+    color: #409eff;
 }
+
 .study-main .study-all .study-content .content-right .study-card-item .item-info {
-  height: 24px;
-  line-height: 24px;
-  overflow: hidden;
-  margin-top: 0;
-  font-size: 14px;
+    height: 24px;
+    line-height: 24px;
+    overflow: hidden;
+    margin-top: 0;
+    font-size: 14px;
 }
+
 .study-main .study-all .study-content .content-right .study-card-item .item-info .price {
-  margin-left: 0;
-  float: left;
+    margin-left: 0;
+    float: left;
 }
+
 .study-main .study-all .study-content .content-right .study-card-item .item-info .praise {
-  float: right;
-  color: #999;
-  margin-left: 10px;
+    float: right;
+    color: #999;
+    margin-left: 10px;
 }
+
 .study-main .study-information {
-  background-color: #f5f5f5;
-  min-height: 700px;
-  clear: both;
+    background-color: #f5f5f5;
+    min-height: 700px;
+    clear: both;
 }
+
 .study-main .study-information .info-button {
-  border-radius: 4px;
-  font-size: 18px;
-  background-color: #409eff;
-  margin: 0;
-  overflow: visible;
-  cursor: pointer;
-  vertical-align: middle;
-  text-align: center;
-  padding: 0 12px;
-  border: 1px solid #409eff;
-  color: #fff;
+    border-radius: 4px;
+    font-size: 18px;
+    background-color: #409eff;
+    margin: 0;
+    overflow: visible;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+    padding: 0 12px;
+    border: 1px solid #409eff;
+    color: #fff;
 }
+
 .study-main .study-information .inner-center {
-  width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  min-height: 419px;
-  box-sizing: border-box;
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 419px;
+    box-sizing: border-box;
 }
+
 .study-main .study-information .exercise-main {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 30px 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 30px 0;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs {
-  margin-right: 340px;
-  padding: 0 20px 30px;
-  background: #fff;
-  box-sizing: border-box;
+    margin-right: 340px;
+    padding: 0 20px 30px;
+    background: #fff;
+    box-sizing: border-box;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-tabs-title-bar {
-  height: 45px;
-  margin-bottom: 20px;
-  margin-left: -20px;
+    height: 45px;
+    margin-bottom: 20px;
+    margin-left: -20px;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-tabs-title-bar .exercise-tabs-title {
-  margin-top: 0;
-  border-top: 5px solid #fff;
-  line-height: 50px;
-  padding: 0 40px;
-  font-size: 20px;
-  font-weight: 400;
+    margin-top: 0;
+    border-top: 5px solid #fff;
+    line-height: 50px;
+    padding: 0 40px;
+    font-size: 20px;
+    font-weight: 400;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content {
-  display: block;
-  padding: 0 10px 30px;
-  text-align: left;
+    display: block;
+    padding: 0 10px 30px;
+    text-align: left;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .title {
-  position: relative;
-  margin: 2px;
-  padding: 20px 20px;
+    position: relative;
+    margin: 2px;
+    padding: 20px 20px;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .title h3 {
-  font-size: 20px;
-  line-height: 24px;
-  margin-top: 5px;
-  font-weight: normal;
+    font-size: 20px;
+    line-height: 24px;
+    margin-top: 5px;
+    font-weight: normal;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .state {
-  font-size: 16px;
-  top: 25px;
-  padding-left: 15px;
+    font-size: 16px;
+    top: 25px;
+    padding-left: 15px;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .score {
-  font-size: 16px;
-  top: 25px;
-  float: right;
+    font-size: 16px;
+    top: 25px;
+    float: right;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .question-list {
-  margin-top: 20px;
-  padding: 0 20px 0 20px;
+    margin-top: 20px;
+    padding: 0 20px 0 20px;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .question-list label {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .question-list .question {
-  position: relative;
+    position: relative;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .question-list .question-title {
-  padding: 10px 0;
-  border-top: 1px solid #969696;
+    padding: 10px 0;
+    border-top: 1px solid #969696;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .question-list .question-title-number {
-  width: 55px;
-  font-size: 24px;
-  text-align: center;
+    width: 55px;
+    font-size: 24px;
+    text-align: center;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .question-list .question-title-content {
-  line-height: 35px;
-  font-size: 14px;
-  padding-left: 10px;
-  width: 100%;
+    line-height: 35px;
+    font-size: 14px;
+    padding-left: 10px;
+    width: 100%;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .question-list .answer {
-  padding: 20px 15px;
-  font-size: 14px;
-  color: #000;
+    padding: 20px 15px;
+    font-size: 14px;
+    color: #000;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .question-list .answer span {
-  margin-right: 50px;
-  min-height: 26px;
+    margin-right: 50px;
+    min-height: 26px;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .question-list .answer i {
-  font-size: 26px;
-  float: right;
+    font-size: 26px;
+    float: right;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .question-list .answer .true {
-  color: #67c23a;
+    color: #67c23a;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .question-list .answer .false {
-  color: red;
+    color: red;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .exercise .question-list .answer .answer-score {
-  font-size: 14px;
-  width: 140px;
-  top: 25px;
-  float: right;
+    font-size: 14px;
+    width: 140px;
+    top: 25px;
+    float: right;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .setting-save {
-  width: 100px;
-  margin: 30px 30px 0 30px;
-  border-radius: 20px;
-  border: none;
-  float: right;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857;
+    width: 100px;
+    margin: 30px 30px 0 30px;
+    border-radius: 20px;
+    border: none;
+    float: right;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .finished {
-  color: #e85308;
+    color: #e85308;
 }
+
 .study-main .study-information .exercise-main .exercise-tabs .exercise-content .unfinished {
-  color: #409eff;
+    color: #409eff;
 }
+
 .study-main .study-information .study-banner {
-  padding: 20px 0 30px;
-  background: #fff;
-  min-height: 400px;
+    padding: 20px 0 30px;
+    background: #fff;
+    min-height: 400px;
 }
+
 .study-main .study-information .study-banner .study-img-text {
-  min-height: 360px;
-  position: relative;
+    min-height: 360px;
+    position: relative;
 }
+
 .study-main .study-information .study-banner .study-img-text .study-img-left {
-  position: absolute;
-  top: 0;
-  left: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
+
 .study-main .study-information .study-banner .study-img-text .study-img-left img {
-  border: 0;
-  width: 600px;
-  height: 338px;
-  vertical-align: middle;
+    border: 0;
+    width: 600px;
+    height: 338px;
+    vertical-align: middle;
 }
+
 .study-main .study-information .study-banner .study-img-text .study-text-right {
-  margin-left: 630px;
-  width: 570px;
-  text-align: left;
+    margin-left: 630px;
+    width: 570px;
+    text-align: left;
 }
+
 .study-main .study-information .study-banner .study-img-text .study-text-right .text-title {
-  word-wrap: break-word;
-  white-space: pre-wrap;
-  font-size: 22px;
-  line-height: 1.2;
-  margin-bottom: 10px;
-  font-weight: 400;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    font-size: 22px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    font-weight: 400;
 }
+
 .study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info:after {
-  display: block;
-  visibility: hidden;
+    display: block;
+    visibility: hidden;
 }
+
 .study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .enroll-study-info {
-  padding: 15px;
-  margin-bottom: 30px;
-  background-color: #f5f5f5;
+    padding: 15px;
+    margin-bottom: 30px;
+    background-color: #f5f5f5;
 }
+
 .study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .teacher-name {
-  margin-bottom: 8px;
-  color: #409eff;
-  font-size: 14px;
+    margin-bottom: 8px;
+    color: #409eff;
+    font-size: 14px;
 }
+
 .study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .workload {
-  background: transparent;
-  line-height: 32px;
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 8px;
+    background: transparent;
+    line-height: 32px;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
 }
+
 .study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .study-time {
-  margin-bottom: 8px;
-  color: #67c23a;
-  font-size: 12px;
+    margin-bottom: 8px;
+    color: #67c23a;
+    font-size: 12px;
 }
+
 .study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .enroll {
-  margin-top: 10px;
+    margin-top: 10px;
 }
+
 .study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .enroll .study-apply {
-  margin-bottom: 10px;
-  font-size: 13px;
-  color: #999999;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #999999;
 }
+
 .study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .enroll .enroll-apply-btn {
-  margin-top: 30px;
-  margin-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
+
 .study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .enroll .enroll-button {
-  height: 52px;
-  line-height: 52px;
-  width: 220px;
+    height: 52px;
+    line-height: 52px;
+    width: 220px;
 }
+
 .study-main .study-information .info-main {
-  display: block;
+    display: block;
 }
+
 .study-main .study-information .info-main .main {
-  float: left;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 30px 0;
+    float: left;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 30px 0;
 }
+
 .study-main .study-information .info-main .main .hide {
-  display: none;
+    display: none;
 }
+
 .study-main .study-information .info-main .main .disable {
-  cursor: default;
+    cursor: default;
 }
+
 .study-main .study-information .info-main .main .tabs {
-  margin-right: 340px;
-  padding: 0 20px 30px;
-  background: #fff;
-  box-sizing: border-box;
+    margin-right: 340px;
+    padding: 0 20px 30px;
+    background: #fff;
+    box-sizing: border-box;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-title-bar {
-  height: 45px;
-  margin-bottom: 20px;
-  margin-left: -20px;
+    height: 45px;
+    margin-bottom: 20px;
+    margin-left: -20px;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-title-bar .tabs-title {
-  margin-top: 0;
-  border-top: 5px solid #fff;
-  line-height: 50px;
-  padding: 0 40px;
-  font-size: 16px;
-  float: left;
-  cursor: pointer;
-  font-weight: 400;
+    margin-top: 0;
+    border-top: 5px solid #fff;
+    line-height: 50px;
+    padding: 0 40px;
+    font-size: 16px;
+    float: left;
+    cursor: pointer;
+    font-weight: 400;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-title-bar .active {
-  color: #409eff;
-  border-top-color: #409eff;
+    color: #409eff;
+    border-top-color: #409eff;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content {
-  display: block;
-  text-align: left;
+    display: block;
+    text-align: left;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-details {
-  padding: 20px 20px 1px;
+    padding: 20px 20px 1px;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-details svg {
-  color: #409eff;
-  margin-right: 10px;
-  margin-bottom: 3px;
-  vertical-align: middle;
+    color: #409eff;
+    margin-right: 10px;
+    margin-bottom: 3px;
+    vertical-align: middle;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-details p {
-  white-space: normal;
+    white-space: normal;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-details p span {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-details .details-title {
-  padding: 0 0 10px 0;
-  font-size: 18px;
-  font-weight: bold;
+    padding: 0 0 10px 0;
+    font-size: 18px;
+    font-weight: bold;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-details .details-content {
-  margin-bottom: 50px;
-  position: relative;
+    margin-bottom: 50px;
+    position: relative;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-details .details-text {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  text-align: left;
-  color: #666;
-  line-height: 22px;
-  word-wrap: break-word;
-  white-space: pre-wrap;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-align: left;
+    color: #666;
+    line-height: 22px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-list {
-  padding-top: 20px !important;
-  padding-bottom: 1px;
+    padding-top: 20px !important;
+    padding-bottom: 1px;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-list .tabs-item {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-list .tabs-item .tabs-item-title {
-  margin-bottom: 5px;
-  padding-top: 5px;
-  line-height: 40px;
-  height: 40px;
-  position: relative;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    line-height: 40px;
+    height: 40px;
+    position: relative;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-list .tabs-item .tabs-item-title span {
-  width: 42px;
-  margin-left: 22px;
-  float: left;
-  color: #000;
-  font-size: 20px;
+    width: 42px;
+    margin-left: 22px;
+    float: left;
+    color: #000;
+    font-size: 20px;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-list .tabs-item .tabs-item-title h3 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 700;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-list .tabs-item .tabs-item-list {
-  margin: 0 10px;
-  font-size: 14px;
+    margin: 0 10px;
+    font-size: 14px;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-list .tabs-item .tabs-item-list .tabs-study-item {
-  position: relative;
-  line-height: 50px;
-  padding-left: 53px;
-  display: block;
-  width: 100%;
-  color: #333;
-  box-sizing: border-box;
-  background-color: #f5f5f5;
-  margin-bottom: 20px;
-  text-decoration: none;
+    position: relative;
+    line-height: 50px;
+    padding-left: 53px;
+    display: block;
+    width: 100%;
+    color: #333;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    margin-bottom: 20px;
+    text-decoration: none;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-list .tabs-item .tabs-item-list .tabs-study-item svg {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 53px;
-  text-align: center;
-  font-size: 24px;
-  color: #a3d2f8;
-  margin-top: -12px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 53px;
+    text-align: center;
+    font-size: 24px;
+    color: #a3d2f8;
+    margin-top: -12px;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-list .tabs-item .tabs-item-list .tabs-study-item .study-item-title {
-  margin: 0;
+    margin: 0;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-list .tabs-item .tabs-item-list .tabs-study-item .study-item-title .text {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  word-wrap: normal;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-wrap: normal;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-list .tabs-item .tabs-item-list .tabs-study-item .study-item-title .duration {
-  color: #999;
-  margin-left: 10px;
-  display: inline-block;
-  vertical-align: middle;
+    color: #999;
+    margin-left: 10px;
+    display: inline-block;
+    vertical-align: middle;
 }
+
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-list .instruction-text {
-  text-align: center;
-  line-height: 20px;
+    text-align: center;
+    line-height: 20px;
 }
+
 .study-main .study-information .info-main .main-aside {
-  float: left;
-  width: 330px;
-  box-sizing: border-box;
-  margin: 30px 0 30px -330px;
-  display: block;
+    float: left;
+    width: 330px;
+    box-sizing: border-box;
+    margin: 30px 0 30px -330px;
+    display: block;
 }
+
 .study-main .study-information .info-main .main-aside .aside-blocks {
-  padding: 0 30px;
-  background-color: #fff;
+    padding: 0 30px;
+    background-color: #fff;
 }
+
 .study-main .study-information .info-main .main-aside .exam-schedule {
-  padding: 20px 0 35px;
-  font-size: 14px;
-  text-align: left;
+    padding: 20px 0 35px;
+    font-size: 14px;
+    text-align: left;
 }
+
 .study-main .study-information .info-main .main-aside .exam-title {
-  font-size: 16px;
-  color: #409eff;
-  text-align: center;
+    font-size: 16px;
+    color: #409eff;
+    text-align: center;
 }
+
 .study-main .study-information .info-main .main-aside .exam-button {
-  height: 30px;
-  line-height: 30px;
-  width: 100%;
-  padding: 0;
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    padding: 0;
 }
+
 .study-main .study-information .info-main .main-aside .exam-text {
-  margin-top: 20px;
-  color: #666666;
+    margin-top: 20px;
+    color: #666666;
 }
+
 /*# sourceMappingURL=study.css.map */

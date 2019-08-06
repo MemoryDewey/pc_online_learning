@@ -127,7 +127,7 @@
     import SearchBarMid from '../../common/SearchBarMid'
     import {TotalOption,} from '../../../utils/constant/options';
     import SearchBar_mid from '../../common/SearchBarMid';
-    import {getProjectCount,getProject} from "../../../api/project";
+    import {getProjectCount, getProject} from "../../../api/project";
 
     export default {
         name: "List",
