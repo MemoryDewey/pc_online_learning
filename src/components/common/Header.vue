@@ -223,7 +223,7 @@
         },
         methods: {
             exit() {
-                logout().then(() => {
+                logout().then(res => {
                     this.$store.commit('exit');
                 });
                 window.location.reload();

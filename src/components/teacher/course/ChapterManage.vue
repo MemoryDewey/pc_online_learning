@@ -21,10 +21,10 @@
                                    @click="updateChapter(scope.row.id,scope.row.name,scope.row.cid)">编辑
                         </el-button>
                         <el-button size="mini" type="danger" v-if="!scope.row.delete"
-                                   @click="deleteChapter(scope.row.cid,scope.row.id)">删除
+                                   @click="deleteChapter(scope.row.id)">删除
                         </el-button>
                         <el-button size="mini" type="success" v-if="scope.row.delete"
-                                   @click="recoverChapter(scope.row.cid,scope.row.id)">还原
+                                   @click="recoverChapter(scope.row.id)">还原
                         </el-button>
                     </template>
                 </el-table-column>
@@ -163,8 +163,8 @@
                 if (this.formInline.chapter === '') {
                     Message.warning('请输入学员账号');
                     return false;
-                } else if (this.formInline.chapter.length > 30) {
-                    Message.warning('章节名应小于30个字符');
+                } else if (this.formInline.chapter.length > 15 || this.formInline.chapter.length < 3) {
+                    Message.warning('章节名应在3到15个字符');
                     return false;
                 } else if (this.formInline.course === '') {
                     Message.warning('请选择课程');
@@ -213,13 +213,13 @@
                 }
             },
             /* 删除章节 */
-            deleteChapter(courseID, chapterID) {
+            deleteChapter(chapterID) {
                 MessageBox.confirm('确定从该课程中删除该章节？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(async () => {
-                    let res = await deleteChapter({courseID, chapterID});
+                    let res = await deleteChapter({chapterID});
                     if (res) {
                         Message.success(res.msg);
                         this.getChapter(1, '');
@@ -229,8 +229,8 @@
                 })
             },
             /* 还原章节 */
-            async recoverChapter(courseID, chapterID) {
-                let res = await recoverChapter({courseID, chapterID});
+            async recoverChapter(chapterID) {
+                let res = await recoverChapter({chapterID});
                 if (res) {
                     Message.success(res.msg);
                     this.getChapter(1, '');
