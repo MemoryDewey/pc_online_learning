@@ -6,7 +6,7 @@
                 <el-input v-model="searchContent" placeholder="请输入课程名" class="input-with-select">
                     <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
                     <i class="el-icon-close el-input__icon" slot="suffix" style="cursor: pointer"
-                       @click="getCourse(1,'')">
+                       @click="clearSearch">
                     </i>
                 </el-input>
             </div>
@@ -399,6 +399,11 @@
                     this.getCourse(1, this.searchContent);
                 }
             },
+            /* 清空搜索框 */
+            clearSearch() {
+                this.searchContent = '';
+                this.getCourse(1, '');
+            },
             /* 提交表单 */
             submitForm(formName) {
                 this.$refs[formName].validate(async (valid) => {
@@ -406,7 +411,7 @@
                         if (this.imageSubmit) this.$refs.upload.submit();
                         else {
                             let res = await updateCourseInfo(this.ruleForm);
-                            if(res) this.handleSuccess(res);
+                            if (res) this.handleSuccess(res);
                         }
                     } else return false;
                 });
@@ -439,7 +444,7 @@
                     this.dialogVisible = false;
                     this.resetForm('ruleForm');
                     this.getCourse(1, '');
-                }else Message.error(res.msg);
+                } else Message.error(res.msg);
             },
             /* 删除课程 */
             deleteCourse(courseID) {

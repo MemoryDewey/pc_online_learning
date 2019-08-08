@@ -9,6 +9,9 @@
                         <el-option label="文件类型" value="type"></el-option>
                     </el-select>
                     <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+                    <i class="el-icon-close el-input__icon" slot="suffix" style="cursor: pointer"
+                       @click="clearSearch">
+                    </i>
                 </el-input>
             </div>
         </div>
@@ -209,6 +212,11 @@
                     this.getFile(1, this.selectValue, this.searchContent);
                 }
             },
+            /* 清空搜索框 */
+            clearSearch() {
+                this.searchContent = '';
+                this.getFile(1, '', null);
+            },
             /* 提交表单 */
             submitForm(formName) {
                 this.$refs[formName].validate(async (valid) => {
@@ -316,7 +324,7 @@
             },
             /* 添加/更改提交成功后执行 */
             handleSuccess(res) {
-                if (res) {
+                if (res.status === 1) {
                     Message.success(res.msg);
                     this.dialogFormVisible = false;
                     this.getFile(1, '', null);

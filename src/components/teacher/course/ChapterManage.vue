@@ -5,6 +5,9 @@
             <div class="search-area">
                 <el-input v-model="searchContent" placeholder="请输入章节名" class="input-with-select">
                     <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+                    <i class="el-icon-close el-input__icon" slot="suffix" style="cursor: pointer"
+                       @click="clearSearch">
+                    </i>
                 </el-input>
             </div>
         </div>
@@ -144,6 +147,11 @@
                     this.tableData = [];
                     this.getChapter(1, this.searchContent);
                 }
+            },
+            /* 清空搜索框 */
+            clearSearch() {
+                this.searchContent = '';
+                this.getChapter(1, '');
             },
             /* 获取课程 */
             async getCourse() {

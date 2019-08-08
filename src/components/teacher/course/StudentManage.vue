@@ -10,7 +10,7 @@
                     </el-select>
                     <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
                     <i class="el-icon-close el-input__icon" slot="suffix" style="cursor: pointer"
-                       @click="getStudent(1, '0', null)">
+                       @click="clearSearch">
                     </i>
                 </el-input>
             </div>
@@ -151,6 +151,11 @@
                     this.isSearch = true;
                     this.getStudent(1, this.selectValue, this.searchContent);
                 }
+            },
+            /* 清空搜索框 */
+            clearSearch() {
+                this.searchContent = '';
+                this.getStudent(1, '0', null);
             },
             //格式化日期
             formatDate(date) {

@@ -12,7 +12,7 @@ export const deleteCourse = data => post('/teacher/course/info/delete', data);
 export const recoverCourse = data => post('/teacher/course/info/recover', data);
 
 
-export const getChapter = params => get('/teacher/course/file/chapter', params);
+export const getChapter = params => get('/teacher/course/chapter-course', params);
 export const getChapterInfo = params => get('/teacher/course/chapter', params);
 export const addChapter = data => post('/teacher/course/chapter/add', data);
 export const deleteChapter = data => post('/teacher/course/chapter/delete', data);
