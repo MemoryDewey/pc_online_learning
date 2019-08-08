@@ -167,7 +167,7 @@
 
 <script>
     import ListHeader from './ListHeader'
-    import {getListCount, getList, getRecommend} from '../../../api/course'
+    import {getListPage, getList, getRecommend} from '../../../api/course'
 
     export default {
         name: "List",
@@ -210,15 +210,14 @@
                     `${sortQuery}${sortQuery === '' ? '' : '&'}`;
             },
             getPageCount() {
-                getListCount({
+                getListPage({
                     system: this.$route.query.system,
                     type: this.$route.query.type,
                     filter: this.$route.query.filter,
                     search: this.$route.params.search
                 }).then(res => {
                     if (res) {
-                        let count = res.count;
-                        this.pageCount = count % 10 === 0 ? Math.floor(count / 10) : Math.floor(count / 10) + 1;
+                        this.pageCount = res.page
                     }
                 })
             },

@@ -3,7 +3,7 @@ import {get, post} from '../utils/request';
 export const getCourseType = params => get('/course/list/type', params);
 export const getCourseSystem = () => get('/course/list/system');
 
-export const getListCount = data => post('/course/list/count', data);
+export const getListPage = data => post('/course/list/page', data);
 export const getList = params => get('/course/list', params);
 export const getRecommend = () => get('/course/list/recommend');
 export const getIndexCourse = () => get('/course/list/index-show');

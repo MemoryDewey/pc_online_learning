@@ -90,19 +90,19 @@
             async getLive(page) {
                 this.tableData = [];
                 this.currentPage = page;
-                let res = getLive({page});
+                let res = await getLive({page});
                 if (res) {
                     let data = res.live;
-                    for (let i = 0; i < data.length; i++) {
+                    for(let live of data){
                         this.tableData.push({
-                            course: data[i]['CourseInformation.CourseName'],
-                            title: data[i]['title'],
-                            pushUrl: data[i]['pushUrl'],
-                            pushName: data[i]['pushName'],
-                            time: moment(data[i]['txTime']).format('YYYY-MM-DD HH:mm:ss')
+                            course: live['CourseInformation.CourseName'],
+                            title: live.title,
+                            pushUrl: live.pushUrl,
+                            pushName: live.pushName,
+                            time: moment(live.txTime).format('YYYY-MM-DD HH:mm:ss')
                         })
                     }
-                    this.pageSum = res.count % 8 === 0 ? Math.floor(res.count / 8) : Math.floor(res.count / 8) + 1;
+                    this.pageSum = res.pageSum;
                 }
             },
             /* 页码改变 */

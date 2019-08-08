@@ -5,6 +5,9 @@
             <div class="search-area">
                 <el-input v-model="searchContent" placeholder="请输入视频名" class="input-with-select">
                     <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+                    <i class="el-icon-close el-input__icon" slot="suffix" style="cursor: pointer"
+                       @click="clearSearch" v-show="searchContent">
+                    </i>
                 </el-input>
             </div>
         </div>
@@ -101,6 +104,7 @@
         getSignature,
         getVideo,
         addVideo,
+        checkVideo,
         updateVideo
     } from '../../../api/course-manage'
 
@@ -155,17 +159,17 @@
                     await getVideo({page, search});
                 if (res) {
                     let data = res.video;
-                    for (let i = 0; i < data.length; i++) {
+                    for(let video of data){
                         this.tableData.push({
-                            id: data[i]['videoID'], name: data[i]['videoName'],
-                            chapter: data[i]['CourseChapter.chapterName'],
-                            cptID: data[i]['CourseChapter.chapterID'],
-                            course: data[i]['CourseChapter.CourseInformation.courseName'],
-                            cseID: data[i]['CourseChapter.CourseInformation.courseID']
+                            id: video.videoID, name: video.videoName,
+                            chapter: video['CourseChapter.chapterName'],
+                            cptID: video['CourseChapter.chapterID'],
+                            course: video['CourseChapter.CourseInformation.courseName'],
+                            cseID: video['CourseChapter.CourseInformation.courseID'],
+                            ware: video.wareUrl
                         })
                     }
-                    this.pageSum = res.count % 8 === 0 ?
-                        Math.floor(res.count / 8) : Math.floor(res.count / 8) + 1;
+                    this.pageSum = res.pageSum;
                 }
             },
             /* 获取课程章节 */
@@ -214,9 +218,9 @@
             },
             /* 从服务端获取签名 */
             async getSignature() {
-                return await getSignature().then((response) => {
-                    return response.data.signature;
-                });
+                let res = await getSignature();
+                if (res) return res.signature;
+                else return null;
             },
             /* 选择文件 */
             chooseFile() {
@@ -247,22 +251,35 @@
                                 text: '正在处理视频，请稍等.....'
                             });
                             let fileId = doneResult.fileId.toString();
-                            let res = await addVideo({
-                                courseID: this.ruleForm.course, chapterID: this.ruleForm.chapter,
-                                videoName: this.ruleForm.name, fileId
-                            });
-                            if (res) {
-                                Loading.service({}).close();
-                                this.getVideo(1);
-                                this.dialogFormVisible = false;
-                                Message.success(res.msg);
-                                this.ruleForm = {
-                                    name: '', duration: 0, course: '', chapter: '',
+                            let count = 0;
+
+                            let timer = setInterval(async () => {
+                                let res = await checkVideo({fileId});
+                                count++;
+                                if (res.check === 1) {
+                                    clearInterval(timer);
+                                    let res = await addVideo({
+                                        courseID: this.ruleForm.course, chapterID: this.ruleForm.chapter,
+                                        videoName: this.ruleForm.name, fileId
+                                    });
+                                    if (res) {
+                                        Loading.service({}).close();
+                                        this.getVideo(1);
+                                        this.dialogFormVisible = false;
+                                        Message.success(res.msg);
+                                        this.ruleForm = {name: '', duration: 0, course: '', chapter: ''};
+                                        this.percent = 0;
+                                        this.upload = false;
+                                        this.file = null;
+                                    } else {
+                                        Loading.service({}).close();
+                                        this.dialogFormVisible = false;
+                                    }
+                                } else if (count === 20) {
+                                    clearInterval(timer);
+                                    Message.error('视频不存在');
                                 }
-                            } else {
-                                Loading.service({}).close();
-                                this.dialogFormVisible = false;
-                            }
+                            }, 1000);
                         });
                     } else return false;
                 });
@@ -318,14 +335,19 @@
                     let res = await deleteVideo({
                         courseID: val.cseID, videoID: val.id
                     });
-                    if (res.data.status === 1) {
-                        Message.success(res.data.msg);
+                    if (res.status === 1) {
+                        Message.success(res.msg);
                         this.getVideo(1);
-                    } else Message.warning(res.data.msg);
+                    } else Message.warning(res.msg);
                 }).catch(() => {
                     Message.info('已取消操作')
                 })
-            }
+            },
+            /* 清空搜索框 */
+            clearSearch() {
+                this.searchContent = '';
+                this.getVideo(1);
+            },
         },
         async created() {
             this.getVideo(1);

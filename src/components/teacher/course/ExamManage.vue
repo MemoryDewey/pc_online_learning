@@ -188,7 +188,7 @@
                             exam: data[i]['examID']
                         })
                     }
-                    this.pageSum = res.count % 8 === 0 ? Math.floor(res.count / 8) : Math.floor(res.count / 8) + 1;
+                    this.pageSum = res.pageSum;
                 }
             },
             /* 页码改变 */

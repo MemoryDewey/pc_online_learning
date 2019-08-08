@@ -6,7 +6,7 @@
                 <el-input v-model="searchContent" placeholder="请输入课程名" class="input-with-select">
                     <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
                     <i class="el-icon-close el-input__icon" slot="suffix" style="cursor: pointer"
-                       @click="clearSearch">
+                       @click="clearSearch" v-show="searchContent">
                     </i>
                 </el-input>
             </div>
@@ -294,8 +294,7 @@
                     await getCourseInfo({page, search});
                 if (res) {
                     let courses = res.course;
-                    this.pageSum = res.count % 8 === 0 ?
-                        Math.floor(res.count / 8) : Math.floor(res.count / 8) + 1;
+                    this.pageSum = res.pageSum;
                     for (let course of courses) {
                         this.tableData.push({
                             cid: course.courseID,

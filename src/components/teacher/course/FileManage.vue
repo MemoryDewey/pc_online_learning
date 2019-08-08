@@ -10,7 +10,7 @@
                     </el-select>
                     <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
                     <i class="el-icon-close el-input__icon" slot="suffix" style="cursor: pointer"
-                       @click="clearSearch">
+                       @click="clearSearch" v-show="searchContent">
                     </i>
                 </el-input>
             </div>
@@ -194,8 +194,7 @@
                     await getFile({page, type, content});
                 if (res) {
                     this.file = res.file;
-                    this.pageSum = res.count % 8 === 0 ?
-                        Math.floor(res.count / 8) : Math.floor(res.count / 8) + 1;
+                    this.pageSum = res.pageSum;
                 }
             },
             /* 页码改变 */

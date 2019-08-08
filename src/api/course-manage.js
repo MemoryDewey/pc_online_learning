@@ -25,10 +25,11 @@ export const getSignature = () => get('/teacher/course/video/signature');
 export const addVideo = data => post('/teacher/course/video/add', data);
 export const updateVideo = data => post('/teacher/course/video/update', data);
 export const deleteVideo = data => post('/teacher/course/video/delete', data);
+export const checkVideo = data => post('/teacher/course/video/check', data);
 
 export const getLive = params => get('/teacher/course/live', params);
-export const setLive = data => post('/teacher/course/live/set', data);
-export const getLiveCourse = () => get('/teacher/course/teacher/live');
+export const setLive = data => post('/teacher/course/live/add', data);
+export const getLiveCourse = () => get('/teacher/course/live-course');
 
 
 export const deleteWare = data => post('/teacher/course/ware/delete', data);

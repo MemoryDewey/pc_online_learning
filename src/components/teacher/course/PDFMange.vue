@@ -4,6 +4,9 @@
             <div class="search-area">
                 <el-input v-model="searchContent" placeholder="请输入视频名" class="input-with-select">
                     <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+                    <i class="el-icon-close el-input__icon" slot="suffix" style="cursor: pointer"
+                       @click="clearSearch" v-show="searchContent">
+                    </i>
                 </el-input>
             </div>
         </div>
@@ -47,7 +50,8 @@
             <!--对话框标题 E-->
             <div class="dialog-content">
                 <el-upload class="upload-demo" drag :data="uploadData" :before-upload="beforeUpload"
-                           action="/api/teacher/course/ware" :on-success="uploadSuccess" name="pdf">
+                           action="/api/teacher/course/ware" :on-success="uploadSuccess"
+                           name="pdf" :show-file-list="false">
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                     <div class="el-upload__tip" slot="tip">只能上传PDF文件，且不超过5MB</div>
@@ -91,18 +95,17 @@
                     await getVideo({page, search});
                 if (res) {
                     let data = res.video;
-                    for (let i = 0; i < data.length; i++) {
+                    for(let video of data){
                         this.tableData.push({
-                            id: data[i]['videoID'], name: data[i]['videoName'],
-                            chapter: data[i]['CourseChapter.chapterName'],
-                            cptID: data[i]['CourseChapter.chapterID'],
-                            course: data[i]['CourseChapter.CourseInformation.courseName'],
-                            cseID: data[i]['CourseChapter.CourseInformation.courseID'],
-                            ware: data[i]['wareUrl']
+                            id: video.videoID, name: video.videoName,
+                            chapter: video['CourseChapter.chapterName'],
+                            cptID: video['CourseChapter.chapterID'],
+                            course: video['CourseChapter.CourseInformation.courseName'],
+                            cseID: video['CourseChapter.CourseInformation.courseID'],
+                            ware: video.wareUrl
                         })
                     }
-                    this.pageSum = res.count % 8 === 0 ?
-                        Math.floor(res.count / 8) : Math.floor(res.count / 8) + 1;
+                    this.pageSum = res.pageSum;
                 }
             },
             /* 页码改变 */
@@ -167,7 +170,12 @@
                 } else {
                     Message.error(res.msg);
                 }
-            }
+            },
+            /* 清空搜索框 */
+            clearSearch() {
+                this.searchContent = '';
+                this.getVideo(1);
+            },
         },
         async created() {
             this.getVideo(1);

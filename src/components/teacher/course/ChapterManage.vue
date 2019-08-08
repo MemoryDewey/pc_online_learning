@@ -6,7 +6,7 @@
                 <el-input v-model="searchContent" placeholder="请输入章节名" class="input-with-select">
                     <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
                     <i class="el-icon-close el-input__icon" slot="suffix" style="cursor: pointer"
-                       @click="clearSearch">
+                       @click="clearSearch" v-show="searchContent">
                     </i>
                 </el-input>
             </div>
@@ -119,17 +119,15 @@
                     await getChapterInfo({page, search});
                 if (res) {
                     let data = res.chapter;
-                    this.pageSum = res.count % 8 === 0 ?
-                        Math.floor(res.count / 8) : Math.floor(res.count / 8) + 1;
-                    for (let i = 0; i < data.length; i++) {
+                    this.pageSum = res.pageSum;
+                    for(let chapter of data)
                         this.tableData.push({
-                            id: data[i]['chapterID'],
-                            name: data[i]['chapterName'],
-                            course: data[i]['CourseInformation.courseName'],
-                            cid: data[i]['CourseInformation.CourseDetail.courseID'],
-                            delete: data[i]['deletedAt']
+                            id: chapter['chapterID'],
+                            name: chapter['chapterName'],
+                            course: chapter['CourseInformation.courseName'],
+                            cid: chapter['CourseInformation.CourseDetail.courseID'],
+                            delete: chapter['deletedAt']
                         })
-                    }
                 }
             },
             /* 页码改变 */

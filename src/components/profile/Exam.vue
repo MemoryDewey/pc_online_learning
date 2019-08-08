@@ -69,8 +69,7 @@
             async getExam(page) {
                 let response = await getExam({page});
                 if (response) {
-                    this.count = response.count % 4 === 0 ? Math.floor(response.count / 4) :
-                        Math.floor(response.count / 4) + 1;
+                    this.count = response.pageSum;
                     this.courses = response.course;
                 }
             },
