@@ -2,6 +2,10 @@
     <div class="card-content manage-view">
         <div class="card-header">
             <div class="add-button" @click="addLive">开启直播</div>
+            <div class="search-area">
+                <el-link type="primary" @click="downloadHelp"
+                         :underline="false">如何进行直播<i class="el-icon-view el-icon--right"></i></el-link>
+            </div>
         </div>
         <div class="flex-list">
             <el-table :data="tableData" border style="width: 100%">
@@ -55,6 +59,7 @@
     import {Message} from 'element-ui'
     import moment from 'moment'
     import {getLive, setLive, getLiveCourse} from '../../../api/course-manage'
+    import {saveAs} from 'file-saver'
 
     export default {
         name: "LiveManage",
@@ -134,6 +139,10 @@
                 let res = await getLiveCourse();
                 this.course = res.course;
             },
+            /* 下载文件 */
+            downloadHelp(){
+                saveAs(`${process.env.VUE_APP_BASE_API}/teacher/course/live/help`);
+            }
         },
         async created() {
             this.getLive(1);
