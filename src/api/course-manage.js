@@ -43,6 +43,7 @@ export const recoverFile = data => post('/teacher/course/file/recover', data);
 
 export const getPaper = params => get('/teacher/course/paper', params);
 export const addPaper = data => post('/teacher/course/paper/add', data);
-export const deletePaper = data => post('/teacher/course/paper/delete', data);
-export const getCourseVideo = data => post('/teacher/course/video/all', data);
+export const updatePaper = data =>post('/teacher/course/paper/update',data);
+export const getCoursePaper = () => get('/teacher/course/course-paper');
+export const getCourseVideo = params => get('/teacher/course/video-course-paper', params);
 
