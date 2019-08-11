@@ -260,27 +260,21 @@
                 this.infoArr.push({'title': '项目ID', 'value': item.projectID});
                 this.infoArr.push({'title': '成员类型', 'value': this.myTotalOption.labelMemberType[item.memberType]});
                 this.infoArr.push({'title': '冻结金额', 'value': item.frozenBalance});
-                this.infoArr.push({'title': '是否参与评分', 'value': item.boolRemark == 0 ? '否' : '是'});
+                this.infoArr.push({'title': '是否参与评分', 'value': item.boolRemark === 0 ? '否' : '是'});
                 this.infoTableWidth = 0;
                 this.infoTable = [];
             },
             async getProject(page) {
                 let response = await getProjectAuth({page});
-                let responseCount = await getProjectCountAuth();
-                if (response) {
-                    this.projectCount = responseCount.count % 10 === 0 ?
-                        Math.floor(responseCount.count / 10) : Math.floor(responseCount.count / 10) + 1;
-                    this.projects = response.sqlres;
-                }
+                if (response) this.projects = response.sqlres;
+                response = await getProjectCountAuth();
+                if(response)this.projectCount = response.pageSum;
             },
             async getAttendApply(page) {
                 let response = await getApplyRecord({page});
-                let responseCount = await getApplyCountRecord();
-                if (response) {
-                    this.projectCount = responseCount.count % 10 === 0 ?
-                        Math.floor(responseCount.count / 10) : Math.floor(responseCount.count / 10) + 1;
-                    this.applyRecords = response.sqlres;
-                }
+                if (response) this.applyRecords = response.sqlres;
+                response = await getApplyCountRecord();
+                this.projectCount = response.pageSum;
             },
 
             //打开互评栏
@@ -313,10 +307,10 @@
             // 提交得分
             submitScore: async function () {
                 try {
-                    for (var index in this.scoreForm.memberList) {
-                        this.scoreForm.memberList[index].designScore = this.scoreForm.memberList[index].memberDesignScore
-                        this.scoreForm.memberList[index].codeScore = this.scoreForm.memberList[index].memberCodeScore
-                        this.scoreForm.memberList[index].attitudeScore = this.scoreForm.memberList[index].memberAttitudeScore
+                    for (let index of this.scoreForm.memberList) {
+                        index.designScore = index.memberDesignScore;
+                        index.codeScore = index.memberCodeScore;
+                        index.attitudeScore = index.memberAttitudeScore
                     }
                     let res = await submitProjectScore({
                         projectID: this.scoreForm.projectID,

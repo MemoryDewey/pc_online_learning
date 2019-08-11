@@ -134,12 +134,9 @@
             //获取课程信息
             async getPayment(page) {
                 let response = await getPaymentRecord({page});
-                let responseCount = await getPaymentCount();
-                if (response) {
-                    this.recordCount = responseCount.count % 10 === 0 ?
-                        Math.floor(responseCount.count / 10) : Math.floor(responseCount.count / 10) + 1;
-                    this.paymentRecords = response.sqlres;
-                }
+                if (response) this.paymentRecords = response.sqlres;
+                response = await getPaymentCount();
+                if(response)this.recordCount = response.pageSum;
             },
 
             //进行支付

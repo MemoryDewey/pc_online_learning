@@ -189,10 +189,7 @@
                     filter: this.$route.query.filter,
                     search: this.$route.params.search
                 }).then(res => {
-                    if (res) {
-                        let count = res.count;
-                        this.pageCount = count % 10 === 0 ? Math.floor(count / 10) : Math.floor(count / 10) + 1;
-                    }
+                    if (res) this.pageCount = res.count;
                 }).catch(err => {
                     console.log(err);
                 })

@@ -116,6 +116,7 @@
     import Footer from '../../components/common/Footer'
     import Project from "../teacher/Project";
     import {getIndexCourse} from "../../api/course";
+    import {getIndexProject} from "../../api/project";
 
     export default {
         name: "index",
@@ -152,8 +153,8 @@
                 let course = await getIndexCourse();
                 this.freeCourse = course.freeCourse;
                 this.chargeCourse = course.chargeCourse;
-                let project = await this.$axios.get('/api/project/query/getindexproject');
-                this.project = project.data.sqlres;
+                let res = await getIndexProject();
+                this.project = res.sqlres;
             } catch (e) {
                 console.log(e);
             }
