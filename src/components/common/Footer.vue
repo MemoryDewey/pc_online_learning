@@ -21,6 +21,7 @@
         box-sizing: border-box;
         text-align: center;
         position: absolute;
+        min-width: 1280px;
         width: 100%;
         left: 0;
         background: #444547;
