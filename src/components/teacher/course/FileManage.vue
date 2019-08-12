@@ -182,7 +182,8 @@
                         {required: true, message: '请选择章节', trigger: 'change'}
                     ]
                 },
-                fileChoose: false
+                fileChoose: false,
+                preDefined: {fileID: '', fileType: '', fileSize: '', deletedAt: '', chapterName: ''}
             }
         },
         methods: {

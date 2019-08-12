@@ -113,6 +113,7 @@
                 searchContent: null,
                 info: [],
                 pageSum: 0,
+                preDefined: {joinTime: '', score: ''},
                 currentPage: 1,
                 dialogFormVisible: false,
                 dialogFormInfo: {
