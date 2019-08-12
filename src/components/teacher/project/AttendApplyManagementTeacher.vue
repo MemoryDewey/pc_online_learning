@@ -188,7 +188,7 @@
                     try {
                         let response = await agreeApply({applyID});
                         if (response) {
-                            Message.success(response.msg);
+                            Message.success("操作成功!");
                             this.getAttendApply(1);
                         }
                     } catch (error) {

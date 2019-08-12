@@ -63,7 +63,7 @@
                                 </div>
                             </div>
                             <div class="study-item" v-for="project in projects" :key="project['projectID']"
-                                 @click="gotoCourseInfo(`/project/${project['projectID']}/information`)">
+                                 @click="gotoProjectInfo(`/project/${project['projectID']}/information`)">
                                 <!--图片-->
                                 <div class="left">
                                     <div class="c-img">
@@ -162,7 +162,7 @@
             handleDialogClose() {
                 this.infoDialogVisible = false;
             },
-            gotoCourseInfo(path) {
+            gotoProjectInfo(path) {
                 this.$router.push(path);
             },
             //生成URL模板，当参数改变时自动生成对应的查询URL
@@ -207,13 +207,18 @@
             /* 改变URL */
             async '$route.query'(to) {
                 this.getPageCount();
-                if (this.$route.params.search !== undefined)
+                if (this.$route.params.search !== undefined) {
                     getProjectCount({search: this.$route.params.search}).then((response) => {
                         if (response) this.searchCount = response.count;
                     }).catch((err) => {
                         console.log(err);
                     });
-                getProject(this.$route.query).then((response) => {
+                    getProject({search: this.$route.params.search}).then((response) => {
+                        if (response) this.projects = response.sqlres;
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+                } else getProject(this.$route.query).then((response) => {
                     if (response) this.projects = response.sqlres;
                 }).catch((err) => {
                     console.log(err);

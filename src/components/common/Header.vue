@@ -225,8 +225,8 @@
             exit() {
                 logout().then(res => {
                     this.$store.commit('exit');
+                    window.location.reload();
                 });
-                window.location.reload();
             },
             search() {
                 let url = this.page === 'course' ? `/course/list/${this.searchContent}` : `/project/list/${this.searchContent}`;

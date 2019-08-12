@@ -32,7 +32,12 @@ library.add(
     faExclamationCircle
 );
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-Vue.use(VueLazyLoad);
+Vue.use(VueLazyLoad, {lazyComponent: true});
+Vue.use({
+    install() {
+        Vue.prototype.destroy = Vue.prototype.$destroy;
+    },
+});
 Vue.use(ELEMENT);
 
 Vue.prototype.$axios = axios;

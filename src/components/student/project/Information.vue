@@ -6,7 +6,14 @@
                     <!--课程详情 S-->
                     <div class="study-img-text">
                         <div class="study-img-left">
-                            <el-image :src="project.projectPic"></el-image>
+                            <!--<el-image :src="project.projectPic" lazy="true">
+                                <div slot="error" class="image-slot">
+                                    <i class="el-icon-picture-outline"></i>
+                                </div>
+                            </el-image>-->
+                            <lazy-component>
+                                <img :src="project.projectPic" alt="">
+                            </lazy-component>
                         </div>
                         <div class="study-text-right">
                             <h1 class="text-title">{{project.projectName}}</h1>
@@ -159,7 +166,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="main-aside">
+                    <!--项目安排-->
+                    <div v-if="false" class="main-aside">
                         <div class="aside-blocks">
                             <div class="exam-schedule">
                                 <div class="exam-title">项目安排</div>

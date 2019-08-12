@@ -70,16 +70,16 @@
                                         </router-link>
                                     </li>
                                     <li class="sort-item">
-                                        <router-link tag="i"
-                                                     :class="{up:true,active:$route.query.sort==='3'}"
+                                        <router-link tag="i" class="up"
+                                                     :class="{active:$route.query.sort==='3'}"
                                                      :to="`${sortUrl}sort=3`">
                                         </router-link>
                                         <router-link :class="{cur:$route.query.sort==='3' || $route.query.sort==='4'}"
                                                      :to="$route.query.sort==='3'?`${sortUrl}sort=4`:`${sortUrl}sort=3`">
                                             &emsp;价格
                                         </router-link>
-                                        <router-link tag="i"
-                                                     :class="{down:true,active:$route.query.sort==='4'}"
+                                        <router-link tag="i" class="down"
+                                                     :class="{active:$route.query.sort==='4'}"
                                                      :to="`${sortUrl}sort=4`">
                                         </router-link>
                                     </li>
@@ -100,7 +100,9 @@
                                 <!--图片-->
                                 <div class="left">
                                     <div class="c-img">
-                                        <img v-lazy="`${course.courseImage}`" alt="">
+                                        <lazy-component>
+                                            <img :src="`${course.courseImage}`" alt="">
+                                        </lazy-component>
                                     </div>
                                 </div>
                                 <!--内容-->
@@ -109,7 +111,8 @@
                                         <!--标题-->
                                         <div class="title">
                                             <a><span class="text">{{course['courseName']}}</span></a>
-                                            <a :class="{price:true, free:course.price === 0, charge:course.price !== 0}">
+                                            <a class="price"
+                                               :class="{free:course.price === 0, charge:course.price !== 0}">
                                                 {{course.price === 0 ? '免费' : `${course.price} BST`}}</a>
                                         </div>
                                         <!--授课老师/机构-->
@@ -147,7 +150,9 @@
                             :key="recommend.courseID"
                             @click="gotoCourseInfo(`/course/${recommend.courseID}/information`)">
                             <a class="item-img-link">
-                                <img v-lazy="`${recommend.courseImage}`" alt="">
+                                <lazy-component>
+                                    <img :src="`${recommend.courseImage}`" alt="">
+                                </lazy-component>
                             </a>
                             <h4 class="item-title">
                                 <a class="item-title-link">{{recommend.courseName}}</a>
@@ -173,7 +178,7 @@
         name: "List",
         data() {
             return {
-                recommendCourse: '',
+                recommendCourse: {courseImage: ''},
                 //分页URL
                 pageUrl: '',
                 //排序URL
@@ -226,8 +231,7 @@
             },
             async searchCourseCount() {
                 if (this.$route.params.search !== undefined) {
-                    let response = await getListCount({search: this.$route.params.search});
-                    if (response) this.searchCount = response.count;
+                    this.searchCount = this.courses.length
                 }
             }
         },
@@ -242,9 +246,10 @@
                 this.changeUrl(to);
             },
             async '$route.params'(to) {
-                this.searchCourseCount();
                 let res = await getList(this.$route.params);
+                this.courses = [];
                 if (res) this.courses = res.course;
+                this.searchCourseCount();
                 this.changeUrl(to);
             }
         },

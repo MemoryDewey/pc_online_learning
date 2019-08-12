@@ -2,7 +2,7 @@ import {get, post} from '../utils/request';
 
 export const getProjectAuth = params => get('/project/query/getProjectAuth', params);
 export const getProjectCountAuth = () => post('/project/query/getProjectCountAuth');
-export const getapplyRecord = params => get('/project/query/getApplyRecord', params);
+export const getApplyRecord = params => get('/project/query/getApplyRecord', params);
 export const getApplyCountRecord = () => post('/project/query/getApplyRecordCount');
 export const getProjectMember = params => get('/project/query/getProjectMember', params);
 export const deleteProjectMember = params => get('/project/projectManagement/deleteProjectMember', params);
@@ -23,7 +23,7 @@ export const getIndexProject = () => get('/project/query/getIndexProject');
 export const getPaymentRecord = params => get('/project/query/getPaymentRecord', params);
 export const getPaymentCount = () => post('/project/query/getPaymentCount');
 
-export const attendProject = data => post('/project/applyRecord/creatApply', data);
+export const attendProject = data => post('/project/applyRecord/createApply', data);
 export const getProjectDetail = params => get('/project/query/projectDetail', params);
 
 export const getProjectCount = data => post('/project/query/getProjectCount', data);
