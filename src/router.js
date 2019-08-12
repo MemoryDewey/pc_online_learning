@@ -1,6 +1,5 @@
 import Vue from 'vue'
 //import VueRouter from 'vue-router'
-import axios from 'axios'
 
 const Index = () => import('./views/student/Index');
 
@@ -46,6 +45,8 @@ const PCAM = () => import( './components/teacher/project/CreateApplyManagementTe
 const PP = () => import( './components/teacher/project/ProjectTeacher');
 const PPM = () => import( './components/teacher/project/ProjectMemberTeacher');
 
+import {checkLogin} from './api/passport'
+
 
 Vue.use(VueRouter);
 
@@ -61,8 +62,8 @@ export default new VueRouter({
                 {
                     path: ':courseID', name: 'CourseVideo', component: CourseVideo, meta: {title: '课程视频'},
                     beforeEnter(to, from, next) {
-                        axios.get('/api/passport/check-login').then((res) => {
-                            if (res.data.status === 1) next();
+                        checkLogin().then((res) => {
+                            if (res.status === 1) next();
                             else next('/passport/login');
                         }).catch(() => {
                             next('/passport/login');
@@ -78,8 +79,8 @@ export default new VueRouter({
                 }
             ],
             beforeEnter(to, from, next) {
-                axios.get('/api/passport/check-login').then((res) => {
-                    if (res.data.level === 1) next('/teacher/course/student');
+                checkLogin().then((res) => {
+                    if (res.level === 1) next('/teacher/course/student');
                     else next();
                 }).catch(() => {
                     next();
@@ -100,8 +101,8 @@ export default new VueRouter({
                 }
             ],
             beforeEnter(to, from, next) {
-                axios.get('/api/passport/check-login').then((res) => {
-                    if (res.data.level === 1) next('/teacher/course/student');
+                checkLogin().then((res) => {
+                    if (res.level === 1) next('/teacher/course/student');
                     else next();
                 }).catch(() => {
                     next();
@@ -125,8 +126,8 @@ export default new VueRouter({
                 {path: 'exam', name: 'CEM', component: CEM, meta: {title: '试卷管理'}}
             ],
             beforeEnter(to, from, next) {
-                axios.get('/api/passport/check-login').then((res) => {
-                    if (res.data.level === 1) next();
+                checkLogin().then((res) => {
+                    if (res.level === 1) next();
                     else next('/404');
                 }).catch(() => {
                     next('/404');
@@ -143,8 +144,8 @@ export default new VueRouter({
                 {path: 'projectmember', name: 'PPM', component: PPM, meta: {title: '项目成员管理'}},
             ],
             beforeEnter(to, from, next) {
-                axios.get('/api/passport/check-login').then((res) => {
-                    if (res.data.level === 1) next();
+                checkLogin().then((res) => {
+                    if (res.level === 1) next();
                     else next('/404');
                 }).catch(() => {
                     next('/404');
@@ -165,8 +166,8 @@ export default new VueRouter({
         {
             path: '/', name: 'Index', component: Index, meta: {title: "区块链在线学习平台"},
             beforeEnter(to, from, next) {
-                axios.get('/api/passport/check-login').then((res) => {
-                    if (res.data.level === 1) next('/teacher/course/student');
+                checkLogin().then((res) => {
+                    if (res.level === 1) next('/teacher/course/student');
                     else next();
                 }).catch(() => {
                     next();
@@ -178,8 +179,8 @@ export default new VueRouter({
         {
             path: '/profile', name: 'Profile', component: Profile,
             beforeEnter(to, from, next) {
-                axios.get('/api/passport/check-login').then((res) => {
-                    if (res.data.status === 1) next();
+                checkLogin().then((res) => {
+                    if (res.status === 1) next();
                     else next('/passport/login');
                 }).catch(() => {
                     next('/passport/login');
