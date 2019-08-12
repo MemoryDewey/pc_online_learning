@@ -6,14 +6,11 @@
                     <!--课程详情 S-->
                     <div class="study-img-text">
                         <div class="study-img-left">
-                            <!--<el-image :src="project.projectPic" lazy="true">
+                            <el-image :src="project.projectPic">
                                 <div slot="error" class="image-slot">
-                                    <i class="el-icon-picture-outline"></i>
+                                    <img src="../../../assets/image/load-error.jpg" alt="">
                                 </div>
-                            </el-image>-->
-                            <lazy-component>
-                                <img :src="project.projectPic" alt="">
-                            </lazy-component>
+                            </el-image>
                         </div>
                         <div class="study-text-right">
                             <h1 class="text-title">{{project.projectName}}</h1>
@@ -256,7 +253,6 @@
                 this.tabsInit();
                 this.tabsTitle[val] = true;
             },
-
             // InformationDialog
             handleDialogClose() {
                 this.infoDialogVisible = false;
@@ -313,9 +309,9 @@
                     ];
                     this.infoTable = [];
                     this.infoTableWidth = 2;
-                    this.infoTable.push("成员ID")
-                    this.infoTable.push("冻结资产")
-                    for (var index in content.memberID) {
+                    this.infoTable.push("成员ID");
+                    this.infoTable.push("冻结资产");
+                    for (let index in content.memberID) {
                         this.infoTable.push(content.memberID[index]);
                         this.infoTable.push(content.FrozenBalanceList[index])
                     }
@@ -365,14 +361,14 @@
                     ]
                     this.infoTable = [];
                     this.infoTableWidth = 4;
-                    this.infoTable.push("成员ID")
-                    this.infoTable.push("态度评分")
-                    this.infoTable.push("代码评分")
-                    this.infoTable.push("设计评分")
-                    for (var index in content.scoreMemberID) {
-                        this.infoTable.push(content.scoreMemberID[index])
-                        this.infoTable.push(content.attitudeScore[index].toString())
-                        this.infoTable.push(content.codeScore[index].toString())
+                    this.infoTable.push("成员ID");
+                    this.infoTable.push("态度评分");
+                    this.infoTable.push("代码评分");
+                    this.infoTable.push("设计评分");
+                    for (const index in content.scoreMemberID) {
+                        this.infoTable.push(content.scoreMemberID[index]);
+                        this.infoTable.push(content.attitudeScore[index].toString());
+                        this.infoTable.push(content.codeScore[index].toString());
                         this.infoTable.push(content.designScore[index].toString())
                     }
                     this.infoDialogVisible = true;
@@ -385,7 +381,7 @@
                 this.infoArr = [
                     {'title': '奖惩原因', 'value': val.awardReason},
                     {'title': '奖惩时间', 'value': val.awardTime},
-                ]
+                ];
                 this.infoTableWidth = 0;
             },
             async checkRewardOnChain(rewardItem) {
@@ -397,9 +393,9 @@
                     const receipt = await this.$store.state.web3.web3Instance().eth.getTransactionReceipt(rewardItem.txHash);
                     console.log('receipt', receipt);
                     // console.log(receipt.logs[rewardItem.logIndex]);
-                    console.log(getFormatFromAbi("LogRewardMessage", eprojectABI))
+                    console.log(getFormatFromAbi("LogRewardMessage", eprojectABI));
 
-                    var content = this.$store.state.web3.web3Instance().eth.abi.decodeLog(
+                    let content = this.$store.state.web3.web3Instance().eth.abi.decodeLog(
                         getFormatFromAbi("LogRewardMessage", eprojectABI),
                         receipt.logs[rewardItem.logIndex].data,
                         receipt.logs[rewardItem.logIndex].topics.slice(1));
@@ -440,7 +436,7 @@
                             "title": "奖惩记录ID",
                             "value": content.rewardID
                         },
-                    ]
+                    ];
 
                     this.infoTableWidth = 0;
                     this.infoDialogVisible = true;
@@ -450,26 +446,26 @@
             },
             async attendProject() {
                 try {
-                    var res = await attendProject({projectID: this.$route.params.projectID});
+                    let res = await attendProject({projectID: this.$route.params.projectID});
                     if (res) Message.success('操作成功');
                 } catch (error) {
                     console.log(error);
                     Message.error('通信失败');
                 }
             },
-        },
-        created() {
-            this.myTotalOption = TotalOption;
-            getProjectDetail({projectID: this.$route.params.projectID}).then((response) => {
+            async getDetail(){
+                let response = await getProjectDetail({projectID: this.$route.params.projectID});
                 if (response) {
                     this.project = response.sqlres;
                     this.memberInfo = response.sqlres.ProjectMembers;
                     this.rewardInfo = response.sqlres.ProjectRewards;
                     document.title = this.project.projectName;
                 }
-            }).catch((err) => {
-                console.log(err);
-            });
+            }
+        },
+        created() {
+            this.getDetail();
+            this.myTotalOption = TotalOption;
         },
 
     }

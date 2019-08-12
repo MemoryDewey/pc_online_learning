@@ -36,7 +36,7 @@
                         <div class="flex-row content">
                             <div class="flex-cell first cover">
                                 <router-link :to="`/project/${project['projectID']}/information`">
-                                    <el-image :src="project['projectPic']"></el-image>
+                                    <img v-lazy="project['projectPic']" alt=""/>
                                     <div class="title">{{project['projectName']}}</div>
                                 </router-link>
                             </div>
@@ -96,7 +96,7 @@
                         <div class="flex-row content">
                             <div class="flex-cell first cover">
                                 <router-link :to="`/project/${apply.ProjectInformation['projectID']}/information`">
-                                    <el-image :src="apply.ProjectInformation['projectPic']"></el-image>
+                                    <img v-lazy="apply.ProjectInformation['projectPic']" alt=""/>
                                     <div class="title">{{apply.ProjectInformation['projectName']}}</div>
                                 </router-link>
                             </div>

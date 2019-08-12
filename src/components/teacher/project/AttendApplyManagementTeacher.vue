@@ -31,23 +31,23 @@
             <!--课程不存在 E-->
             <!--课程存在 S-->
             <div class="flex-list-item" v-else v-for="apply in applyRecords" :key="apply['applyID']">
-
                 <div class="flex-row content">
                     <div class="flex-cell first cover">
                         <!-- 注意ApplyInProject -->
                         <router-link :to="`/project/${apply.ApplyInProject['projectID']}/information`">
+                            <img v-lazy="apply.ApplyInProject['projectPic']" alt="">
                             <div class="title">{{apply.ApplyInProject['projectName']}}</div>
                         </router-link>
                     </div>
                     <div class="flex-cell state">{{apply.ApplyerInfo['nickname']}}</div>
                     <div class="flex-cell state">{{myTotalOption.labelProjectApplyStatue[apply.applyStatue]}}</div>
                     <div class="flex-cell operating">
-                        <a :class="{'btn-operate':true,mark:true,'btn-operate-disabled':apply.applyStatue!=='WAITING'}"
-                           @click="agreeApply(apply['applyID'])">
+                        <a class="btn-operate mark" :class="{'btn-operate-disabled':apply.applyStatue!=='WAITING'}"
+                           @click="agreeApply(apply['applyID'])" style="max-height: 27px">
                             同意请求
                         </a>
-                        <a :class="{'btn-operate':true,delete:true,'btn-operate-disabled':apply.applyStatue!=='WAITING'}"
-                           @click="rejectApply(apply['applyID'])">
+                        <a class="btn-operate delete" :class="{'btn-operate-disabled':apply.applyStatue!=='WAITING'}"
+                           @click="rejectApply(apply['applyID'])" style="max-height: 27px">
                             拒绝请求
                         </a>
                     </div>

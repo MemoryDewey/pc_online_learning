@@ -36,7 +36,7 @@
                         </div>
                         <div class="flex-row content">
                             <div class="flex-cell first cover">
-                                <el-image :src="genImage(payment)"></el-image>
+                                <img v-lazy="genImage(payment)" alt=""/>
                                 <div class="title">项目编号/支付信息：{{genTitle(payment)}}<br/>支付ID号：{{payment['paymentID']}}
                                 </div>
                             </div>
@@ -114,15 +114,9 @@
                 }
                 return titleName
             },
-            genImage(item) {
-                let src = "";
-                if (null != item.AttendApply) src = item.AttendApply.projectPic;
-                if (null != item.courseInfo) src = item.courseInfo.courseImage;
-                return src;
-            },
             paymentInfo(item) {
                 this.infoDialogVisible = true;
-                this.infoArr = []
+                this.infoArr = [];
                 this.infoArr.push({'title': '支付人用户ID', 'value': item.PaymentSender.userID});
                 this.infoArr.push({'title': '关联事件', 'value': item.relateEvent});
                 this.infoArr.push({'title': '投资项目编号', 'value': item.objectID != null ? item.objectID : '无'});
@@ -136,7 +130,7 @@
                 let response = await getPaymentRecord({page});
                 if (response) this.paymentRecords = response.sqlres;
                 response = await getPaymentCount();
-                if(response)this.recordCount = response.pageSum;
+                if (response) this.recordCount = response.pageSum;
             },
 
             //进行支付
@@ -181,6 +175,18 @@
         },
         components: {
             "information-dialog": InformationDialog,
+        },
+        computed: {
+            genImage() {
+                return (item) => {
+                    let src = "";
+                    console.log(item);
+                    if (null != item.AttendApply) src = item.AttendApply.projectPic;
+                    if (null != item.CreateApply) src = item.CreateApply.projectPic;
+                    if (null != item.courseInfo) src = item.courseInfo.courseImage;
+                    return src;
+                }
+            }
         },
         created() {
             this.myTotalOption = TotalOption;

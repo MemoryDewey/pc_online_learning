@@ -32,7 +32,10 @@ library.add(
     faExclamationCircle
 );
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-Vue.use(VueLazyLoad, {lazyComponent: true});
+Vue.use(VueLazyLoad, {
+    lazyComponent: true,
+    error: require('./assets/image/load-error.jpg')
+});
 Vue.use({
     install() {
         Vue.prototype.destroy = Vue.prototype.$destroy;

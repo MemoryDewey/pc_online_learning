@@ -34,9 +34,6 @@
             <!--课程不存在 E-->
             <!--课程存在 S-->
             <div class="flex-list-item" v-else v-for="apply in applyRecords" :key="apply['applyID']">
-                <div class="flex-row head">
-                    <!-- <div class="time">{{project.ProjectMembers[0]['joinTime']}}</div> -->
-                </div>
                 <div class="flex-row content">
                     <div class="flex-cell first cover">
                         <router-link :to="``">
@@ -162,7 +159,7 @@
                 this.$router.replace({path: '/profile/wallet'});
             },
             openCreateForm() {
-                for (var key in this.createForm) {
+                for (const key in this.createForm) {
                     this.createForm[key] = "";
                 }
                 this.createFormVisible = true;
@@ -179,8 +176,8 @@
             },
             //获取课程信息
             async getCreateApply(page) {
-                var dict = {page}
-                if (this.searchColumn != "" && this.serachContent != "") {
+                const dict = {page};
+                if (this.searchColumn !== "" && this.serachContent !== "") {
                     dict[this.searchColumn] = this.searchContent
                 }
                 let response = await getCreateRecord({dict});
@@ -195,26 +192,26 @@
             async openDialog(projectID) {
                 try {
                     let res = await getProjectMember({projectID});
-                    if (res.status == 0) throw "Query Failed!"
+                    if (res.status === 0) throw "Query Failed!";
                     this.scoreForm.memberList = [];
                     var ind = 0;
                     for (var index in res.sqlres) {
                         // console.log(item)
                         var item = res.sqlres[index];
-                        if (item.memberType == 1) {
-                            ;
+                        if (item.memberType === 1) {
+
                         } else {
-                            item.userID = item.memberID
-                            item.memberDesignScore = 0
-                            item.memberCodeScore = 0
-                            item.memberAttitudeScore = 0
-                            item.memberScore = 0
+                            item.userID = item.memberID;
+                            item.memberDesignScore = 0;
+                            item.memberCodeScore = 0;
+                            item.memberAttitudeScore = 0;
+                            item.memberScore = 0;
                             this.scoreForm.memberList.push(
                                 item
                             );
                         }
                     }
-                    console.log(this.scoreForm.memberList)
+                    console.log(this.scoreForm.memberList);
                     this.scoreForm.projectID = projectID;
                     this.scoreFormVisible = true;
                 } catch (error) {
@@ -286,10 +283,10 @@
             },
             // SearchBarMid
             handleSearchInfo(dict) {
-                this.searchColumn = dict.searchColumn
-                this.searchContent = dict.searchContent
-                if (dict.searchInstantly == true) {
-                    this.getCreateApply(1)
+                this.searchColumn = dict.searchColumn;
+                this.searchContent = dict.searchContent;
+                if (dict.searchInstantly === true) {
+                    this.getCreateApply(1);
                     this.currentPage = 1
                 }
             },

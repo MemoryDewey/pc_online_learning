@@ -54,7 +54,7 @@
                                 <ul>
                                     <li>
                                         <router-link :class="{cur:$route.query.sort===undefined}" :to="`${sortUrl}`">
-                                            综合排序
+                                            默认排序
                                         </router-link>
                                     </li>
                                     <li>
@@ -100,9 +100,7 @@
                                 <!--图片-->
                                 <div class="left">
                                     <div class="c-img">
-                                        <lazy-component>
-                                            <img :src="`${course.courseImage}`" alt="">
-                                        </lazy-component>
+                                        <img v-lazy="`${course.courseImage}`" alt="">
                                     </div>
                                 </div>
                                 <!--内容-->
@@ -150,9 +148,7 @@
                             :key="recommend.courseID"
                             @click="gotoCourseInfo(`/course/${recommend.courseID}/information`)">
                             <a class="item-img-link">
-                                <lazy-component>
-                                    <img :src="`${recommend.courseImage}`" alt="">
-                                </lazy-component>
+                                <img v-lazy="`${recommend.courseImage}`" alt="">
                             </a>
                             <h4 class="item-title">
                                 <a class="item-title-link">{{recommend.courseName}}</a>

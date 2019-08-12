@@ -21,7 +21,7 @@
                                 <ul>
                                     <li>
                                         <router-link :class="{cur:$route.query.sort===undefined}" :to="`${sortUrl}`">
-                                            综合排序
+                                            默认排序
                                         </router-link>
                                     </li>
                                     <li>
@@ -37,16 +37,16 @@
                                         </router-link>
                                     </li>
                                     <li class="sort-item">
-                                        <router-link tag="i"
-                                                     :class="{up:true,active:$route.query.sort==='3'}"
+                                        <router-link tag="i" class="up"
+                                                     :class="{active:$route.query.sort==='3'}"
                                                      :to="`${sortUrl}sort=3`">
                                         </router-link>
                                         <router-link :class="{cur:$route.query.sort==='3' || $route.query.sort==='4'}"
                                                      :to="$route.query.sort==='3'?`${sortUrl}sort=4`:`${sortUrl}sort=3`">
                                             &emsp;价格
                                         </router-link>
-                                        <router-link tag="i"
-                                                     :class="{down:true,active:$route.query.sort==='4'}"
+                                        <router-link tag="i" class="down"
+                                                     :class="{active:$route.query.sort==='4'}"
                                                      :to="`${sortUrl}sort=4`">
                                         </router-link>
                                     </li>
@@ -67,11 +67,7 @@
                                 <!--图片-->
                                 <div class="left">
                                     <div class="c-img">
-                                        <el-image :src="project.projectPic">
-                                            <div slot="error" style="font-size: 60px;margin-left: 100px">
-                                                <i class="el-icon-picture-outline"></i>
-                                            </div>
-                                        </el-image>
+                                        <img v-lazy="project.projectPic" alt="">
                                     </div>
                                 </div>
                                 <!--内容-->
@@ -80,7 +76,7 @@
                                         <!--标题-->
                                         <div class="title">
                                             <a><span class="text">{{project['projectName']}}</span></a>
-                                            <a :class="{price:true, free:false, charge:true}">
+                                            <a class="price charge">
                                                 {{project['projectFee'] === 0 ? '免费' : `${project['projectFee']}
                                                 BST`}}</a>
                                         </div>
@@ -163,7 +159,8 @@
                 this.infoDialogVisible = false;
             },
             gotoProjectInfo(path) {
-                this.$router.push(path);
+                let url = this.$router.resolve({path});
+                window.open(url.href, "_blank");
             },
             //生成URL模板，当参数改变时自动生成对应的查询URL
             changeUrl(val) {

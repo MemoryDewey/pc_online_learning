@@ -31,24 +31,17 @@
             <!--课程不存在 E-->
             <!--课程存在 S-->
             <div class="flex-list-item" v-else v-for="project in projects" :key="project['projectID']">
-                <div class="flex-row head">
-                    <div class="time">{{project.ProjectCreatorMemberInfo['joinTime']}}</div>
-                </div>
                 <div class="flex-row content">
                     <div class="flex-cell first cover">
-                        <router-link :to="`/project/${project['projectID']}/information`">
-                            <div class="title">{{project['projectName']}}</div>
-                        </router-link>
+                        <img v-lazy="project['projectPic']" alt="">
+                        <div class="title">{{project['projectName']}}</div>
                     </div>
                     <div class="flex-cell price">{{project.ProjectCreatorMemberInfo['frozenBalance']}}</div>
                     <div class="flex-cell state">
                         项目状态:{{myTotalOption.labelProjectStatus[project.projectStatue]}}<br/>互评阶段:{{myTotalOption.labelRemarkPhase[project.remarkPhase]}}
                     </div>
                     <div class="flex-cell operating">
-                        <a class="btn-operate mark"
-                           @click="openDialog(project)">
-                            成员管理
-                        </a>
+                        <el-button type="primary" @click="openDialog(project)"> 成员管理</el-button>
                     </div>
                 </div>
             </div>

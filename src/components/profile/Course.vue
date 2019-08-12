@@ -34,7 +34,7 @@
             <div class="flex-row content">
                 <div class="flex-cell first cover">
                     <router-link :to="`/course/${course['courseID']}`">
-                        <img :src="course.image" alt="">
+                        <img v-lazy="course.image" alt="">
                         <div class="title">{{course['courseName']}}</div>
                     </router-link>
                 </div>
@@ -76,7 +76,7 @@
                     <div class="label-rate">
                         总评
                     </div>
-                    <el-rate v-model="dialogFormInfo.rateValue" show-text
+                    <el-rate v-model="dialogFormInfo.rateValue" show-text=""
                              :texts="['非常失望，差评', '比较失望，勉强中评',
                          '一般，中评', '还不错，好评', '点赞，五星好评']">
                     </el-rate>

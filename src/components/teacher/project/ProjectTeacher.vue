@@ -35,7 +35,7 @@
                 <div class="flex-row content">
                     <div class="flex-cell first cover">
                         <a>
-                            <img :src="project['projectPic']" alt="">
+                            <img v-lazy="project['projectPic']" alt="">
                             <div class="title">{{project['projectName']}}</div>
                         </a>
                     </div>

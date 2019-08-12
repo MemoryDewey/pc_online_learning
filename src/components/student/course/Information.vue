@@ -9,7 +9,7 @@
                     <!--课程详情 S-->
                     <div class="study-img-text">
                         <div class="study-img-left">
-                            <img :src="`${course.info['courseImage']}`" alt="">
+                            <img v-lazy="`${course.info['courseImage']}`" alt="">
                         </div>
                         <div class="study-text-right">
                             <h1 class="text-title">{{bread.courseName}}</h1>
@@ -185,7 +185,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </template>
