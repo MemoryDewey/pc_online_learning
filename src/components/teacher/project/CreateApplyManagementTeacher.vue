@@ -194,10 +194,10 @@
                     let res = await getProjectMember({projectID});
                     if (res.status === 0) throw "Query Failed!";
                     this.scoreForm.memberList = [];
-                    var ind = 0;
-                    for (var index in res.sqlres) {
+                    const ind = 0;
+                    for (const index in res.sqlres) {
                         // console.log(item)
-                        var item = res.sqlres[index];
+                        const item = res.sqlres[index];
                         if (item.memberType === 1) {
 
                         } else {
@@ -222,7 +222,7 @@
             // 提交得分
             submitScore: async function () {
                 try {
-                    for (var index in this.scoreForm.memberList) {
+                    for (const index in this.scoreForm.memberList) {
                         this.scoreForm.memberList[index].designScore = this.scoreForm.memberList[index].memberDesignScore
                         this.scoreForm.memberList[index].codeScore = this.scoreForm.memberList[index].memberCodeScore
                         this.scoreForm.memberList[index].attitudeScore = this.scoreForm.memberList[index].memberAttitudeScore
@@ -251,6 +251,7 @@
                     if (!res) throw "Failed";
                     this.createFormVisible = false;
                     Message.success("操作成功");
+                    this.getCreateApply(1);
                 } catch (error) {
                     Message.error("操作失败!");
                     this.createFormVisible = false;

@@ -180,7 +180,6 @@
             genImage() {
                 return (item) => {
                     let src = "";
-                    console.log(item);
                     if (null != item.AttendApply) src = item.AttendApply.projectPic;
                     if (null != item.CreateApply) src = item.CreateApply.projectPic;
                     if (null != item.courseInfo) src = item.courseInfo.courseImage;
