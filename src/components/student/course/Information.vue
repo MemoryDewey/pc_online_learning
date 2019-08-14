@@ -422,39 +422,41 @@
             },
             //购买课程
             async buyCourse() {
-                let sendDict = {};
-                console.log(this.$store.state.web3.coinbase);
-                sendDict["from"] = this.$store.state.web3.coinbase;
-                sendDict["gas"] = 100000;
-                try {
-                    let res = await applyCharge({courseID: this.$route.params.courseID});
-                    if (res) {
-                        const socket = wsClient.connect(`${location.origin}`);
-                        socket.emit('buyCourse', "");
-                        socket.on('message', data => {
-                            if (data.status === 1) {
-                                Message.success(data.msg);
-                                this.hadApply = true;
-                                this.applyCount = data.result.applyCount;
-                            } else Message.error(data.msg);
-                            socket.close();
-                        });
-                        sendDict["value"] = await this.$store.state.web3.web3Instance()
-                            .utils.toWei(res.data.payAmount.toString(), 'finney');
-                        let TID = "A" + res.data.paymentID;
-                        TID = this.$store.state.web3.web3Instance().utils.fromAscii(TID);
-                        this.$store.state.contractInstance().methods.submitPayment(TID)
-                            .send(sendDict)
-                            .on('receipt', receipt => {
-                                Message.success('支付成功')
-                            })
-                            .on('error', error => {
-                                Message.error('支付失败！')
-                            })
+                if (this.$store.state.loginState) {
+                    let sendDict = {};
+                    console.log(this.$store.state.web3.coinbase);
+                    sendDict["from"] = this.$store.state.web3.coinbase;
+                    sendDict["gas"] = 100000;
+                    try {
+                        let res = await applyCharge({courseID: this.$route.params.courseID});
+                        if (res) {
+                            const socket = wsClient.connect(`${location.origin}`);
+                            socket.emit('buyCourse', "");
+                            socket.on('message', data => {
+                                if (data.status === 1) {
+                                    Message.success(data.msg);
+                                    this.hadApply = true;
+                                    this.applyCount = data.result.applyCount;
+                                } else Message.error(data.msg);
+                                socket.close();
+                            });
+                            sendDict["value"] = await this.$store.state.web3.web3Instance()
+                                .utils.toWei(res.data.payAmount.toString(), 'finney');
+                            let TID = "A" + res.data.paymentID;
+                            TID = this.$store.state.web3.web3Instance().utils.fromAscii(TID);
+                            this.$store.state.contractInstance().methods.submitPayment(TID)
+                                .send(sendDict)
+                                .on('receipt', receipt => {
+                                    Message.success('支付成功')
+                                })
+                                .on('error', error => {
+                                    Message.error('支付失败！')
+                                })
+                        }
+                    } catch (e) {
+                        console.log(e);
                     }
-                } catch (e) {
-                    console.log(e);
-                }
+                } else Message.warning('请登录后再进行该操作')
             }
         },
         async created() {
