@@ -30,9 +30,6 @@
                     <!--课程不存在 E-->
                     <!--课程存在 S-->
                     <div class="flex-list-item" v-else v-for="project in projects" :key="project['projectID']">
-                        <div class="flex-row head">
-                            <div class="time">{{project.ProjectMembers[0]['joinTime']}}</div>
-                        </div>
                         <div class="flex-row content">
                             <div class="flex-cell first cover">
                                 <router-link :to="`/project/${project['projectID']}/information`">

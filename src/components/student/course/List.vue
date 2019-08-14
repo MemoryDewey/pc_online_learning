@@ -242,11 +242,13 @@
                 this.changeUrl(to);
             },
             async '$route.params'(to) {
-                let res = await getList(this.$route.params);
-                this.courses = [];
-                if (res) this.courses = res.course;
-                this.searchCourseCount();
-                this.changeUrl(to);
+                if(this.$route.params) {
+                    let res = await getList(this.$route.params);
+                    this.courses = [];
+                    if (res) this.courses = res.course;
+                    this.searchCourseCount();
+                    this.changeUrl(to);
+                }
             }
         },
         async created() {

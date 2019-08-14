@@ -12,7 +12,7 @@ export const getInfo = params => get('/course/information', params);
 export const applyFree = data => post('/course/information/apply-free', data);
 export const applyCharge = data => post('/course/information/getPaymentID', data);
 export const examCheck = params => get('/examine/exam-check', params);
-export const getLive = data => post('/course/information/live', data);
+export const getLive = params => get('/course/information/live', params);
 export const getVideo = params => get('/course/information/video', params);
 export const getFile = params => get('/course/information/file', params);
 export const getClass = data => post('/course/information/class', data);
