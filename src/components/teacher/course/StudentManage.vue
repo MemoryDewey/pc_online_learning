@@ -46,7 +46,7 @@
                 <div class="flex-row content" v-for="student in info">
                     <div class="flex-cell state">{{student.nickname}}</div>
                     <div class="flex-cell state">{{student.courseName}}</div>
-                    <div class="flex-cell time">{{formatDate(student.joinTime)}}</div>
+                    <div class="flex-cell time">{{formatDate(student.createdAt)}}</div>
                     <div class="flex-cell score">{{student.score}}</div>
                     <div class="flex-cell operating">
                         <a class="btn-operate mark"
