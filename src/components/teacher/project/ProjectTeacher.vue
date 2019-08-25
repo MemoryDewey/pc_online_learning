@@ -84,7 +84,7 @@
             <!--分页 E-->
         </div>
         <!--对话框 S-->
-        <el-dialog title="发起项目评分" :visible.sync="scoreFormVisible" width="600px">
+        <el-dialog title="发起项目评分" :visible.sync="scoreFormVisible" width="800px">
             <el-form :model="scoreForm">
                 <el-form-item label="项目ID">
                     {{scoreForm.projectID}}
@@ -149,7 +149,7 @@
         <information-dialog @dialogClose="handleDialogClose" :infoArr="infoArr" :infoTableWidth="infoTableWidth"
                             :infoDialogVisible="infoDialogVisible" :infoTable="infoTable"></information-dialog>
 
-        <el-dialog title="项目成绩单" :visible.sync="proScoreFormVisible" width="600px">
+        <el-dialog title="项目成绩单" :visible.sync="proScoreFormVisible" width="800px">
             <el-form :model="proScoreForm">
                 <el-form-item label="项目ID">
                     <el-input v-model="proScoreForm.projectID" autocomplete="off" :disabled="true"></el-input>
@@ -512,7 +512,7 @@
                 }).then(async () => {
                     try {
                         let data = {
-                            params: {projectID}
+                            projectID
                         };
                         let res = await closeProject(data)
                         if (!res) throw "Fetch Failed!"
