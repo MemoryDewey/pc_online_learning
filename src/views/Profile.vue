@@ -74,15 +74,7 @@
                                         <span>我的钱包</span>
                                     </router-link>
                                 </li>
-                                <li :class="{'active':active.course}">
-                                    <router-link :to="{name:'course'}">
-                                        <div class="setting-icon">
-                                            <font-awesome-icon icon="book-open"></font-awesome-icon>
-                                        </div>
-                                        <span>直播课表</span>
-                                    </router-link>
-                                </li>
-                                <li :class="{'active':active.exam}">
+                                <li :class="{'active':active.exam}" v-if="false">
                                     <router-link :to="{name:'exam'}">
                                         <div class="setting-icon">
                                             <font-awesome-icon icon="envelope"></font-awesome-icon>

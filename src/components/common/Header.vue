@@ -27,7 +27,7 @@
                 </div>
                 <div v-else class="login">
                     <div class="user">
-                        <div class="message" v-if="$store.state.isTeacher">
+                        <div class="message" v-if="$store.state.isTeacher && false">
                             <a>
                                 <el-badge :value="5" :max="99" class="badge" type="primary">
                                     <font-awesome-icon icon="envelope"></font-awesome-icon>
