@@ -242,7 +242,7 @@
                 this.changeUrl(to);
             },
             async '$route.params'(to) {
-                if(this.$route.params) {
+                if (this.$route.params.search) {
                     let res = await getList(this.$route.params);
                     this.courses = [];
                     if (res) this.courses = res.course;

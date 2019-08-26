@@ -3,6 +3,8 @@ import Vue from 'vue'
 
 const Index = () => import('./views/student/Index');
 
+const Wallet = () => import('./views/student/Wallet');
+
 const Error = () => import('./views/404');
 const Passport = () => import('./views/Passport');
 const Login = () => import('./components/passport/Login');
@@ -26,7 +28,7 @@ const ProfileCertificate = () => import( './components/profile/Certificate');
 const ProfileExam = () => import( './components/profile/Exam');
 const ProfilePersonal = () => import( './components/profile/Personal');
 const ProfileProject = () => import( './components/profile/Project');
-const ProfileWallet = () => import( './components/profile/Wallet');
+const ProfilePaid = () => import( './components/profile/PaidNote');
 
 
 const TeacherCourse = () => import( './views/teacher/Course');
@@ -89,7 +91,7 @@ export default new VueRouter({
         },
 
         /* 项目 */
-        {
+        /*{
             path: '/project', name: 'Project', component: Project, children: [
                 {path: 'list', name: 'ProjectList', component: ProjectList, meta: {title: '项目实践'}},
                 {path: 'list/:search', name: 'ProjectListSearch', component: ProjectList, meta: {title: '项目实践'}},
@@ -108,7 +110,7 @@ export default new VueRouter({
                     next();
                 });
             }
-        },
+        },*/
 
         /* 课件 */
         {path: '/course-ware', name: 'CourseWare', component: CourseWare, meta: {title: '课件'}},
@@ -136,7 +138,7 @@ export default new VueRouter({
         },
 
         /* 项目管理 */
-        {
+        /*{
             path: '/teacher/project', name: 'TeacherProject', component: TeacherProject, children: [
                 {path: 'project', name: 'PP', component: PP, meta: {title: '项目管理'}},
                 {path: 'attendapply', name: 'PAAM', component: PAAM, meta: {title: '项目报名申请管理'}},
@@ -151,7 +153,7 @@ export default new VueRouter({
                     next('/404');
                 });
             }
-        },
+        },*/
 
         /* 登录注册 */
         {
@@ -188,13 +190,18 @@ export default new VueRouter({
             },
             children: [
                 {path: 'personal', name: 'personal', component: ProfilePersonal, meta: {title: '个人信息'}},
-                {path: 'wallet', name: 'wallet', component: ProfileWallet, meta: {title: '我的钱包'}},
+                {path: 'paid', name: 'paid', component: ProfilePaid, meta: {title: '已购课程'}},
                 {path: 'course', name: 'course', component: ProfileCourse, meta: {title: '我的课程'}},
                 {path: 'exam', name: 'exam', component: ProfileExam, meta: {title: '我的考试'}},
-                {path: 'project', name: 'project', component: ProfileProject, meta: {title: '我的项目'}},
+                /*{path: 'project', name: 'project', component: ProfileProject, meta: {title: '我的项目'}},*/
                 {path: 'certificate', name: 'certificate', component: ProfileCertificate, meta: {title: '我的证书'}}
             ]
         },
+
+        /**
+         * 钱包
+         */
+        {path: '/wallet', name: 'Wallet', component: Wallet, meta: {title: '我的钱包'}},
 
         /* 404 */
         {

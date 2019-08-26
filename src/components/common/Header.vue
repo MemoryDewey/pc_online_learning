@@ -41,7 +41,7 @@
                             </a>
                             <ul :class="{'dropdown-list':true,'teacher-dropdown':$store.state.isTeacher}">
                                 <li>
-                                    <router-link to="/profile/wallet">
+                                    <router-link to="/wallet">
                                         <font-awesome-icon icon="wallet"></font-awesome-icon>
                                         我的钱包
                                     </router-link>
@@ -89,7 +89,7 @@
                             </ul>
                         </div>
                     </li>
-                    <li :class="navActive.project">
+                    <li :class="navActive.project" v-if="false">
                         <div class="first">
                             <router-link to="/project/list">项目实践</router-link>
                         </div>
@@ -101,7 +101,7 @@
                                 <li>
                                     <router-link to="/profile/course">我的课程</router-link>
                                 </li>
-                                <li>
+                                <li v-if="false">
                                     <router-link to="/profile/project">我的项目</router-link>
                                 </li>
                                 <li>
@@ -144,7 +144,7 @@
                             </ul>
                         </div>
                     </li>
-                    <li :class="navActive.projectMng">
+                    <li :class="navActive.projectMng" v-if="false">
                         <div class="first">
                             <router-link to="/teacher/project/project">项目管理</router-link>
                         </div>
@@ -214,7 +214,8 @@
                     profile: {active: false},
                     courseMng: {active: false},
                     projectMng: {active: false},
-                    notFound: {active: false}
+                    notFound: {active: false},
+                    wallet: {active: false}
                 },
                 loginState: false,
                 courseSystem: null,

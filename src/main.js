@@ -16,7 +16,7 @@ import {
     faFilePdf, faFilePowerpoint, faFileWord, faFileExcel, faStar, faCheck,
     faTimes, faPlus, faCheckCircle, faShieldAlt, faMobileAlt, faTimesCircle,
     faUser, faLock, faExchangeAlt, faAngleDoubleUp, faAngleDoubleDown,
-    faExclamationCircle
+    faExclamationCircle, faYenSign
 } from '@fortawesome/free-solid-svg-icons'
 
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
@@ -29,7 +29,7 @@ library.add(
     faFilePdf, faFilePowerpoint, faFileWord, faFileExcel, faStar, faCheck,
     faTimes, faPlus, faCheckCircle, faShieldAlt, faMobileAlt, faTimesCircle,
     faUser, faLock, faExchangeAlt, faAngleDoubleDown, faAngleDoubleUp,
-    faExclamationCircle
+    faExclamationCircle, faYenSign
 );
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(VueLazyLoad, {

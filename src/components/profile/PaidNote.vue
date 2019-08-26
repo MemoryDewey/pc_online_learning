@@ -3,10 +3,11 @@
         <!--课程列表顶部信息 S-->
         <template>
             <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-                <el-tab-pane label="支付管理" name="first">
+                <el-tab-pane label="R M B"></el-tab-pane>
+                <el-tab-pane label="B S T" name="first">
                     <div class="flex-list-header">
                         <div class="flex-row">
-                            <div class="flex-cell first">项目信息/支付ID码</div>
+                            <div class="flex-cell first">课程信息/支付ID码</div>
                             <div class="flex-cell">支付金额</div>
                             <div class="flex-cell">支付状态/类型</div>
                             <div class="flex-cell">操作</div>
@@ -37,7 +38,7 @@
                         <div class="flex-row content">
                             <div class="flex-cell first cover">
                                 <img v-lazy="genImage(payment)" alt=""/>
-                                <div class="title">项目编号/支付信息：{{genTitle(payment)}}<br/>支付ID号：{{payment['paymentID']}}
+                                <div class="title">课程信息：{{genTitle(payment)}}<br/>支付ID号：{{payment['paymentID']}}
                                 </div>
                             </div>
                             <div class="flex-cell price">{{payment.payAmount}}</div>

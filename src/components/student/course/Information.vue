@@ -186,6 +186,20 @@
                 </div>
             </div>
         </div>
+        <el-dialog :visible.sync="buyDialogVisible"
+                   custom-class="buy-dialog" title="请选择购买课程方式"
+                   @close="buyDialogVisible = false">
+            <div class="balance">
+                <el-radio v-model="payType" :label="0" border>余额支付</el-radio>
+                <div class="info" v-if="payType === 0">
+                    <div class="have">当前余额：￥5064.3</div>
+                    <div class="need">需要价格：￥{{course.info.price}}</div>
+                </div>
+            </div>
+            <div>
+                <el-radio v-model="payType" :label="1" border>BST支付</el-radio>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -249,7 +263,9 @@
                     exist: false,
                     name: null,
                     state: false,
-                }
+                },
+                buyDialogVisible: false,
+                payType: 0
             }
         },
         components: {
@@ -422,6 +438,10 @@
             },
             //购买课程
             async buyCourse() {
+                this.buyDialogVisible = true;
+            },
+            //通过BST购买课程
+            async byBst() {
                 if (this.$store.state.loginState) {
                     let sendDict = {};
                     console.log(this.$store.state.web3.coinbase);
@@ -457,6 +477,10 @@
                         console.log(e);
                     }
                 } else Message.warning('请登录后再进行该操作')
+            },
+            //通过余额购买课程
+            async byBalance() {
+
             }
         },
         async created() {

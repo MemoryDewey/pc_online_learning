@@ -16,12 +16,12 @@
                                         <span>个人资料</span>
                                     </router-link>
                                 </li>
-                                <li :class="{'active':active.wallet}">
-                                    <router-link :to="{name:'wallet'}">
+                                <li :class="{'active':active.paid}">
+                                    <router-link :to="{name:'paid'}">
                                         <div class="setting-icon">
-                                            <font-awesome-icon icon="wallet"></font-awesome-icon>
+                                            <font-awesome-icon icon="yen-sign"></font-awesome-icon>
                                         </div>
-                                        <span>我的钱包</span>
+                                        <span>已购课程</span>
                                     </router-link>
                                 </li>
                                 <li :class="{'active':active.course}">
@@ -40,7 +40,7 @@
                                         <span>我的考试</span>
                                     </router-link>
                                 </li>
-                                <li :class="{'active':active.project}">
+                                <li :class="{'active':active.project}" v-if="false">
                                     <router-link :to="{name:'project'}">
                                         <div class="setting-icon">
                                             <font-awesome-icon icon="tasks"></font-awesome-icon>
@@ -66,7 +66,7 @@
                                         <span>个人资料</span>
                                     </router-link>
                                 </li>
-                                <li :class="{'active':active.wallet}">
+                                <li :class="{'active':active.wallet}" v-if="false">
                                     <router-link :to="{name:'wallet'}">
                                         <div class="setting-icon">
                                             <font-awesome-icon icon="wallet"></font-awesome-icon>
@@ -109,7 +109,7 @@
             return {
                 page: "profile",
                 active: {
-                    personal: false, wallet: false, course: false,
+                    personal: false, paid: false, course: false,
                     exam: false, project: false, certificate: false,
                     projectTeacher: false, attendApply: false, createApply: false,
                     projectMember: false

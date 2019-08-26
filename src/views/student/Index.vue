@@ -25,7 +25,7 @@
                 </el-carousel>
             </div>
             <div class="content">
-                <div class="content-course">
+                <div class="content-course" style="margin-bottom: 30px">
                     <div class="header clear">
                         <ul class="clear">
                             <li v-bind:class="chargeActive" @click="changeCourseFee">付费课程</li>
@@ -66,7 +66,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="project">
+                <div class="project" v-if="false">
                     <div class="header clear">
                         <ul class="clear">
                             <li class="active" style="border-right: 0;padding: 0">最新项目</li>
