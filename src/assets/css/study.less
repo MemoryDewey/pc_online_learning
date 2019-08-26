@@ -984,7 +984,8 @@
                 line-height: 20px;
                 font-size: 18px;
                 color: #999;
-                svg{
+
+                svg {
                   color: #409eff;
                   margin-right: 8px;
                 }
@@ -1033,22 +1034,33 @@
     }
   }
 
-  .buy-dialog{
-    width: 400px;
-    .balance{
+  .buy-dialog {
+    width: 420px;
+
+    .balance, .bst {
       margin-bottom: 20px;
-      label{
+      text-align: left;
+
+      label {
         display: inline-block;
       }
-      .info{
+
+      .info {
         vertical-align: middle;
         display: inline-block;
-        text-align: left;
-        .have{
+
+        .have {
           color: #42c02e;
         }
-        .need{
+
+        .need {
           color: #409eff;
+        }
+
+        .recharge, .refresh {
+          margin-left: 8px;
+          color: #e80808;
+          cursor: pointer;
         }
       }
     }

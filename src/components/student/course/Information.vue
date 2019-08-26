@@ -33,7 +33,7 @@
                                              @click="applyFree">
                                             免费报名
                                         </div>
-                                        <div class="info-button enroll-button" v-else @click="buyCourse">
+                                        <div class="info-button enroll-button" v-else @click="buyCourseDialogOpen">
                                             立即购买
                                         </div>
                                     </div>
@@ -191,14 +191,25 @@
                    @close="buyDialogVisible = false">
             <div class="balance">
                 <el-radio v-model="payType" :label="0" border>余额支付</el-radio>
-                <div class="info" v-if="payType === 0">
-                    <div class="have">当前余额：￥5064.3</div>
-                    <div class="need">需要价格：￥{{course.info.price}}</div>
+                <div class="info">
+                    <div class="have">
+                        余额：￥{{walletInfo.balance}}
+                        <span class="recharge">充值</span>
+                        <span class="refresh" @click="getUserBalance">刷新</span>
+                    </div>
+                    <div class="need">价格：￥{{course.info.price}}</div>
                 </div>
             </div>
-            <div>
+            <div class="bst">
                 <el-radio v-model="payType" :label="1" border>BST支付</el-radio>
+                <div class="info">
+                    <div class="need" v-loading="!getBstSuccess">价格：{{bstPrice}} BST</div>
+                </div>
             </div>
+            <span slot="footer" class="dialog-footer" v-if="walletInfo.balance > course.info.price">
+                <el-button @click="centerDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="buyCourse">确 定</el-button>
+            </span>
         </el-dialog>
     </div>
 </template>
@@ -210,16 +221,17 @@
     import {saveAs} from 'file-saver'
     import wsClient from 'socket.io-client'
     import {
-        getInfo,
         applyCharge,
         applyFree,
         examCheck,
-        getLive,
-        getVideo,
-        getFile,
         getClass,
-        getExamTime
+        getExamTime,
+        getFile,
+        getInfo,
+        getLive,
+        getVideo
     } from "../../../api/course";
+    import {getWalletInfo} from '../../../api/wallet'
 
     export default {
         name: "Information",
@@ -265,7 +277,10 @@
                     state: false,
                 },
                 buyDialogVisible: false,
-                payType: 0
+                payType: 0,
+                bstPrice: 0,
+                getBstSuccess: false,
+                walletInfo: {balance: 0.00}
             }
         },
         components: {
@@ -436,9 +451,32 @@
                 response = await getExamTime({courseID: this.$route.params.courseID});
                 this.examTime = response.time;
             },
+            //购买课程Dialog
+            async buyCourseDialogOpen() {
+                this.buyDialogVisible = true;
+                await this.getUserBalance();
+                await this.getBstPrice();
+            },
+            //获取账户余额
+            async getUserBalance() {
+                let res = await getWalletInfo();
+                this.walletInfo = res.wallet;
+            },
+            //获取BST换算信息
+            async getBstPrice() {
+                let res = await this.$axios.get('https://api1.zg.com/tickers');
+                let data = res.data.ticker;
+                let bstInfo = data.find((x) => {
+                    return x.symbol = "BST_USDT";
+                });
+                this.getBstSuccess = true;
+                this.bstPrice = ((1 / bstInfo.sell) / 7 * this.course.info.price).toFixed(7)
+            },
             //购买课程
             async buyCourse() {
-                this.buyDialogVisible = true;
+                this.buyDialogVisible = false;
+                if (this.payType === 1) await this.byBst();
+                if (this.payType === 0) await this.byBalance();
             },
             //通过BST购买课程
             async byBst() {

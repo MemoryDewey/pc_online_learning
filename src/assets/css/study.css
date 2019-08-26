@@ -863,4 +863,37 @@
   margin-top: 20px;
   color: #666666;
 }
+.study-main .buy-dialog {
+  width: 420px;
+}
+.study-main .buy-dialog .balance,
+.study-main .buy-dialog .bst {
+  margin-bottom: 20px;
+  text-align: left;
+}
+.study-main .buy-dialog .balance label,
+.study-main .buy-dialog .bst label {
+  display: inline-block;
+}
+.study-main .buy-dialog .balance .info,
+.study-main .buy-dialog .bst .info {
+  vertical-align: middle;
+  display: inline-block;
+}
+.study-main .buy-dialog .balance .info .have,
+.study-main .buy-dialog .bst .info .have {
+  color: #42c02e;
+}
+.study-main .buy-dialog .balance .info .need,
+.study-main .buy-dialog .bst .info .need {
+  color: #409eff;
+}
+.study-main .buy-dialog .balance .info .recharge,
+.study-main .buy-dialog .bst .info .recharge,
+.study-main .buy-dialog .balance .info .refresh,
+.study-main .buy-dialog .bst .info .refresh {
+  margin-left: 8px;
+  color: #e80808;
+  cursor: pointer;
+}
 /*# sourceMappingURL=study.css.map */
