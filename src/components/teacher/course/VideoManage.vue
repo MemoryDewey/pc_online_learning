@@ -159,7 +159,7 @@
                     await getVideo({page, search});
                 if (res) {
                     let data = res.video;
-                    for(let video of data){
+                    for (let video of data) {
                         this.tableData.push({
                             id: video.videoID, name: video.videoName,
                             chapter: video['CourseChapter.chapterName'],
@@ -207,12 +207,10 @@
             },
             /* 文件检查 */
             beforeUpload(file) {
-                const isValid = (file.type === 'video/mp4' || file.type === 'video/flv'
-                    || file.type === 'video/wmv' || file.type === 'video/mpg'
-                    || file.type === 'video/mpeg' || file.type === 'video/avi'
-                    || file.type === 'video/webm' || file.type === 'video/mkv');
+                const isValid = (file.type === 'video/mp4' || file.type === 'video/x-ms-wmv'
+                    || file.type === 'video/mpg' || file.type === 'video/avi');
                 const isLt1G = file.size / 1024 / 1024 < 1024;
-                if (!isValid) Message.error('仅支持.mp4, .flv, .wmv, .mpg, .mepg, .webm, .avi, .mkv视频文件上传!');
+                if (!isValid) Message.error('仅支持.mp4, .wmv, .mpg, .mepg, .avi视频文件上传!');
                 if (!isLt1G) Message.error('上传文件大小不能超过 1GB!');
                 return isValid && isLt1G;
             },

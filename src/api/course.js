@@ -10,7 +10,8 @@ export const getIndexCourse = () => get('/course/list/index-show');
 
 export const getInfo = params => get('/course/information', params);
 export const applyFree = data => post('/course/information/apply-free', data);
-export const applyCharge = data => post('/course/information/getPaymentID', data);
+export const applyChargeByBst = data => post('/course/information/getPaymentID', data);
+export const applyCourseByCash = data => post('/course/information/buy-course', data);
 export const examCheck = params => get('/examine/exam-check', params);
 export const getLive = params => get('/course/information/live', params);
 export const getVideo = params => get('/course/information/video', params);

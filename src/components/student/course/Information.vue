@@ -194,7 +194,7 @@
                 <div class="info">
                     <div class="have">
                         余额：￥{{walletInfo.balance}}
-                        <span class="recharge">充值</span>
+                        <router-link to="/wallet" tag="span" class="recharge">充值</router-link>
                         <span class="refresh" @click="getUserBalance">刷新</span>
                     </div>
                     <div class="need">价格：￥{{course.info.price}}</div>
@@ -206,7 +206,7 @@
                     <div class="need" v-loading="!getBstSuccess">价格：{{bstPrice}} BST</div>
                 </div>
             </div>
-            <span slot="footer" class="dialog-footer" v-if="walletInfo.balance > course.info.price">
+            <span slot="footer" class="dialog-footer">
                 <el-button @click="centerDialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="buyCourse">确 定</el-button>
             </span>
@@ -221,7 +221,8 @@
     import {saveAs} from 'file-saver'
     import wsClient from 'socket.io-client'
     import {
-        applyCharge,
+        applyChargeByBst,
+        applyCourseByCash,
         applyFree,
         examCheck,
         getClass,
@@ -474,19 +475,22 @@
             },
             //购买课程
             async buyCourse() {
-                this.buyDialogVisible = false;
-                if (this.payType === 1) await this.byBst();
-                if (this.payType === 0) await this.byBalance();
+                if (this.$store.state.loginState) {
+                    this.buyDialogVisible = false;
+                    if (this.payType === 1) await this.byBst();
+                    if (this.payType === 0) await this.byBalance();
+                }else Message.warning('请登录后再进行该操作')
             },
             //通过BST购买课程
             async byBst() {
-                if (this.$store.state.loginState) {
-                    let sendDict = {};
-                    console.log(this.$store.state.web3.coinbase);
-                    sendDict["from"] = this.$store.state.web3.coinbase;
-                    sendDict["gas"] = 100000;
-                    try {
-                        let res = await applyCharge({courseID: this.$route.params.courseID});
+                if (!window.web3)
+                    Message.warning('您的浏览器不支持BST方式购买');
+                let sendDict = {};
+                sendDict["from"] = this.$store.state.web3.coinbase;
+                sendDict["gas"] = 100000;
+                try {
+                    if (this.$store.state.web3.coinbase) {
+                        let res = await applyChargeByBst({courseID: this.$route.params.courseID});
                         if (res) {
                             const socket = wsClient.connect(`${location.origin}`);
                             socket.emit('buyCourse', "");
@@ -511,14 +515,23 @@
                                     Message.error('支付失败！')
                                 })
                         }
-                    } catch (e) {
-                        console.log(e);
-                    }
-                } else Message.warning('请登录后再进行该操作')
+                    } else Message.error('MetaMask初始化失败，请检查后重试！')
+                } catch (e) {
+                    console.log(e);
+                }
             },
             //通过余额购买课程
             async byBalance() {
-
+                if (this.walletInfo.balance < this.course.info.price)
+                    Message.error('余额不足，请充值');
+                else {
+                    let res = await applyCourseByCash({courseID: this.$route.params.courseID});
+                    if(res) {
+                        this.hadApply = true;
+                        this.applyCount = res.applyCount;
+                        Message.success(res.msg);
+                    }
+                }
             }
         },
         async created() {
