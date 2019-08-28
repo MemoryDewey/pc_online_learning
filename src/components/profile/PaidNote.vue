@@ -1,73 +1,117 @@
 <template>
     <div class="flex-list">
         <!--课程列表顶部信息 S-->
-        <template>
-            <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-                <el-tab-pane label="R M B"></el-tab-pane>
-                <el-tab-pane label="B S T" name="first">
-                    <div class="flex-list-header">
-                        <div class="flex-row">
-                            <div class="flex-cell first">课程信息/支付ID码</div>
-                            <div class="flex-cell">支付金额</div>
-                            <div class="flex-cell">支付状态/类型</div>
-                            <div class="flex-cell">操作</div>
-                        </div>
+        <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+            <el-tab-pane label="R M B">
+                <div class="flex-list-header">
+                    <div class="flex-row">
+                        <div class="flex-cell first">课程信息</div>
+                        <div class="flex-cell first">支付金额</div>
                     </div>
-                    <!--课程列表顶部信息 E-->
-                    <!--课程列表 S-->
-                    <!--课程不存在 S-->
-                    <div class="flex-list-no-data" v-if="paymentRecords.length===0">
-                        <div class="status-box">
-                            <div class="box-icon">
+                </div>
+                <!--课程列表顶部信息 E-->
+                <!--课程列表 S-->
+                <!--课程不存在 S-->
+                <div class="flex-list-no-data" v-if="paymentRecords.length===0">
+                    <div class="status-box">
+                        <div class="box-icon">
                         <span>
                             <font-awesome-icon icon="info-circle"></font-awesome-icon>
                         </span>
-                            </div>
-                            <div class="box-text">
-                                <div>暂无支付信息</div>
-                            </div>
+                        </div>
+                        <div class="box-text">
+                            <div>暂无支付信息</div>
                         </div>
                     </div>
-                    <!--课程不存在 E-->
-                    <!--课程存在 S-->
-                    <div class="flex-list-item" v-else v-for="payment in paymentRecords"
-                         :key="payment['paymentID']">
-                        <div class="flex-row head">
-                            <!-- <div class="time">{{project.ProjectMembers[0]['joinTime']}}</div> -->
+                </div>
+                <!--课程不存在 E-->
+                <!--课程存在 S-->
+                <div class="flex-list-item" v-else v-for="course in rmbCourses"
+                     :key="course['productID']">
+                    <div class="flex-row head">
+                        <div class="time">{{course['createdAt']}}</div>
+                    </div>
+                    <div class="flex-row content">
+                        <div class="flex-cell first cover">
+                            <img v-lazy="course['CourseInformation'].courseImage" alt=""/>
+                            <div class="title">{{course['CourseInformation'].courseName}}</div>
                         </div>
-                        <div class="flex-row content">
-                            <div class="flex-cell first cover">
-                                <img v-lazy="genImage(payment)" alt=""/>
-                                <div class="title">课程信息：{{genTitle(payment)}}<br/>支付ID号：{{payment['paymentID']}}
-                                </div>
-                            </div>
-                            <div class="flex-cell price">{{payment.payAmount}}</div>
-                            <div class="flex-cell state">
-                                支付状态:{{myTotalOption.labelPaymentStatue[payment['payStatue']]}}<br/>支付类型:{{myTotalOption.labelPaymentType[payment['payType']]}}
-                            </div>
-                            <div class="flex-cell operating">
-                                <a :class="[payment.payStatue!='0'?'btn-operate-disabled':'btn-operate']"
-                                   @click="dealWithPayment(payment)">
-                                    进行支付
-                                </a>
-                                <a class="btn-operate" @click="paymentInfo(payment)">
-                                    支付详情
-                                </a>
-                            </div>
+                        <div class="flex-cell first">{{course.amount}}</div>
+                    </div>
+                </div>
+                <!--课程存在 E-->
+                <!--课程列表 E-->
+                <!--分页 S-->
+                <div class="sort-page">
+                    <el-pagination background layout="prev, pager, next"
+                                   :pager-count="10" @current-change="getRmbCourse"
+                                   :total="10*recordCount" :hide-on-single-page="true">
+                    </el-pagination>
+                </div>
+            </el-tab-pane>
+            <el-tab-pane label="B S T" name="first">
+                <div class="flex-list-header">
+                    <div class="flex-row">
+                        <div class="flex-cell first">课程信息/支付ID码</div>
+                        <div class="flex-cell">支付金额</div>
+                        <div class="flex-cell">支付状态/类型</div>
+                        <div class="flex-cell">操作</div>
+                    </div>
+                </div>
+                <!--课程列表顶部信息 E-->
+                <!--课程列表 S-->
+                <!--课程不存在 S-->
+                <div class="flex-list-no-data" v-if="paymentRecords.length===0">
+                    <div class="status-box">
+                        <div class="box-icon">
+                        <span>
+                            <font-awesome-icon icon="info-circle"></font-awesome-icon>
+                        </span>
+                        </div>
+                        <div class="box-text">
+                            <div>暂无支付信息</div>
                         </div>
                     </div>
-                    <!--课程存在 E-->
-                    <!--课程列表 E-->
-                    <!--分页 S-->
-                    <div class="sort-page" v-if="paymentRecords.length>0">
-                        <el-pagination background layout="prev, pager, next"
-                                       :pager-count="10" @current-change="paymentPageChanged"
-                                       :total="10*recordCount">
-                        </el-pagination>
+                </div>
+                <!--课程不存在 E-->
+                <!--课程存在 S-->
+                <div class="flex-list-item" v-else v-for="payment in paymentRecords"
+                     :key="payment['paymentID']">
+                    <div class="flex-row head">
+                        <!-- <div class="time">{{project.ProjectMembers[0]['joinTime']}}</div> -->
                     </div>
-                </el-tab-pane>
-            </el-tabs>
-        </template>
+                    <div class="flex-row content">
+                        <div class="flex-cell first cover">
+                            <img v-lazy="genImage(payment)" alt=""/>
+                            <div class="title">课程信息：{{genTitle(payment)}}<br/>支付ID号：{{payment['paymentID']}}
+                            </div>
+                        </div>
+                        <div class="flex-cell price">{{payment.payAmount}}</div>
+                        <div class="flex-cell state">
+                            支付状态:{{myTotalOption.labelPaymentStatue[payment['payStatue']]}}<br/>支付类型:{{myTotalOption.labelPaymentType[payment['payType']]}}
+                        </div>
+                        <div class="flex-cell operating">
+                            <a :class="[payment.payStatue!='0'?'btn-operate-disabled':'btn-operate']"
+                               @click="dealWithPayment(payment)">
+                                进行支付
+                            </a>
+                            <a class="btn-operate" @click="paymentInfo(payment)">
+                                支付详情
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--课程存在 E-->
+                <!--课程列表 E-->
+                <!--分页 S-->
+                <div class="sort-page">
+                    <el-pagination background layout="prev, pager, next"
+                                   :pager-count="10" @current-change="paymentPageChanged"
+                                   :total="10*recordCount" :hide-on-single-page="true">
+                    </el-pagination>
+                </div>
+            </el-tab-pane>
+        </el-tabs>
         <information-dialog @dialogClose="handleDialogClose" :infoArr="infoArr" :infoTableWidth="infoTableWidth"
                             :infoDialogVisible="infoDialogVisible" :infoTable="infoTable"></information-dialog>
     </div>
@@ -79,6 +123,7 @@
     import {Message, MessageBox, ElTabs} from 'element-ui'
     import {TotalOption} from '../../utils/constant/options';
     import {getPaymentRecord, getPaymentCount, cancelApply} from '../../api/project'
+    import {getWalletCourse} from "../../api/course";
 
     export default {
         name: "Wallet",
@@ -93,6 +138,8 @@
                 infoArr: [{title: 'defualt', value: 'default'}],
                 infoTableWidth: 0,
                 infoTable: [],
+                rmbPageSum: 1,
+                rmbCourses:[]
             }
         },
         methods: {
@@ -133,7 +180,6 @@
                 response = await getPaymentCount();
                 if (response) this.recordCount = response.pageSum;
             },
-
             //进行支付
             async cancelApply(applyID) {
                 MessageBox.confirm('确定取消报名该项目？相关的支付事件将被自动删除', '提示', {
@@ -150,7 +196,6 @@
                     Message.info("已取消操作");
                 })
             },
-
             // 进行支付
             dealWithPayment: async function (dealItem) {
                 let TID = dealItem.payType + dealItem.paymentID;
@@ -173,6 +218,14 @@
             paymentPageChanged(val) {
                 this.getPayment(val);
             },
+            //获取RMB支付课程信息
+            async getRmbCourse(page) {
+                let res = await getWalletCourse({page});
+                if (res) {
+                    this.rmbCourses = res.courses;
+                    this.rmbPageSum = res.pageSum;
+                }
+            }
         },
         components: {
             "information-dialog": InformationDialog,
@@ -190,6 +243,7 @@
         },
         created() {
             this.myTotalOption = TotalOption;
+            this.getRmbCourse(1);
             this.getPayment(1);
         }
 

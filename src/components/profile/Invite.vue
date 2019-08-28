@@ -4,6 +4,7 @@
         <div class="flex-list-header">
             <div class="flex-row">
                 <div class="flex-cell first">用户名</div>
+                <div class="flex-cell first">账号</div>
                 <div class="flex-cell first">邀请时间</div>
             </div>
         </div>
@@ -26,6 +27,7 @@
         <div class="flex-list-item" v-else v-for="invite in invites" :key="invite.id">
             <div class="flex-row content">
                 <div class="flex-cell first">{{invite['Invited'].nickname}}</div>
+                <div class="flex-cell first">{{invite['Invited']['UserPassport'].phone}}</div>
                 <div class="flex-cell first">{{invite['createdAt']}}</div>
             </div>
         </div>
@@ -33,7 +35,7 @@
         <!--分页 S-->
         <div class="sort-page" v-if="invites.length>0">
             <el-pagination background layout="prev, pager, next" @current-change="pageChanged"
-                           :total="10*count">
+                           :total="10*count" :hide-on-single-page="true">
             </el-pagination>
         </div>
         <!--分页 E-->

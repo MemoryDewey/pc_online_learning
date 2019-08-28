@@ -668,6 +668,14 @@
   font-size: 13px;
   color: #999999;
 }
+.study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .enroll .study-apply span {
+  float: right;
+  color: #409eff;
+  cursor: pointer;
+}
+.study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .enroll .study-apply span svg {
+  margin-right: 5px;
+}
 .study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .enroll .enroll-apply-btn {
   margin-top: 30px;
   margin-bottom: 10px;

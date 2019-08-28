@@ -3,7 +3,7 @@
         <div class="flex-list-header">
             <div class="flex-row">
                 <div class="flex-cell first">课程</div>
-                <div class="flex-cell">证书编号</div>
+                <div class="flex-cell first">证书编号</div>
                 <div class="flex-cell">操作</div>
             </div>
         </div>

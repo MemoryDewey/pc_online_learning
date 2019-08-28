@@ -53,7 +53,7 @@
                                         <div class="setting-icon">
                                             <font-awesome-icon icon="share-alt"></font-awesome-icon>
                                         </div>
-                                        <span>邀请好友</span>
+                                        <span>我的邀请</span>
                                     </router-link>
                                 </li>
                                 <li :class="{'active':active.certificate}">
