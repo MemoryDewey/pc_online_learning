@@ -27,6 +27,7 @@ const ProfileCourse = () => import( './components/profile/Course');
 const ProfileCertificate = () => import( './components/profile/Certificate');
 const ProfileExam = () => import( './components/profile/Exam');
 const ProfilePersonal = () => import( './components/profile/Personal');
+const ProfileInvite = () => import('./components/profile/Invite');
 const ProfileProject = () => import( './components/profile/Project');
 const ProfilePaid = () => import( './components/profile/PaidNote');
 
@@ -193,6 +194,7 @@ export default new VueRouter({
                 {path: 'paid', name: 'paid', component: ProfilePaid, meta: {title: '已购课程'}},
                 {path: 'course', name: 'course', component: ProfileCourse, meta: {title: '我的课程'}},
                 {path: 'exam', name: 'exam', component: ProfileExam, meta: {title: '我的考试'}},
+                {path: 'invite', name: 'invite', component: ProfileInvite, meta: {title: '我的邀请'}},
                 /*{path: 'project', name: 'project', component: ProfileProject, meta: {title: '我的项目'}},*/
                 {path: 'certificate', name: 'certificate', component: ProfileCertificate, meta: {title: '我的证书'}}
             ]
@@ -201,7 +203,17 @@ export default new VueRouter({
         /**
          * 钱包
          */
-        {path: '/wallet', name: 'Wallet', component: Wallet, meta: {title: '我的钱包'}},
+        {
+            path: '/wallet', name: 'Wallet', component: Wallet, meta: {title: '我的钱包'},
+            beforeEnter(to, from, next) {
+                checkLogin().then((res) => {
+                    if (res.status === 1) next();
+                    else next('/passport/login');
+                }).catch(() => {
+                    next('/passport/login');
+                });
+            }
+        },
 
         /* 404 */
         {

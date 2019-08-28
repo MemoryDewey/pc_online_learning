@@ -48,6 +48,14 @@
                                         <span>我的项目</span>
                                     </router-link>
                                 </li>
+                                <li :class="{'active':active.invite}">
+                                    <router-link :to="{name:'invite'}">
+                                        <div class="setting-icon">
+                                            <font-awesome-icon icon="share-alt"></font-awesome-icon>
+                                        </div>
+                                        <span>邀请好友</span>
+                                    </router-link>
+                                </li>
                                 <li :class="{'active':active.certificate}">
                                     <router-link :to="{name:'certificate'}">
                                         <div class="setting-icon">
@@ -110,8 +118,8 @@
                 page: "profile",
                 active: {
                     personal: false, paid: false, course: false,
-                    exam: false, project: false, certificate: false,
-                    projectTeacher: false, attendApply: false, createApply: false,
+                    exam: false, certificate: false, invite:false,
+                    project: false, projectTeacher: false, attendApply: false, createApply: false,
                     projectMember: false
                 }
             }

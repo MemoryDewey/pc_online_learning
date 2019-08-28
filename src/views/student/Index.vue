@@ -146,8 +146,8 @@
                 let course = await getIndexCourse();
                 this.freeCourse = course.freeCourse;
                 this.chargeCourse = course.chargeCourse;
-                let res = await getIndexProject();
-                this.project = res.sqlres;
+                /*let res = await getIndexProject();
+                this.project = res.sqlres;*/
             } catch (e) {
                 console.log(e);
             }

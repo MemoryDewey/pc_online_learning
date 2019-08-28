@@ -27,7 +27,12 @@
                                     </div>
                                 </div>
                                 <div class="enroll">
-                                    <div class="study-apply">已有{{applyCount}}人报名</div>
+                                    <div class="study-apply">已有{{applyCount}}人报名
+                                        <el-tooltip effect="light" placement="bottom" content="复制分享链接">
+                                            <span v-if="course.info.price!==0" @click="shareCourse"><font-awesome-icon
+                                                    icon="share-alt"></font-awesome-icon>分享</span>
+                                        </el-tooltip>
+                                    </div>
                                     <div class="enroll-apply-btn" v-if="!hadApply">
                                         <div class="info-button enroll-button" v-if="course.info['price']===0"
                                              @click="applyFree">
@@ -229,7 +234,7 @@
         getExamTime,
         getFile,
         getInfo,
-        getLive,
+        getLive, getShareUrl,
         getVideo
     } from "../../../api/course";
     import {getWalletInfo} from '../../../api/wallet'
@@ -479,7 +484,7 @@
                     this.buyDialogVisible = false;
                     if (this.payType === 1) await this.byBst();
                     if (this.payType === 0) await this.byBalance();
-                }else Message.warning('请登录后再进行该操作')
+                } else Message.warning('请登录后再进行该操作')
             },
             //通过BST购买课程
             async byBst() {
@@ -526,10 +531,25 @@
                     Message.error('余额不足，请充值');
                 else {
                     let res = await applyCourseByCash({courseID: this.$route.params.courseID});
-                    if(res) {
+                    if (res) {
+                        Message.success(res.msg);
                         this.hadApply = true;
                         this.applyCount = res.applyCount;
-                        Message.success(res.msg);
+                    }
+                }
+            },
+            //分享课程
+            async shareCourse() {
+                if (!this.hadApply) Message.warning('需要购买此课程才有权限分享该课程');
+                else {
+                    let res = await getShareUrl();
+                    if (res) {
+                        let url = `${location.origin}${res.url}`;
+                        this.$copyText(url).then(() => {
+                            Message.success('已将链接复制到粘贴板');
+                        }).catch(err => {
+                            console.log(err);
+                        });
                     }
                 }
             }

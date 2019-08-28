@@ -17,6 +17,7 @@ export const getLive = params => get('/course/information/live', params);
 export const getVideo = params => get('/course/information/video', params);
 export const getFile = params => get('/course/information/file', params);
 export const getClass = data => post('/course/information/class', data);
+export const getShareUrl = () => get('/course/information/share');
 export const getExamTime = params => get('/examine/exam-time', params);
 
 export const getComment = params => get('/course/information/comment', params);

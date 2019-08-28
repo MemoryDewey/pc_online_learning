@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import ELEMENT from 'element-ui'
+import VueClipboard from 'vue-clipboard2'
 // import 'element-ui/lib/theme-chalk/index.css'
 import VueLazyLoad from 'vue-lazyload'
 /* font-awesome 图标库 S*/
@@ -16,7 +17,7 @@ import {
     faFilePdf, faFilePowerpoint, faFileWord, faFileExcel, faStar, faCheck,
     faTimes, faPlus, faCheckCircle, faShieldAlt, faMobileAlt, faTimesCircle,
     faUser, faLock, faExchangeAlt, faAngleDoubleUp, faAngleDoubleDown,
-    faExclamationCircle, faYenSign
+    faExclamationCircle, faYenSign, faShareAlt
 } from '@fortawesome/free-solid-svg-icons'
 
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
@@ -29,9 +30,11 @@ library.add(
     faFilePdf, faFilePowerpoint, faFileWord, faFileExcel, faStar, faCheck,
     faTimes, faPlus, faCheckCircle, faShieldAlt, faMobileAlt, faTimesCircle,
     faUser, faLock, faExchangeAlt, faAngleDoubleDown, faAngleDoubleUp,
-    faExclamationCircle, faYenSign
+    faExclamationCircle, faYenSign, faShareAlt
 );
 Vue.component('font-awesome-icon', FontAwesomeIcon);
+VueClipboard.config.autoSetContainer = true;
+Vue.use(VueClipboard);
 Vue.use(VueLazyLoad, {
     lazyComponent: true,
     error: require('./assets/image/load-error.jpg')

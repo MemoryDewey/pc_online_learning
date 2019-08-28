@@ -77,7 +77,7 @@
                 },
                 //整个表单控件
                 registerForm: {
-                    phone: "", password: "", confirm: "", verify: ""
+                    phone: "", password: "", confirm: "", verify: "", inviteID: null
                 },
                 //用户输入框CSS
                 inputCss: {
@@ -186,6 +186,9 @@
                 if (this.inputCss.hasOwnProperty(item))
                     this.inputCss[item] = this.prepend[item];
             }
+        },
+        created() {
+            if (this.$route.query.uid) this.registerForm.inviteID = this.$route.query.uid;
         }
     }
 </script>

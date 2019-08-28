@@ -23,7 +23,7 @@ let getWeb3 = new Promise(function (resolve, reject) {
                 if (err) {
                     reject(new Error('Unable to retrieve network ID'))
                 } else {
-                    console.log('retrieve newworkId: ' + networkId)
+                    //console.log('retrieve newworkId: ' + networkId)
                     result = Object.assign({}, result, {networkId})
                     resolve(result)
                 }
@@ -37,7 +37,7 @@ let getWeb3 = new Promise(function (resolve, reject) {
                     reject(new Error('Unable to retrieve coinbase'))
                 } else {
                     coinbase = result.web3().utils.toChecksumAddress(coinbase);
-                    console.log('retrieve coinbase: ' + coinbase);
+                    //console.log('retrieve coinbase: ' + coinbase);
                     result = Object.assign({}, result, {coinbase});
                     resolve(result)
                 }

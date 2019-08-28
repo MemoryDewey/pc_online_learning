@@ -37,7 +37,7 @@ export default new Vuex.Store({
             state.nickname = payload;
         },
         registerWeb3Instance(state, payload) {
-            console.log('commited result to registerWeb3Instance mutation');
+            //console.log('commited result to registerWeb3Instance mutation');
             let result = payload;
             let web3Copy = state.web3;
             web3Copy.coinbase = result.coinbase;
@@ -48,19 +48,19 @@ export default new Vuex.Store({
             // pollWeb3();
         },
         pollWeb3Instance(state, payload) {
-            console.log('commited result to pollWeb3Instance mutation, coinbase: ' + payload.coinbase);
+            //console.log('commited result to pollWeb3Instance mutation, coinbase: ' + payload.coinbase);
             state.web3.coinbase = payload.coinbase;
         },
         registerContractInstance(state, payload) {
-            console.log('Casino contract instance: ', payload);
+            //console.log('Casino contract instance: ', payload);
             state.contractInstance = () => payload[0]
         },
     },
     actions: {
         registerWeb3({commit}) {
-            console.log('registerWeb3 Action being executed');
+            //console.log('registerWeb3 Action being executed');
             getWeb3.then(result => {
-                console.log('committing result to registerWeb3Instance mutation');
+                //console.log('committing result to registerWeb3Instance mutation');
                 commit('registerWeb3Instance', result)
             }).catch(e => {
                 console.log('error in action registerWeb3', e)

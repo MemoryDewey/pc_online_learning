@@ -19,18 +19,20 @@
                             <div class="account-money">账户余额</div>
                             <span class="money-main">{{balanceMain}}</span>
                             <span class="money-sub">{{balanceSub}}元</span>
-                            <el-button type="primary" round size="mini" class="balance-btn" plain>充值</el-button>
+                            <el-button type="primary" round size="mini" class="balance-btn" plain
+                                       @click="openMoneyDialog('recharge')">充值
+                            </el-button>
                             <div class="action">
-                                <el-button type="success" round size="small"
+                                <el-button type="success" round size="small" @click="openMoneyDialog('cash')"
                                            class="balance-btn" plain :disabled="balanceMain < 100">提现
                                 </el-button>
                                 <span class="warn" v-if="balanceMain < 100">*当前余额不足100元</span>
                             </div>
                         </el-col>
                         <el-col :span="7" class="meta">
-                            <div>每次提现最小额度为￥100</div>
-                            <div>提现会在 1-5 个工作日内到账</div>
-                            <div>建议提现时间为每日9.00-17.00</div>
+                            <div>每次提现/充值最小额度为￥100</div>
+                            <div>提现/充值会在 1-5 个工作日内到账</div>
+                            <div>建议提现/充值时间为每日9.00-17.00</div>
                             <div>有问题请致电:
                                 <el-link type="primary">400-966-0003</el-link>
                             </div>
@@ -54,10 +56,33 @@
                 </el-table-column>
             </el-table>
             <el-pagination layout="prev, pager, next" background :hide-on-single-page="true"
-                           :total="pageSum*10" class="page" @current-chaneg="getWalletLogs"
+                           :total="pageSum*10" class="page" @current-change="getWalletLogs"
             ></el-pagination>
-            <el-dialog :visible.sync="rechargeDialogVisible" width="500px">
-
+            <el-dialog :visible.sync="moneyDialogVisible" width="500px" :title="dialogTitle"
+                       @close="moneyDialogVisible = false">
+                <el-form label-position="top" :model="dialogForm" :rules="dialogRules" ref="ruleForm">
+                    <el-form-item label="金额" prop="amount">
+                        <el-input-number v-model="dialogForm.amount" size="medium" :precision="2"
+                                         :min="100"></el-input-number>
+                    </el-form-item>
+                    <el-form-item label="支付宝账号" prop="account">
+                        <el-input v-model="dialogForm.account"></el-input>
+                    </el-form-item>
+                    <el-form-item label="支付宝实名" prop="name">
+                        <el-input v-model="dialogForm.name"></el-input>
+                    </el-form-item>
+                    <el-form-item style="text-align: right">
+                        <el-button type="primary" @click="submitMoneyDialog('ruleForm')">提交</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-dialog>
+            <el-dialog title="请用支付宝扫码支付" width="400px" :visible.sync="codeDialogVisible" center>
+                <div class="code-img">
+                    <img :src="'/images/pay/ali.png'" alt="">
+                </div>
+                <span slot="footer" class="dialog-footer">
+                    <el-button type="primary" @click="payFinished">支 付 完 成</el-button>
+                </span>
             </el-dialog>
         </div>
         <footer-wallet></footer-wallet>
@@ -68,8 +93,8 @@
     import Header from "../../components/common/Header";
     import Footer from "../../components/common/Footer";
     import {getPersonalInfo, updateBstAddress} from "../../api/profile";
-    import {getWalletInfo, getWalletLog} from "../../api/wallet";
-    import {Message} from 'element-ui'
+    import {getWalletInfo, getWalletLog, recharge, toCash} from "../../api/wallet";
+    import {Message, MessageBox} from 'element-ui'
 
     export default {
         name: "Wallet",
@@ -95,7 +120,7 @@
             statusFilter(status) {
                 const statusMap = {
                     "Accept": "交易成功",
-                    "Reject": "交易失败",
+                    "Reject": "审核未通过",
                     "Pending": "审核中"
                 };
                 return statusMap[status]
@@ -118,7 +143,24 @@
                 balanceSub: .00,
                 pageSum: 1,
                 walletLogsTable: [],
-                rechargeDialogVisible: false
+                moneyDialogVisible: false,
+                dialogTitle: null,
+                dialogType: null,
+                dialogForm: {
+                    amount: '', account: '', name: ''
+                },
+                dialogRules: {
+                    amount: [
+                        {required: true, message: '请输入金额', trigger: 'blur'}
+                    ],
+                    account: [
+                        {required: true, message: '请输入支付宝账号', trigger: 'blur'}
+                    ],
+                    name: [
+                        {required: true, message: '请输入支付宝实名姓名', trigger: 'blur'}
+                    ],
+                },
+                codeDialogVisible: false
             }
         },
         methods: {
@@ -166,6 +208,68 @@
                         await this.getPersonalInfo();
                     }
                 });
+            },
+            openMoneyDialog(type) {
+                this.moneyDialogVisible = true;
+                if (type === 'recharge') {
+                    this.dialogType = 'R';
+                    this.dialogTitle = "充值";
+                } else {
+                    this.dialogType = 'T';
+                    this.dialogTitle = "提现"
+                }
+            },
+            submitMoneyDialog(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        let msg = `确认${this.dialogType === 'R' ? '充值' : '提现'}${this.dialogForm.amount}元
+                        (支付宝账号${this.dialogForm.account})`;
+                        MessageBox.confirm(msg, "充值/提现", {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消'
+                        }).then(async () => {
+                            if (this.dialogType === 'R') {
+                                this.codeDialogVisible = true;
+                            } else await this.toCash();
+                        });
+                    } else return false;
+                });
+            },
+            async recharge() {
+                let data = {
+                    amount: this.dialogForm.amount,
+                    aliPayInfo: {
+                        account: this.dialogForm.account,
+                        name: this.dialogForm.name
+                    }
+                };
+                let res = await recharge(data);
+                if (res) {
+                    Message.success(res.msg);
+                    this.getWalletInfo();
+                    this.getWalletLogs(1);
+                }
+            },
+            async toCash() {
+                let data = {
+                    amount: this.dialogForm.amount,
+                    aliPayInfo: {
+                        account: this.dialogForm.account,
+                        name: this.dialogForm.name
+                    }
+                };
+                let res = await toCash(data);
+                if (res) {
+                    Message.success(res.msg);
+                    this.moneyDialogVisible = false;
+                    this.getWalletInfo();
+                    this.getWalletLogs(1);
+                }
+            },
+            payFinished(){
+                this.moneyDialogVisible = false;
+                this.codeDialogVisible = false;
+                this.recharge();
             }
         },
         created() {
@@ -269,14 +373,15 @@
                 padding: 10px 34px;
 
                 div {
-                    font-size: 14px;
+                    font-size: 13px !important;
                     color: #969696;
                     margin-bottom: 5px;
                 }
             }
         }
 
-        .el-table {
+        .el-table{
+            margin-bottom: 20px;
             .success {
                 color: #67c23a
             }
@@ -299,8 +404,19 @@
         }
 
         .page {
+            margin-bottom: 20px;
             text-align: center;
-            margin-top: 20px;
+        }
+
+        .code-img {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+
+            img {
+                width: 250px;
+                height: 250px;
+            }
         }
     }
 </style>
