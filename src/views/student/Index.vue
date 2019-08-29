@@ -42,7 +42,7 @@
                                     <img v-lazy="course.courseImage" alt="">
                                     <div class="course-title">{{course.courseName}}</div>
                                     <div class="course-info clear">
-                                        <div style="float: left;color: #e85308;">{{course.price}} BST</div>
+                                        <div style="float: left;color: #e85308;">￥ {{course.price}}</div>
                                         <div class="apply-num">
                                             {{course.applyCount}}人已报名
                                         </div>
