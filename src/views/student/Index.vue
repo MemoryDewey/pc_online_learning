@@ -109,7 +109,7 @@
     import Footer from '../../components/common/Footer'
     import Project from "../teacher/Project";
     import {getIndexCourse} from "../../api/course";
-    import {getIndexProject} from "../../api/project";
+    //import {getIndexProject} from "../../api/project";
 
     export default {
         name: "index",

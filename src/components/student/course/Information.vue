@@ -488,7 +488,7 @@
             },
             //通过BST购买课程
             async byBst() {
-                if (!window.web3)
+                if (!window.web3 && !window.ethereum)
                     Message.warning('您的浏览器不支持BST方式购买');
                 let sendDict = {};
                 sendDict["from"] = this.$store.state.web3.coinbase;
