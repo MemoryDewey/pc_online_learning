@@ -224,7 +224,6 @@
     import InfoComment from './InfoComment'
     import {Message} from 'element-ui'
     import {saveAs} from 'file-saver'
-    import wsClient from 'socket.io-client'
     import {
         applyChargeByBst,
         applyCourseByCash,
@@ -238,6 +237,7 @@
         getVideo
     } from "../../../api/course";
     import {getWalletInfo} from '../../../api/wallet'
+    // import wsClient from 'socket.io-client'
 
     export default {
         name: "Information",
@@ -489,15 +489,12 @@
             //通过BST购买课程
             async byBst() {
                 if (!window.web3 && !window.ethereum)
-                    Message.warning('您的浏览器不支持BST方式购买');
-                let sendDict = {};
-                sendDict["from"] = this.$store.state.web3.coinbase;
-                sendDict["gas"] = 100000;
+                    Message.warning('您的浏览器不支持BST方式购买，请安装MetaMask插件');
                 try {
                     if (this.$store.state.web3.coinbase) {
                         let res = await applyChargeByBst({courseID: this.$route.params.courseID});
                         if (res) {
-                            const socket = wsClient.connect(`${location.origin}`);
+                            /*const socket = wsClient.connect(`${location.origin}`);
                             socket.emit('buyCourse', "");
                             socket.on('message', data => {
                                 if (data.status === 1) {
@@ -506,21 +503,19 @@
                                     this.applyCount = data.result.applyCount;
                                 } else Message.error(data.msg);
                                 socket.close();
-                            });
-                            sendDict["value"] = await this.$store.state.web3.web3Instance()
-                                .utils.toWei(res.data.payAmount.toString(), 'finney');
-                            let TID = "A" + res.data.paymentID;
-                            TID = this.$store.state.web3.web3Instance().utils.fromAscii(TID);
-                            this.$store.state.contractInstance().methods.submitPayment(TID)
-                                .send(sendDict)
-                                .on('receipt', receipt => {
-                                    Message.success('支付成功')
+                            });*/
+                            let value = await this.$store.state.web3.web3Instance()
+                                .utils.toWei('3000', 'finney');
+                            this.$store.state.contractInstance().methods.transfer('0x58fC160868a0C5eA80978B826d05036b7FEf0a12', value)
+                                .send({from: this.$store.state.web3.coinbase})
+                                .on('transactionHash', () => {
+                                    Message.success('已发起交易，请等待交易结果')
                                 })
-                                .on('error', error => {
+                                .on('error', () => {
                                     Message.error('支付失败！')
                                 })
                         }
-                    } else Message.error('MetaMask初始化失败，请检查后重试！')
+                    } else Message.error('MetaMask未登录！')
                 } catch (e) {
                     console.log(e);
                 }
