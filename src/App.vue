@@ -4,11 +4,6 @@
     </div>
 </template>
 <script>
-    import {
-        mapState
-    } from 'vuex'
-    import state from "./store";
-
     export default {
         name: 'App',
         components: {},
@@ -16,18 +11,7 @@
             return {
                 activeIndex: '1',
             }
-        },
-        async beforeCreate() {
-            if (!this.$store.state.web3.web3Instance) {
-                await this.$store.dispatch('registerWeb3');
-                await this.$store.dispatch('getContractInstance');
-            }
-        },
-
-        computed: mapState({
-            contractInstance: state => state.contractInstance,
-            coinbase: state => state.web3.coinbase,
-        })
+        }
     }
 </script>
 <style lang="less">

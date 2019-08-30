@@ -224,10 +224,11 @@
     import InfoComment from './InfoComment'
     import {Message} from 'element-ui'
     import {saveAs} from 'file-saver'
+    import {mapState} from 'vuex'
     import {
         applyChargeByBst,
         applyCourseByCash,
-        applyFree,
+        applyFree, checkBstConfirmation, checkBstStatue,
         examCheck,
         getClass,
         getExamTime,
@@ -335,7 +336,11 @@
                     }
                     return icon;
                 }
-            }
+            },
+            ...mapState({
+                contractInstance: state => state.contractInstance,
+                coinbase: state => state.web3.coinbase
+            })
         },
         methods: {
             //报名课程
@@ -459,9 +464,11 @@
             },
             //购买课程Dialog
             async buyCourseDialogOpen() {
-                this.buyDialogVisible = true;
-                await this.getUserBalance();
-                await this.getBstPrice();
+                if (this.$store.state.loginState) {
+                    this.buyDialogVisible = true;
+                    await this.getUserBalance();
+                    await this.getBstPrice();
+                } else Message.warning('请登录后再进行该操作');
             },
             //获取账户余额
             async getUserBalance() {
@@ -476,49 +483,58 @@
                     return x.symbol = "BST_USDT";
                 });
                 this.getBstSuccess = true;
-                this.bstPrice = ((1 / bstInfo.sell) / 7 * this.course.info.price).toFixed(7)
+                this.bstPrice = ((1 / bstInfo.sell) / 7 * this.course.info.price).toFixed(2)
             },
             //购买课程
             async buyCourse() {
                 if (this.$store.state.loginState) {
-                    this.buyDialogVisible = false;
-                    if (this.payType === 1) await this.byBst();
-                    if (this.payType === 0) await this.byBalance();
+                    if (this.payType === 1) {
+                        if (this.getBstSuccess) {
+                            this.buyDialogVisible = false;
+                            await this.byBst();
+                        } else Message.warning('请在获取到价格后再进行操作')
+                    }
+                    if (this.payType === 0) {
+                        this.buyDialogVisible = false;
+                        await this.byBalance();
+                    }
                 } else Message.warning('请登录后再进行该操作')
             },
             //通过BST购买课程
             async byBst() {
                 if (!window.web3 && !window.ethereum)
                     Message.warning('您的浏览器不支持BST方式购买，请安装MetaMask插件');
-                try {
-                    if (this.$store.state.web3.coinbase) {
-                        let res = await applyChargeByBst({courseID: this.$route.params.courseID});
-                        if (res) {
+                else try {
+                        if (this.$store.state.web3.coinbase) {
                             /*const socket = wsClient.connect(`${location.origin}`);
-                            socket.emit('buyCourse', "");
-                            socket.on('message', data => {
-                                if (data.status === 1) {
-                                    Message.success(data.msg);
-                                    this.hadApply = true;
-                                    this.applyCount = data.result.applyCount;
-                                } else Message.error(data.msg);
-                                socket.close();
-                            });*/
-                            let value = await this.$store.state.web3.web3Instance()
-                                .utils.toWei('3000', 'finney');
-                            this.$store.state.contractInstance().methods.transfer('0x58fC160868a0C5eA80978B826d05036b7FEf0a12', value)
-                                .send({from: this.$store.state.web3.coinbase})
-                                .on('transactionHash', () => {
-                                    Message.success('已发起交易，请等待交易结果')
+                                socket.emit('buyCourse', "");
+                                socket.on('message', data => {
+                                    if (data.status === 1) {
+                                        Message.success(data.msg);
+                                        this.hadApply = true;
+                                        this.applyCount = data.result.applyCount;
+                                    } else Message.error(data.msg);
+                                    socket.close();
+                                });*/
+                            let value = await this.$store.state.web3.web3Instance().utils.toWei(this.bstPrice.toString(), 'ether');
+                            let res = await checkBstStatue({courseID: this.$route.params.courseID});
+                            if (res) this.$store.state.contractInstance().methods.transfer(res.address, value)
+                                .send({from: this.$store.state.web3.coinbase, data: ""})
+                                .on('transactionHash', async hash => {
+                                    Message.success('已发起交易，请等待交易结果');
+                                    let data = {
+                                        courseID: this.$route.params.courseID,
+                                        hash, amount: this.bstPrice
+                                    };
+                                    await applyChargeByBst(data);
                                 })
-                                .on('error', () => {
+                                .on('error', error => {
                                     Message.error('支付失败！')
                                 })
-                        }
-                    } else Message.error('MetaMask未登录！')
-                } catch (e) {
-                    console.log(e);
-                }
+                        } else Message.error('MetaMask未登录！')
+                    } catch (e) {
+                        console.log(e);
+                    }
             },
             //通过余额购买课程
             async byBalance() {
@@ -549,11 +565,18 @@
                 }
             }
         },
+        async mounted(){await checkBstConfirmation({courseID: this.$route.params.courseID});},
         async created() {
             await this.getInfo();
             this.getLive();
             this.getVideoFile();
             this.getClass();
-        }
+        },
+        async beforeCreate() {
+            if (!this.$store.state.web3.web3Instance) {
+                await this.$store.dispatch('registerWeb3');
+                await this.$store.dispatch('getContractInstance');
+            }
+        },
     }
 </script>

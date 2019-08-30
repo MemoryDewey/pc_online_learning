@@ -38,7 +38,7 @@
                         <div class="title">{{course['courseName']}}</div>
                     </router-link>
                 </div>
-                <div class="flex-cell price">{{course['price']===0?'免费':course['price']}}</div>
+                <div class="flex-cell price">{{course['price']===0?'免费':`￥${course['price']}`}}</div>
                 <div class="flex-cell state">已报名</div>
                 <div class="flex-cell score">{{course['score']}}</div>
                 <div class="flex-cell operating">

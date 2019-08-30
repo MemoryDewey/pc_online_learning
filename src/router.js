@@ -18,17 +18,12 @@ const CourseVideo = () => import( './components/student/course/Video');
 const CourseExam = () => import( './components/student/course/CourseExam');
 const CourseWare = () => import( './components/student/course/CourseWare');
 
-const Project = () => import( './views/student/Project');
-const ProjectList = () => import( './components/student/project/List');
-const ProjectInformation = () => import( './components/student/project/Information');
-
 const Profile = () => import( './views/Profile');
 const ProfileCourse = () => import( './components/profile/Course');
 const ProfileCertificate = () => import( './components/profile/Certificate');
 const ProfileExam = () => import( './components/profile/Exam');
 const ProfilePersonal = () => import( './components/profile/Personal');
 const ProfileInvite = () => import('./components/profile/Invite');
-const ProfileProject = () => import( './components/profile/Project');
 const ProfilePaid = () => import( './components/profile/PaidNote');
 
 
@@ -41,12 +36,6 @@ const CPM = () => import( './components/teacher/course/PDFMange');
 const CFM = () => import( './components/teacher/course/FileManage');
 const CLM = () => import( './components/teacher/course/LiveManage');
 const CEM = () => import( './components/teacher/course/ExamManage');
-
-const TeacherProject = () => import( './views/teacher/Project');
-const PAAM = () => import( './components/teacher/project/AttendApplyManagementTeacher');
-const PCAM = () => import( './components/teacher/project/CreateApplyManagementTeacher');
-const PP = () => import( './components/teacher/project/ProjectTeacher');
-const PPM = () => import( './components/teacher/project/ProjectMemberTeacher');
 
 import {checkLogin} from './api/passport'
 
@@ -91,28 +80,6 @@ export default new VueRouter({
             }
         },
 
-        /* 项目 */
-        /*{
-            path: '/project', name: 'Project', component: Project, children: [
-                {path: 'list', name: 'ProjectList', component: ProjectList, meta: {title: '项目实践'}},
-                {path: 'list/:search', name: 'ProjectListSearch', component: ProjectList, meta: {title: '项目实践'}},
-                {
-                    path: ':projectID/information',
-                    name: 'ProjectInformation',
-                    component: ProjectInformation,
-                    meta: {title: '项目信息'}
-                }
-            ],
-            beforeEnter(to, from, next) {
-                checkLogin().then((res) => {
-                    if (res.level === 1) next('/teacher/course/student');
-                    else next();
-                }).catch(() => {
-                    next();
-                });
-            }
-        },*/
-
         /* 课件 */
         {path: '/course-ware', name: 'CourseWare', component: CourseWare, meta: {title: '课件'}},
 
@@ -137,24 +104,6 @@ export default new VueRouter({
                 });
             }
         },
-
-        /* 项目管理 */
-        /*{
-            path: '/teacher/project', name: 'TeacherProject', component: TeacherProject, children: [
-                {path: 'project', name: 'PP', component: PP, meta: {title: '项目管理'}},
-                {path: 'attendapply', name: 'PAAM', component: PAAM, meta: {title: '项目报名申请管理'}},
-                {path: 'createapply', name: 'PCAM', component: PCAM, meta: {title: '项目创建申请管理'}},
-                {path: 'projectmember', name: 'PPM', component: PPM, meta: {title: '项目成员管理'}},
-            ],
-            beforeEnter(to, from, next) {
-                checkLogin().then((res) => {
-                    if (res.level === 1) next();
-                    else next('/404');
-                }).catch(() => {
-                    next('/404');
-                });
-            }
-        },*/
 
         /* 登录注册 */
         {
@@ -195,7 +144,6 @@ export default new VueRouter({
                 {path: 'course', name: 'course', component: ProfileCourse, meta: {title: '我的课程'}},
                 {path: 'exam', name: 'exam', component: ProfileExam, meta: {title: '我的考试'}},
                 {path: 'invite', name: 'invite', component: ProfileInvite, meta: {title: '我的邀请'}},
-                /*{path: 'project', name: 'project', component: ProfileProject, meta: {title: '我的项目'}},*/
                 {path: 'certificate', name: 'certificate', component: ProfileCertificate, meta: {title: '我的证书'}}
             ]
         },

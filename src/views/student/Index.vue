@@ -42,7 +42,7 @@
                                     <img v-lazy="course.courseImage" alt="">
                                     <div class="course-title">{{course.courseName}}</div>
                                     <div class="course-info clear">
-                                        <div style="float: left;color: #e85308;">￥ {{course.price}}</div>
+                                        <div style="float: left;color: #e85308;">￥{{course.price}}</div>
                                         <div class="apply-num">
                                             {{course.applyCount}}人已报名
                                         </div>
@@ -66,38 +66,6 @@
                         </ul>
                     </div>
                 </div>
-                <div class="project" v-if="false">
-                    <div class="header clear">
-                        <ul class="clear">
-                            <li class="active" style="border-right: 0;padding: 0">最新项目</li>
-                        </ul>
-                        <div class="more">
-                            <a @click="canDown = !canDown" v-if="canDown && project.length > 4">展开
-                                <font-awesome-icon icon="angle-double-down"></font-awesome-icon>
-                            </a>
-                            <a @click="canDown = !canDown" v-if="!canDown">收起
-                                <font-awesome-icon icon="angle-double-up"></font-awesome-icon>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="project-container" :class="{down: !canDown}">
-                        <ul class="clear">
-                            <li v-for="pro in project" :key="pro.projectID">
-                                <router-link :to="`/project/${pro.projectID}/information`" tag="div">
-                                    <img v-lazy="pro.projectPic" alt="">
-                                    <div class="project-title">{{pro.projectName}}</div>
-                                    <div class="duration">
-                                        {{pro.projectIntro}}
-                                    </div>
-                                    <div class="project-info">
-                                        <div class="apply-num">{{pro.applyCount}}人已申请</div>
-                                        <div class="reward">项目资金：{{pro.projectFee}} BST</div>
-                                    </div>
-                                </router-link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
         <app-footer></app-footer>
@@ -107,9 +75,7 @@
 <script>
     import Header from '../../components/common/Header'
     import Footer from '../../components/common/Footer'
-    import Project from "../teacher/Project";
     import {getIndexCourse} from "../../api/course";
-    //import {getIndexProject} from "../../api/project";
 
     export default {
         name: "index",
@@ -121,11 +87,8 @@
                 courseFee: true,
                 newActive: {active: true},
                 hotActive: {active: false},
-                projectNew: true,
-                canDown: true,
                 freeCourse: [],
-                chargeCourse: [],
-                project: []
+                chargeCourse: []
             }
         },
         methods: {
@@ -137,7 +100,6 @@
             }
         },
         components: {
-            Project,
             "app-header": Header,
             "app-footer": Footer
         },
@@ -146,8 +108,6 @@
                 let course = await getIndexCourse();
                 this.freeCourse = course.freeCourse;
                 this.chargeCourse = course.chargeCourse;
-                /*let res = await getIndexProject();
-                this.project = res.sqlres;*/
             } catch (e) {
                 console.log(e);
             }
@@ -306,72 +266,6 @@
                         color: #888;
                         font-size: 12px;
                     }
-                }
-            }
-
-            .project {
-                .project-container {
-                    display: block;
-                    width: 100%;
-                    height: 280px;
-                    overflow: hidden;
-
-                    ul {
-                        width: 100%;
-
-                        li {
-                            float: left;
-                            width: 270px;
-                            border-radius: 6px;
-                            border: 1px solid #eee;
-                            margin-right: 40px;
-                            margin-bottom: 25px;
-                            box-sizing: border-box;
-                            text-align: center;
-                            cursor: pointer;
-
-                            a {
-                                text-decoration: none;
-                                cursor: pointer;
-                            }
-
-                            &:nth-child(4n) {
-                                margin-right: 0;
-                            }
-
-                            .project-title {
-                                width: 100%;
-                                text-align: center;
-                                margin-top: 13px;
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                                white-space: nowrap;
-                            }
-
-                            .project-info {
-                                margin-top: 2px;
-                                text-align: left;
-
-                                .apply-num {
-                                    float: left;
-                                    color: #888;
-                                    margin-left: 10px;
-                                    margin-bottom: 5px;
-                                }
-
-                                .reward {
-                                    margin-right: 10px;
-                                    margin-bottom: 5px;
-                                    float: right;
-                                    color: #e85308;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                .down {
-                    height: 560px;
                 }
             }
         }

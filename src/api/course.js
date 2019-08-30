@@ -1,4 +1,5 @@
 import {get, post} from '../utils/request';
+import da from "element-ui/src/locale/lang/da";
 
 export const getCourseType = params => get('/course/list/type', params);
 export const getCourseSystem = () => get('/course/list/system');
@@ -7,11 +8,14 @@ export const getListPage = data => post('/course/list/page', data);
 export const getList = params => get('/course/list', params);
 export const getRecommend = () => get('/course/list/recommend');
 export const getIndexCourse = () => get('/course/list/index-show');
-export const getWalletCourse = params => get('/course/list/user-buy-rmb', params);
+export const getWalletCourse = params => get('/course/list/user-course-rmb', params);
+export const getWalletBstCourse = params => get('/course/list/user-course-bst', params);
 
 export const getInfo = params => get('/course/information', params);
 export const applyFree = data => post('/course/information/apply-free', data);
-export const applyChargeByBst = data => post('/course/information/getPaymentID', data);
+export const applyChargeByBst = data => post('/course/information/buy-course-bst', data);
+export const checkBstStatue = params => get('/course/information/buy-course-bst/statue', params);
+export const checkBstConfirmation = params => get('/course/information/check-bst-confirmation', params);
 export const applyCourseByCash = data => post('/course/information/buy-course', data);
 export const examCheck = params => get('/examine/exam-check', params);
 export const getLive = params => get('/course/information/live', params);

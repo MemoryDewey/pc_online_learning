@@ -40,14 +40,6 @@
                                         <span>我的考试</span>
                                     </router-link>
                                 </li>
-                                <li :class="{'active':active.project}" v-if="false">
-                                    <router-link :to="{name:'project'}">
-                                        <div class="setting-icon">
-                                            <font-awesome-icon icon="tasks"></font-awesome-icon>
-                                        </div>
-                                        <span>我的项目</span>
-                                    </router-link>
-                                </li>
                                 <li :class="{'active':active.invite}">
                                     <router-link :to="{name:'invite'}">
                                         <div class="setting-icon">

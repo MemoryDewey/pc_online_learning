@@ -11,10 +11,10 @@
                 </div>
                 <!--Logo E-->
                 <!--搜索框 S-->
-                <div class="search clearfix" v-if="!$store.state.isTeacher && page === 'course' || page === 'project'">
+                <div class="search clearfix" v-if="!$store.state.isTeacher && page === 'course'">
                     <font-awesome-icon icon="search"></font-awesome-icon>
                     <label>
-                        <input type="text" :placeholder="`搜索${page==='course'?'课程':'项目'}`"
+                        <input type="text" :placeholder="`搜索课程`"
                                v-model="searchContent" @keydown.enter="search">
                     </label>
                     <div class="btn-search" @click="search">搜索</div>
@@ -89,11 +89,6 @@
                             </ul>
                         </div>
                     </li>
-                    <li :class="navActive.project" v-if="false">
-                        <div class="first">
-                            <router-link to="/project/list">项目实践</router-link>
-                        </div>
-                    </li>
                     <li :class="navActive.profile">
                         <router-link tag="div" class="first" :to="{name:'personal'}">个人中心</router-link>
                         <div class="second">
@@ -144,27 +139,6 @@
                             </ul>
                         </div>
                     </li>
-                    <li :class="navActive.projectMng" v-if="false">
-                        <div class="first">
-                            <router-link to="/teacher/project/project">项目管理</router-link>
-                        </div>
-                        <div class="second">
-                            <ul>
-                                <li>
-                                    <router-link to="/teacher/project/project">项目管理</router-link>
-                                </li>
-                                <li>
-                                    <router-link to="/teacher/project/projectmember">成员管理</router-link>
-                                </li>
-                                <li>
-                                    <router-link to="/teacher/project/attendapply">报名申请管理</router-link>
-                                </li>
-                                <li>
-                                    <router-link to="/teacher/project/createapply">创建申请管理</router-link>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
                     <li :class="navActive.profile">
                         <router-link tag="div" class="first" :to="{name:'personal'}">个人中心</router-link>
                         <div class="second">
@@ -210,10 +184,8 @@
                 navActive: {
                     home: {active: false},
                     course: {active: false},
-                    project: {active: false},
                     profile: {active: false},
                     courseMng: {active: false},
-                    projectMng: {active: false},
                     notFound: {active: false},
                     wallet: {active: false}
                 },
