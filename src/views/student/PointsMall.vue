@@ -5,13 +5,47 @@
             <div class="banner">
                 <div class="user-card clearfix">
                     <div class="user-box">
-                        <div class="info"></div>
-                        <div class="operating"></div>
+                        <div class="info">
+                            <el-row>
+                                <el-col :span="9">
+                                    <div class="avatar"></div>
+                                </el-col>
+                                <el-col :span="15">
+                                    <div class="info-detail">
+                                        <div>默认用户名</div>
+                                        <div style="color: #999">积分：<span style="color: #F56C6C">520</span></div>
+                                        <div class="points-detail">积分明细</div>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                        </div>
+                        <div class="operating">
+                            <el-row>
+                                <el-col :span="9">
+                                    <div class="op-icon">
+                                        <font-awesome-icon icon="map-marker-alt" size="lg"></font-awesome-icon>
+                                    </div>
+                                </el-col>
+                                <el-col :span="15">
+                                    <div class="op-text">管理收获地址</div>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="9">
+                                    <div class="op-icon">
+                                        <font-awesome-icon icon="exchange-alt" size="lg"></font-awesome-icon>
+                                    </div>
+                                </el-col>
+                                <el-col :span="15">
+                                    <div class="op-text">积分兑换记录</div>
+                                </el-col>
+                            </el-row>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="main">
-                <div class="mall-card-title clearfix"><span>免淘网热销</span></div>
+                <div class="mall-card-title clearfix"><span>免淘网热门兑换</span></div>
                 <ul class="mall-card-list clearfix">
                     <li class="mall-card-item">
                         <el-card :body-style="{ padding: '0px'}" shadow="hover" class="mall-card">
@@ -149,6 +183,8 @@
 
 <style lang="less">
     .points-mall {
+        text-align: left;
+
         .banner {
             width: 100%;
             height: 250px;
@@ -158,7 +194,8 @@
             .user-card {
                 width: 1075px;
                 margin: 0 auto;
-                .user-box{
+
+                .user-box {
                     height: 200px;
                     width: 240px;
                     background-color: #fff;
@@ -166,12 +203,57 @@
                     position: relative;
                     float: right;
                     box-sizing: border-box;
-                    .info{
-                        height: 40%;
+
+                    .info {
+                        height: 45%;
+                        width: 100%;
                         border-bottom: 1px solid #ddd;
+
+                        .avatar {
+                            width: 50px;
+                            height: 50px;
+                            border: 1px solid #ddd;
+                            border-radius: 50%;
+                            margin: 19px;
+
+                            img {
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+
+                        .info-detail {
+                            font-size: 14px;
+                            line-height: 20px;
+                            margin: 15px;
+
+                            .points-detail {
+                                color: #409eff;
+                                cursor: pointer;
+                            }
+                        }
                     }
-                    .operating{
-                        height: 60%;
+
+                    .operating {
+                        width: 100%;
+
+                        .el-row {
+                            margin-top: 20px;
+                            cursor: pointer;
+
+                            &:hover {
+                                color: #409eff;
+                            }
+                        }
+
+                        .op-icon {
+                            text-align: center;
+                        }
+
+                        .op-text {
+                            margin-left: 15px;
+                            font-size: 16px;
+                        }
                     }
                 }
             }
@@ -184,7 +266,6 @@
             .mall-card-title {
                 margin: 40px 30px 20px 15px;
                 border-bottom: 1px solid #ddd;
-                text-align: left;
                 font-size: 22px;
                 line-height: 22px;
 
@@ -193,6 +274,7 @@
                     display: inline-block;
                     padding-bottom: 20px;
                     color: #666;
+                    border-bottom: 1px solid #409ef0;
                 }
             }
 
@@ -217,7 +299,6 @@
                     .mall-card {
                         width: 235px;
                         height: 346px;
-                        text-align: left;
 
                         .image {
                             width: 235px;
