@@ -18,6 +18,8 @@ const CourseVideo = () => import( './components/student/course/Video');
 const CourseExam = () => import( './components/student/course/CourseExam');
 const CourseWare = () => import( './components/student/course/CourseWare');
 
+const PointsMall = () => import('./views/student/PointsMall');
+
 const Profile = () => import( './views/Profile');
 const ProfileCourse = () => import( './components/profile/Course');
 const ProfileCertificate = () => import( './components/profile/Certificate');
@@ -46,7 +48,7 @@ export default new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [
-        /* 课程 */
+        //课程
         {
             path: '/course', name: 'Course', component: Course, children: [
                 {path: 'list', name: 'CourseList', component: CourseList, meta: {title: '在线学习'}},
@@ -80,10 +82,10 @@ export default new VueRouter({
             }
         },
 
-        /* 课件 */
+        ///课件
         {path: '/course-ware', name: 'CourseWare', component: CourseWare, meta: {title: '课件'}},
 
-        /* 课程管理 */
+        //课程管理
         {
             path: '/teacher/course', name: 'TeacherCourse', component: TeacherCourse, children: [
                 {path: 'student', name: 'CSM', component: CSM, meta: {title: '学生管理'}},
@@ -105,7 +107,7 @@ export default new VueRouter({
             }
         },
 
-        /* 登录注册 */
+        //登录注册
         {
             path: '/passport', name: 'Passport', component: Passport, children: [
                 {path: 'login', name: 'Login', component: Login, meta: {title: '登录'}},
@@ -114,7 +116,7 @@ export default new VueRouter({
             ]
         },
 
-        /* 主页 */
+        //主页
         {
             path: '/', name: 'Index', component: Index, meta: {title: "区块链在线学习平台"},
             beforeEnter(to, from, next) {
@@ -127,7 +129,7 @@ export default new VueRouter({
             }
         },
 
-        /* 个人中心 */
+        //个人中心
         {
             path: '/profile', name: 'Profile', component: Profile,
             beforeEnter(to, from, next) {
@@ -148,9 +150,7 @@ export default new VueRouter({
             ]
         },
 
-        /**
-         * 钱包
-         */
+        //钱包
         {
             path: '/wallet', name: 'Wallet', component: Wallet, meta: {title: '我的钱包'},
             beforeEnter(to, from, next) {
@@ -163,7 +163,10 @@ export default new VueRouter({
             }
         },
 
-        /* 404 */
+        //积分商城
+        {path: '/points-mall', name: 'PointsMall', component: PointsMall, meta: {title: '积分商城'}},
+
+        //404
         {
             path: '/404', name: 'Error', component: Error, meta: {title: '错误'}
         }

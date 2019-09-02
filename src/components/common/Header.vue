@@ -47,6 +47,12 @@
                                     </router-link>
                                 </li>
                                 <li>
+                                    <router-link to="/points-mall">
+                                        <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
+                                        积分商城
+                                    </router-link>
+                                </li>
+                                <li>
                                     <router-link :to="{name:'personal'}">
                                         <font-awesome-icon icon="cog"></font-awesome-icon>
                                         设置
@@ -55,7 +61,8 @@
                                 <li>
                                     <a @click="exit">
                                         <font-awesome-icon icon="sign-out-alt"></font-awesome-icon>
-                                        退出</a>
+                                        退出
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -95,9 +102,6 @@
                             <ul>
                                 <li>
                                     <router-link to="/profile/course">我的课程</router-link>
-                                </li>
-                                <li v-if="false">
-                                    <router-link to="/profile/project">我的项目</router-link>
                                 </li>
                                 <li>
                                     <router-link to="/profile/certificate">
@@ -146,10 +150,10 @@
                                 <li>
                                     <a>个人信息</a>
                                 </li>
-                                <li>
+                                <li v-if="false">
                                     <a>直播课表</a>
                                 </li>
-                                <li>
+                                <li v-if="false">
                                     <a>
                                         我的钱包
                                     </a>
@@ -187,7 +191,8 @@
                     profile: {active: false},
                     courseMng: {active: false},
                     notFound: {active: false},
-                    wallet: {active: false}
+                    wallet: {active: false},
+                    pointsMall: {active: false}
                 },
                 loginState: false,
                 courseSystem: null,

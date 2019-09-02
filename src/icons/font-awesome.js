@@ -9,7 +9,7 @@ import {
     faFilePdf, faFilePowerpoint, faFileWord, faFileExcel, faStar, faCheck,
     faTimes, faPlus, faCheckCircle, faShieldAlt, faMobileAlt, faTimesCircle,
     faUser, faLock, faExchangeAlt, faAngleDoubleUp, faAngleDoubleDown,
-    faExclamationCircle, faYenSign, faShareAlt, faShoppingCart
+    faExclamationCircle, faYenSign, faShareAlt, faShoppingCart, faDatabase
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -20,6 +20,6 @@ library.add(
     faFilePdf, faFilePowerpoint, faFileWord, faFileExcel, faStar, faCheck,
     faTimes, faPlus, faCheckCircle, faShieldAlt, faMobileAlt, faTimesCircle,
     faUser, faLock, faExchangeAlt, faAngleDoubleDown, faAngleDoubleUp,
-    faExclamationCircle, faYenSign, faShareAlt, faShoppingCart
+    faExclamationCircle, faYenSign, faShareAlt, faShoppingCart, faDatabase
 );
 export default FontAwesomeIcon

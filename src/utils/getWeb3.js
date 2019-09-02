@@ -5,7 +5,7 @@ let getWeb3 = new Promise(async (resolve, reject) => {
     try {
         if(!window.ethereum || !window.web3){
             // If no injected web3 instance is detected, fall back to Ganache
-            reject('Your browser need install MetaMask')
+            reject('Your browser need install MetaMask plugin to payment!')
         }
         if (window.ethereum) {
             web3Provider = window.ethereum;
