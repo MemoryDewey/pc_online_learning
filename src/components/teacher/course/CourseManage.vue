@@ -207,7 +207,7 @@
             /* 输入的课程价格是否合法 */
             const validatePrice = (rule, value, callback) => {
                 if (value === '') callback('请输入课程价格');
-                else if (!Number.isInteger(value)) callback('请输入数字');
+                else if (!Number.isInteger(parseInt(value))) callback('请输入整数数字');
                 else if (value <= 0) callback('课程价格必须大于0');
                 else callback();
             };

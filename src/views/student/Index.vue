@@ -7,7 +7,7 @@
                     <el-carousel-item>
                         <a style="background-color: #010004" class="banner-slide-a" href="https://www.blockchain.com/zh"
                            target="_blank">
-                            <img alt="" src="../../assets/image/block-chain.jpg" class="banner-slide-img">
+                            <img alt="" src="../../assets/image/bass-study.jpg">
                         </a>
                     </el-carousel-item>
                     <el-carousel-item>
@@ -159,7 +159,6 @@
         .banner-slide-img {
             display: block;
             height: 400px;
-            width: 710px;
             margin: 0 auto;
             position: relative;
         }
