@@ -167,11 +167,96 @@
                 </ul>
             </div>
             <el-dialog width="600px" title="管理收货地址（最多添加3个收获地址）" @close="addressDialogVisible = false"
-                       :visible.sync="addressDialogVisible" custom-class="address-dialog">
-                <div class="no-address">
+                       :visible.sync="addressDialogVisible" @opened="addrDialogOpen"
+                       custom-class="address-dialog">
+                <div class="no-address" v-if="false">
                     <font-awesome-icon icon="map-marked-alt"></font-awesome-icon>
                     <div class="info">您还没有收货地址哦~</div>
                 </div>
+                <el-card class="address-card">
+                    <div class="clearfix" slot="header">
+                        <div class="close"><el-button type="text" icon="el-icon-close"></el-button></div>
+                        <div class="name">收货人</div>
+                        <el-tag type="primary" size="small">默认地址</el-tag>
+                    </div>
+                    <el-row>
+                        <el-col :span="12">
+                            <label>收货人：</label>
+                        </el-col>
+                        <el-col :span="12">
+                            <label>手机号码：</label>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12">
+                            <label>所在地区：</label>
+                        </el-col>
+                        <el-col :span="12">
+                            <label>详细地址：</label>
+                            <span></span>
+                        </el-col>
+                    </el-row>
+                    <div class="operating">
+                        <el-button type="text" size="medium">设为默认</el-button>
+                        <el-button type="text" size="medium">编辑</el-button>
+                    </div>
+                </el-card>
+                <el-card class="address-card">
+                    <div class="clearfix" slot="header">
+                        <div class="close"><el-button type="text" icon="el-icon-close"></el-button></div>
+                        <div class="name">收货人</div>
+                        <el-tag type="primary" size="small">默认地址</el-tag>
+                    </div>
+                    <el-row>
+                        <el-col :span="12">
+                            <label>收货人：</label>
+                        </el-col>
+                        <el-col :span="12">
+                            <label>手机号码：</label>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12">
+                            <label>所在地区：</label>
+                        </el-col>
+                        <el-col :span="12">
+                            <label>详细地址：</label>
+                            <span></span>
+                        </el-col>
+                    </el-row>
+                    <div class="operating">
+                        <el-button type="text" size="medium">设为默认</el-button>
+                        <el-button type="text" size="medium">编辑</el-button>
+                    </div>
+                </el-card>
+                <el-card class="address-card">
+                    <div class="clearfix" slot="header">
+                        <div class="close"><el-button type="text" icon="el-icon-close"></el-button></div>
+                        <div class="name">收货人</div>
+                        <el-tag type="primary" size="small">默认地址</el-tag>
+                    </div>
+                    <el-row>
+                        <el-col :span="12">
+                            <label>收货人：</label>
+                        </el-col>
+                        <el-col :span="12">
+                            <label>手机号码：</label>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12">
+                            <label>所在地区：</label>
+                        </el-col>
+                        <el-col :span="12">
+                            <label>详细地址：</label>
+                            <span></span>
+                        </el-col>
+                    </el-row>
+                    <div class="operating">
+                        <el-button type="text" size="medium">设为默认</el-button>
+                        <el-button type="text" size="medium">编辑</el-button>
+                    </div>
+                </el-card>
                 <template slot="footer">
                     <el-button type="primary" @click="addAddrDialogVis = true">添加收货地址</el-button>
                 </template>
@@ -185,7 +270,7 @@
                     <el-form-item label="手机号码" prop="phone">
                         <el-input v-model="ruleForm.phone" placeholder="请填写正确的11位手机号码"></el-input>
                     </el-form-item>
-                    <el-form-item label="收获地区" required>
+                    <el-form-item label="收货地区" required>
                         <el-col :span="8">
                             <el-select v-model="ruleForm.province" placeholder="请选择省份" value="" @change="getCity">
                                 <el-option v-for="province in provinces" :key="province.code"
@@ -206,13 +291,17 @@
                         </el-col>
                     </el-form-item>
                     <el-form-item label="详细地址" prop="detail">
-                        <el-input type="textarea" v-model="ruleForm.detail" placeholder="无需重复填写省市区"></el-input>
+                        <el-input type="textarea" v-model="ruleForm.detail"
+                                  placeholder="无需重复填写省市区(长度在150个字符以内)"></el-input>
                     </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary">保存地址</el-button>
-                        <el-button >取消</el-button>
+                    <el-form-item label="设为默认" style="text-align: left">
+                        <el-switch v-model="ruleForm.default" :active-value="1" :inactive-value="0"></el-switch>
                     </el-form-item>
                 </el-form>
+                <template slot="footer">
+                    <el-button type="primary" @click="addAddress('ruleForm')">添加收货地址</el-button>
+                    <el-button @click="addAddrDialogVis = false">取消</el-button>
+                </template>
             </el-dialog>
         </div>
         <footer-mall></footer-mall>
@@ -224,6 +313,8 @@
     import Footer from "../../components/common/Footer";
     import {getPointInfo} from "../../api/point-mall";
     import regions from "china-citys"
+    import {addAddress, getAddress} from "../../api/shipping-address";
+    import {Message} from 'element-ui'
 
     export default {
         name: "PointsMall",
@@ -248,7 +339,8 @@
                     province: '',
                     city: '',
                     area: '',
-                    detail: ''
+                    detail: '',
+                    default: 0
                 },
                 rules: {
                     name: [
@@ -268,7 +360,8 @@
                         {required: true, message: '请选择区域', trigger: 'change'}
                     ],
                     detail: [
-                        {required: true, message: '请填写详细收获地址', trigger: 'blur'}
+                        {required: true, message: '请填写详细收货地址', trigger: 'blur'},
+                        {min: 5, max: 150, message: '收货地址长度在 5 到 150 个字符', trigger: 'blur'}
                     ]
                 },
                 provinces: [],
@@ -284,6 +377,9 @@
                     avatar: res.info['UserInformation'].avatarUrl,
                     points: res.info.points
                 }
+            },
+            addrDialogOpen(){
+              this.getAddress();
             },
             addAddrDialogOpen() {
                 this.provinces = regions.getProvinces();
@@ -304,6 +400,20 @@
             getArea(city) {
                 this.ruleForm.area = '';
                 this.areas = regions.getAreasByCity(city);
+            },
+            async getAddress() {
+                let res = await getAddress();
+            },
+            async addAddress(formName) {
+                this.$refs[formName].validate(async (valid) => {
+                    if (valid) {
+                        let res = await addAddress(this.ruleForm);
+                        if (res) {
+                            Message.success(res.msg);
+                            this.addAddrDialogClose();
+                        }
+                    } else return false;
+                });
             }
         },
         async created() {
@@ -319,7 +429,7 @@
         .banner {
             width: 100%;
             height: 250px;
-            background-image: url("../../assets/image/mall-banner.jpg");
+            background: url("../../assets/image/mall-banner.jpg") no-repeat #0f62db center;
 
 
             .user-card {
@@ -493,6 +603,41 @@
                     .info {
                         margin-top: 20px;
                         font-size: 18px;
+                    }
+                }
+
+                .address-card {
+                    margin-bottom: 20px;
+                    text-align: left;
+
+                    .el-card__header {
+                        border-bottom: none;
+                        padding: 10px;
+                        .name {
+                            font-size: 16px;
+                            float: left;
+                        }
+                        .close{
+                            float: right;
+                            .el-button{
+                                padding: 0;
+                            }
+                        }
+                        .el-tag{
+                            margin-left: 8px;
+                        }
+                    }
+                    .el-card__body{
+                       padding: 0 20px 10px 10px;
+                        label{
+                            color: #999;
+                        }
+                        .el-row{
+                            margin-bottom: 20px;
+                        }
+                        .operating{
+                            text-align: right;
+                        }
                     }
                 }
             }
