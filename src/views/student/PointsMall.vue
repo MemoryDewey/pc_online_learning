@@ -53,7 +53,7 @@
                     <li class="mall-card-item" v-for="commodity in commodities" :key="commodity.id">
                         <el-card shadow="hover" class="mall-card" :class="{'sell-out':commodity['inventory'] === 0}"
                                  :body-style="{ padding: '0px'}">
-                            <el-image :src="commodity.cover" class="image">
+                            <el-image :src="commodity.cover" class="image" lazy>
                                 <template slot="error">
                                     <img src="../../assets/image/commodity-error.jpg" alt>
                                 </template>

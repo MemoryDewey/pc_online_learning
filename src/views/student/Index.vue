@@ -5,8 +5,7 @@
             <div class="banner-slide">
                 <el-carousel trigger="click" height="400px">
                     <el-carousel-item>
-                        <a style="background-color: #010004" class="banner-slide-a" href="https://www.blockchain.com/zh"
-                           target="_blank">
+                        <a style="background-color: #313692" class="banner-slide-a">
                             <img alt="" src="../../assets/image/bass-study.jpg">
                         </a>
                     </el-carousel-item>
@@ -17,7 +16,7 @@
                         </a>
                     </el-carousel-item>
                     <el-carousel-item>
-                        <a style="background-color: #131313" class="banner-slide-a" href="https://www.ethereum.org/"
+                        <a style="background-color: #101010" class="banner-slide-a" href="https://www.ethereum.org/"
                            target="_blank">
                             <img alt="" src="../../assets/image/ethereum.png" class="banner-slide-img">
                         </a>
