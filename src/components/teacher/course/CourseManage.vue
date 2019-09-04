@@ -17,7 +17,7 @@
             <el-table :data="tableData" style="width: 100%" :border="true">
                 <el-table-column type="expand">
                     <template slot-scope="props">
-                        <el-form label-position="left" inline class="demo-table-expand">
+                        <el-form label-position="left" inline>
                             <el-form-item label="课程名称">
                                 <span>{{ props.row.cname }} <el-tag size="small">{{props.row.live?"直播课":"录播课"}}</el-tag>
                                 </span>
@@ -56,7 +56,7 @@
                 </el-table-column>
                 <el-table-column label="课程名称" prop="cname">
                 </el-table-column>
-                <el-table-column label="课程描述" prop="desc" :show-overflow-tooltip="true">
+                <el-table-column label="课程描述" prop="desc">
                 </el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">

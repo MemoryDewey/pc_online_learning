@@ -27,26 +27,27 @@
                 </div>
                 <div v-else class="login">
                     <div class="user">
-                        <div class="message" v-if="$store.state.isTeacher && false">
+                        <!--<div class="message" v-if="$store.state.isTeacher && false">
                             <a>
                                 <el-badge :value="5" :max="99" class="badge" type="primary">
                                     <font-awesome-icon icon="envelope"></font-awesome-icon>
                                 </el-badge>
                             </a>
-                        </div>
+                        </div>-->
                         <div class="info">
                             <a>
                                 <img alt="头像" :src="avatarUrl">
                                 <span>{{nickname}}</span>
                             </a>
-                            <ul :class="{'dropdown-list':true,'teacher-dropdown':$store.state.isTeacher}">
-                                <li>
+                            //:class="{'dropdown-list':true,'teacher-dropdown':$store.state.isTeacher}"
+                            <ul class="dropdown-list">
+                                <li v-if="!$store.state.isTeacher">
                                     <router-link to="/wallet">
                                         <font-awesome-icon icon="wallet"></font-awesome-icon>
                                         我的钱包
                                     </router-link>
                                 </li>
-                                <li>
+                                <li v-if="!$store.state.isTeacher">
                                     <router-link to="/points-mall">
                                         <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
                                         积分商城

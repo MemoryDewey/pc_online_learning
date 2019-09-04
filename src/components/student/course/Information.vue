@@ -212,7 +212,7 @@
                 </div>
             </div>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="centerDialogVisible = false">取 消</el-button>
+                <el-button @click="buyDialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="buyCourse">确 定</el-button>
             </span>
         </el-dialog>
