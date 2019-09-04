@@ -100,7 +100,11 @@
                                 <!--图片-->
                                 <div class="left">
                                     <div class="c-img">
-                                        <img v-lazy="`${course.courseImage}`" alt="">
+                                        <el-image :src="course.courseImage" lazy>
+                                            <template slot="error">
+                                                <img src="../../../assets/image/commodity-error.jpg" alt>
+                                            </template>
+                                        </el-image>
                                     </div>
                                 </div>
                                 <!--内容-->
@@ -148,7 +152,11 @@
                             :key="recommend.courseID"
                             @click="gotoCourseInfo(`/course/${recommend.courseID}/information`)">
                             <a class="item-img-link">
-                                <img v-lazy="`${recommend.courseImage}`" alt="">
+                                <el-image :src="recommend.courseImage" lazy>
+                                    <template slot="error">
+                                        <img src="../../../assets/image/commodity-error.jpg" alt>
+                                    </template>
+                                </el-image>
                             </a>
                             <h4 class="item-title">
                                 <a class="item-title-link">{{recommend.courseName}}</a>
@@ -191,8 +199,11 @@
         },
         methods: {
             gotoCourseInfo(path) {
-                let url = this.$router.resolve({path});
-                window.open(url.href, "_blank");
+                /*以新窗口的方式打开*/
+                /*let url = this.$router.resolve({path});
+                window.open(url.href, "_blank");*/
+                /*直接打开*/
+                this.$router.push({path});
             },
             changeUrl(val) {
                 let systemQuery = val.system === undefined ? '' : `system=${val.system}`;

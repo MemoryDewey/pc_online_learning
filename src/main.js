@@ -6,16 +6,12 @@ import axios from 'axios'
 import ELEMENT from 'element-ui'
 import VueClipboard from 'vue-clipboard2'
 // import 'element-ui/lib/theme-chalk/index.css'
-import VueLazyLoad from 'vue-lazyload'
 import FontAwesomeIcon from "./icons/font-awesome";
+import {checkLogin} from './api/passport'
 
-Vue.component('font-awesome-icon',FontAwesomeIcon);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 VueClipboard.config.autoSetContainer = true;
 Vue.use(VueClipboard);
-Vue.use(VueLazyLoad, {
-    lazyComponent: true,
-    error: require('./assets/image/load-error.jpg')
-});
 Vue.use({
     install() {
         Vue.prototype.destroy = Vue.prototype.$destroy;
@@ -32,10 +28,20 @@ router.beforeEach((to, from, next) => {
         }) : next('/404');
     } else {
         /* 路由发生变化修改页面title */
-        if (to.meta.title) {
-            document.title = to.meta.title
+        if (to.meta.requireAuth) {
+            checkLogin().then((res) => {
+                if (res.status === 1) {
+                    if (to.meta.title) document.title = to.meta.title;
+                    next();
+                }
+                else next('/passport/login');
+            }).catch(() => {
+                next('/passport/login');
+            });
+        } else  {
+            if (to.meta.title) document.title = to.meta.title;
+            next()
         }
-        next()
     }
 });
 new Vue({

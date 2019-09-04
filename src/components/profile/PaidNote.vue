@@ -28,7 +28,11 @@
                     </div>
                     <div class="flex-row content">
                         <div class="flex-cell first cover">
-                            <img v-lazy="course['CourseInformation'].courseImage" alt=""/>
+                            <el-image :src="course['CourseInformation'].courseImage">
+                                <template slot="error">
+                                    <img src="../../assets/image/commodity-error.jpg" alt>
+                                </template>
+                            </el-image>
                             <div class="title">{{course['CourseInformation'].courseName}}</div>
                         </div>
                         <div class="flex-cell first state">￥{{course.amount}}</div>
@@ -67,7 +71,11 @@
                     </div>
                     <div class="flex-row content">
                         <div class="flex-cell first cover">
-                            <img v-lazy="course['CourseInformation'].courseImage" alt=""/>
+                            <el-image :src="course['CourseInformation'].courseImage">
+                                <template slot="error">
+                                    <img src="../../assets/image/commodity-error.jpg" alt>
+                                </template>
+                            </el-image>
                             <div class="title">{{course['CourseInformation'].courseName}}</div>
                         </div>
                         <div class="flex-cell first state">{{course.amount}} BST</div>

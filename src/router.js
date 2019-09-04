@@ -54,17 +54,17 @@ export default new VueRouter({
                 {path: 'list', name: 'CourseList', component: CourseList, meta: {title: '在线学习'}},
                 {path: 'list/:search', name: 'CourseListSearch', component: CourseList, meta: {title: '在线学习'}},
                 {
-                    path: ':courseID', name: 'CourseVideo', component: CourseVideo, meta: {title: '课程视频'},
-                    beforeEnter(to, from, next) {
-                        checkLogin().then((res) => {
-                            if (res.status === 1) next();
-                            else next('/passport/login');
-                        }).catch(() => {
-                            next('/passport/login');
-                        });
-                    },
+                    path: ':courseID',
+                    name: 'CourseVideo',
+                    component: CourseVideo,
+                    meta: {title: '课程视频', requireAuth: true}
                 },
-                {path: ':courseID/exam', name: 'CourseExam', component: CourseExam, meta: {title: '期末测验'}},
+                {
+                    path: ':courseID/exam',
+                    name: 'CourseExam',
+                    component: CourseExam,
+                    meta: {title: '期末测验', requireAuth: true}
+                },
                 {
                     path: ':courseID/information',
                     name: 'CourseInformation',
@@ -132,43 +132,33 @@ export default new VueRouter({
         //个人中心
         {
             path: '/profile', name: 'Profile', component: Profile,
-            beforeEnter(to, from, next) {
-                checkLogin().then((res) => {
-                    if (res.status === 1) next();
-                    else next('/passport/login');
-                }).catch(() => {
-                    next('/passport/login');
-                });
-            },
             children: [
-                {path: 'personal', name: 'personal', component: ProfilePersonal, meta: {title: '个人信息'}},
-                {path: 'paid', name: 'paid', component: ProfilePaid, meta: {title: '已购课程'}},
-                {path: 'course', name: 'course', component: ProfileCourse, meta: {title: '我的课程'}},
-                {path: 'exam', name: 'exam', component: ProfileExam, meta: {title: '我的考试'}},
-                {path: 'invite', name: 'invite', component: ProfileInvite, meta: {title: '我的邀请'}},
-                {path: 'certificate', name: 'certificate', component: ProfileCertificate, meta: {title: '我的证书'}}
+                {
+                    path: 'personal',
+                    name: 'personal',
+                    component: ProfilePersonal,
+                    meta: {title: '个人信息', requireAuth: true}
+                },
+                {path: 'paid', name: 'paid', component: ProfilePaid, meta: {title: '已购课程', requireAuth: true}},
+                {path: 'course', name: 'course', component: ProfileCourse, meta: {title: '我的课程', requireAuth: true}},
+                {path: 'exam', name: 'exam', component: ProfileExam, meta: {title: '我的考试', requireAuth: true}},
+                {path: 'invite', name: 'invite', component: ProfileInvite, meta: {title: '我的邀请', requireAuth: true}},
+                {
+                    path: 'certificate',
+                    name: 'certificate',
+                    component: ProfileCertificate,
+                    meta: {title: '我的证书', requireAuth: true}
+                }
             ]
         },
 
         //钱包
-        {
-            path: '/wallet', name: 'Wallet', component: Wallet, meta: {title: '我的钱包'},
-            beforeEnter(to, from, next) {
-                checkLogin().then((res) => {
-                    if (res.status === 1) next();
-                    else next('/passport/login');
-                }).catch(() => {
-                    next('/passport/login');
-                });
-            }
-        },
+        {path: '/wallet', name: 'Wallet', component: Wallet, meta: {title: '我的钱包', requireAuth: true},},
 
         //积分商城
-        {path: '/points-mall', name: 'PointsMall', component: PointsMall, meta: {title: '积分商城'}},
+        {path: '/points-mall', name: 'PointsMall', component: PointsMall, meta: {title: '积分商城'}, requireAuth: true},
 
         //404
-        {
-            path: '/404', name: 'Error', component: Error, meta: {title: '错误'}
-        }
+        {path: '/404', name: 'Error', component: Error, meta: {title: '错误'}}
     ]
 })

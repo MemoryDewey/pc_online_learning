@@ -38,7 +38,11 @@
                         <ul class="clear">
                             <li v-for="course in chargeCourse" :key="course.courseID">
                                 <router-link :to="{path:`/course/${course.courseID}/information`}">
-                                    <img v-lazy="course.courseImage" alt="">
+                                    <el-image :src="course.courseImage" lazy>
+                                        <template slot="error">
+                                            <img src="../../assets/image/commodity-error.jpg" alt>
+                                        </template>
+                                    </el-image>
                                     <div class="course-title">{{course.courseName}}</div>
                                     <div class="course-info clear">
                                         <div style="float: left;color: #e85308;">￥{{course.price}}</div>
@@ -54,7 +58,11 @@
                         <ul class="clear">
                             <li v-for="course in freeCourse" :key="course.courseID">
                                 <router-link :to="{path:`/course/${course.courseID}/information`}">
-                                    <img v-lazy="course.courseImage" alt="">
+                                    <el-image :src="course.courseImage" lazy>
+                                        <template slot="error">
+                                            <img src="../../assets/image/commodity-error.jpg" alt>
+                                        </template>
+                                    </el-image>
                                     <div class="course-title">{{course.courseName}}</div>
                                     <div class="course-info clear">
                                         <div style="float: left;color: #42c02e;">免费</div>

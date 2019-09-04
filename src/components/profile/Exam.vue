@@ -32,7 +32,11 @@
             <div class="flex-row content">
                 <div class="flex-cell first cover">
                     <router-link :to="`/course/${course['courseID']}`">
-                        <img v-lazy="`${course.image}`" alt="">
+                        <el-image :src="course.image">
+                            <template slot="error">
+                                <img src="../../assets/image/commodity-error.jpg" alt>
+                            </template>
+                        </el-image>
                         <div class="title">{{course['courseName']}}</div>
                     </router-link>
                 </div>

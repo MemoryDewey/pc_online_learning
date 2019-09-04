@@ -9,7 +9,11 @@
                     <!--课程详情 S-->
                     <div class="study-img-text">
                         <div class="study-img-left">
-                            <img v-lazy="`${course.info['courseImage']}`" alt="">
+                            <el-image :src="course.images">
+                                <template slot="error">
+                                    <img src="../../../assets/image/commodity-error.jpg" alt>
+                                </template>
+                            </el-image>
                         </div>
                         <div class="study-text-right">
                             <h1 class="text-title">{{bread.courseName}}</h1>
@@ -60,18 +64,18 @@
                     <div class="main">
                         <div class="tabs">
                             <div class="tabs-title-bar">
-                                <h2 :class="{'tabs-title':true,active:tabsTitle.courseDetail}"
+                                <h2 class="tabs-title" :class="{active:tabsTitle.courseDetail}"
                                     @click="tabsChange('courseDetail')">课程详情</h2>
-                                <h2 :class="{'tabs-title':true,active:tabsTitle.chapterList}"
+                                <h2 class="tabs-title" :class="{active:tabsTitle.chapterList}"
                                     @click="tabsChange('chapterList')">课程目录</h2>
-                                <h2 :class="{'tabs-title':true,active:tabsTitle.fileList}"
+                                <h2 class="tabs-title" :class="{active:tabsTitle.fileList}"
                                     @click="tabsChange('fileList')">课程资料</h2>
-                                <h2 :class="{'tabs-title':true,active:tabsTitle.comment}"
+                                <h2 class="tabs-title" :class="{active:tabsTitle.comment}"
                                     @click="tabsChange('comment')">课程评价({{commentCount}})</h2>
                             </div>
                             <div class="tabs-content">
                                 <!--课程详情 S-->
-                                <div :class="{'tabs-details':true,hide:!tabsTitle.courseDetail}">
+                                <div class="tabs-details" :class="{hide:!tabsTitle.courseDetail}">
                                     <div class="details-title">
                                         <font-awesome-icon icon="th-large"></font-awesome-icon>
                                         <span>课程概述</span>
@@ -97,7 +101,7 @@
                                 </div>
                                 <!--课程详情 E-->
                                 <!--课程目录 S-->
-                                <div :class="{'tabs-list':true,hide:!tabsTitle.chapterList}">
+                                <div class="tabs-list" :class="{hide:!tabsTitle.chapterList}">
                                     <div class="tabs-item" v-for="chapter in courseChapter" :key="chapter.number">
                                         <div class="tabs-item-title">
                                             <span>{{chapter.number}}</span>
@@ -136,7 +140,7 @@
                                 </div>
                                 <!--课程目录 E-->
                                 <!--课程资料 S-->
-                                <div :class="{'tabs-list':true,hide:!tabsTitle.fileList}">
+                                <div class="tabs-list" :class="{hide:!tabsTitle.fileList}" @click="getFile">
                                     <div class="tabs-item" v-for="chapter in courseFile" :key="chapter.number">
                                         <div class="tabs-item-title">
                                             <span>{{chapter.number}}</span>
@@ -251,7 +255,7 @@
                     courseName: '', courseUrl: ''
                 },
                 course: {
-                    details: '', info: '',
+                    details: {}, info: {}, images: null
                 },
                 tabsTitle: {
                     courseDetail: true,
@@ -368,6 +372,14 @@
             tabsChange(val) {
                 this.tabsInit();
                 this.tabsTitle[val] = true;
+                switch (val) {
+                    case 'chapterList':
+                        this.getVideo();
+                        break;
+                    case 'fileList':
+                        this.getFile();
+                        break;
+                }
                 this.comment.hide = val === 'comment';
             },
             //设置课程评价条数
@@ -415,7 +427,9 @@
             async getInfo() {
                 let response = await getInfo({courseID: this.$route.params.courseID});
                 if (response) {
-                    this.course = response.course;
+                    this.course.info = response.course.info;
+                    this.course.details = response.course.details;
+                    this.course.images = response.courses.info['CourseImages'];
                     let course = this.course;
                     this.courseRate = course.info['favorableRate'] * 10;
                     this.applyCount = course.info.applyCount;
@@ -443,11 +457,14 @@
                     }
                 }
             },
-            //获取视频与文件信息
-            async getVideoFile() {
+            //获取视频信息
+            async getVideo() {
                 let response = await getVideo({courseID: this.$route.params.courseID});
                 if (response) this.courseChapter = response.data;
-                response = await getFile({courseID: this.$route.params.courseID});
+            },
+            //获取视频与文件信息
+            async getFile() {
+                let response = await getFile({courseID: this.$route.params.courseID});
                 if (response) this.courseFile = response.data;
             },
             //处理文件大小显示
@@ -505,36 +522,36 @@
                 if (!window.web3 && !window.ethereum)
                     Message.warning('您的浏览器不支持BST方式购买，请安装MetaMask插件');
                 else try {
-                        if (this.$store.state.web3.coinbase) {
-                            /*const socket = wsClient.connect(`${location.origin}`);
-                                socket.emit('buyCourse', "");
-                                socket.on('message', data => {
-                                    if (data.status === 1) {
-                                        Message.success(data.msg);
-                                        this.hadApply = true;
-                                        this.applyCount = data.result.applyCount;
-                                    } else Message.error(data.msg);
-                                    socket.close();
-                                });*/
-                            let value = await this.$store.state.web3.web3Instance().utils.toWei(this.bstPrice.toString(), 'ether');
-                            let res = await checkBstStatue({courseID: this.$route.params.courseID});
-                            if (res) this.$store.state.contractInstance().methods.transfer(res.address, value)
-                                .send({from: this.$store.state.web3.coinbase, data: ""})
-                                .on('transactionHash', async hash => {
-                                    Message.success('已发起交易，请等待交易结果');
-                                    let data = {
-                                        courseID: this.$route.params.courseID,
-                                        hash, amount: this.bstPrice
-                                    };
-                                    await applyChargeByBst(data);
-                                })
-                                .on('error', error => {
-                                    Message.error('支付失败！')
-                                })
-                        } else Message.error('MetaMask未登录！')
-                    } catch (e) {
-                        console.log(e);
-                    }
+                    if (this.$store.state.web3.coinbase) {
+                        /*const socket = wsClient.connect(`${location.origin}`);
+                            socket.emit('buyCourse', "");
+                            socket.on('message', data => {
+                                if (data.status === 1) {
+                                    Message.success(data.msg);
+                                    this.hadApply = true;
+                                    this.applyCount = data.result.applyCount;
+                                } else Message.error(data.msg);
+                                socket.close();
+                            });*/
+                        let value = await this.$store.state.web3.web3Instance().utils.toWei(this.bstPrice.toString(), 'ether');
+                        let res = await checkBstStatue({courseID: this.$route.params.courseID});
+                        if (res) this.$store.state.contractInstance().methods.transfer(res.address, value)
+                            .send({from: this.$store.state.web3.coinbase, data: ""})
+                            .on('transactionHash', async hash => {
+                                Message.success('已发起交易，请等待交易结果');
+                                let data = {
+                                    courseID: this.$route.params.courseID,
+                                    hash, amount: this.bstPrice
+                                };
+                                await applyChargeByBst(data);
+                            })
+                            .on('error', error => {
+                                Message.error('支付失败！')
+                            })
+                    } else Message.error('MetaMask未登录！')
+                } catch (e) {
+                    console.log(e);
+                }
             },
             //通过余额购买课程
             async byBalance() {
@@ -565,11 +582,12 @@
                 }
             }
         },
-        async mounted(){await checkBstConfirmation({courseID: this.$route.params.courseID});},
-        async created() {
+        async mounted() {
             await this.getInfo();
+            await checkBstConfirmation({courseID: this.$route.params.courseID});
+        },
+        async created() {
             this.getLive();
-            this.getVideoFile();
             this.getClass();
         },
         async beforeCreate() {
