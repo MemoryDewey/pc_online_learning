@@ -40,14 +40,14 @@
                                         <span>我的考试</span>
                                     </router-link>
                                 </li>
-                                <li :class="{'active':active.invite}">
+                                <!--<li :class="{'active':active.invite}">
                                     <router-link :to="{name:'invite'}">
                                         <div class="setting-icon">
                                             <font-awesome-icon icon="share-alt"></font-awesome-icon>
                                         </div>
                                         <span>我的邀请</span>
                                     </router-link>
-                                </li>
+                                </li>-->
                                 <li :class="{'active':active.certificate}">
                                     <router-link :to="{name:'certificate'}">
                                         <div class="setting-icon">

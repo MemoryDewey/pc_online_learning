@@ -19,20 +19,23 @@
                             <div class="account-money">账户余额</div>
                             <span class="money-main">{{balanceMain}}</span>
                             <span class="money-sub">{{balanceSub}}元</span>
-                            <el-button type="primary" round size="mini" class="balance-btn" plain
+                            <!--<el-button type="primary" round size="mini" class="balance-btn" plain
                                        @click="openMoneyDialog('recharge')">充值
-                            </el-button>
+                            </el-button>-->
                             <div class="action">
-                                <el-button type="success" round size="small" @click="openMoneyDialog('cash')"
-                                           class="balance-btn" plain :disabled="balanceMain < 100">提现
+                                <el-button type="primary" round size="mini" class="balance-btn" plain
+                                           @click="openMoneyDialog('recharge')">充值
                                 </el-button>
-                                <span class="warn" v-if="balanceMain < 100">*当前余额不足100元</span>
+                                <!--<el-button type="success" round size="small" @click="openMoneyDialog('cash')"
+                                           class="balance-btn" plain :disabled="balanceMain < 100">提现
+                                </el-button>-->
+                                <!--<span class="warn" v-if="balanceMain < 100">*当前余额不足100元</span>-->
                             </div>
                         </el-col>
                         <el-col :span="7" class="meta">
-                            <div>每次提现/充值最小额度为￥100</div>
-                            <div>提现/充值会在 1-5 个工作日内到账</div>
-                            <div>建议提现/充值时间为每日9.00-17.00</div>
+                            <div>每次充值最小额度为￥100</div>
+                            <div>充值会在 1-5 个工作日内到账</div>
+                            <div>建议充值时间为每日9.00-17.00</div>
                             <div>有问题请致电:
                                 <el-link type="primary">400-966-0003</el-link>
                             </div>

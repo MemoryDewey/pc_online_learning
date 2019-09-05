@@ -142,7 +142,7 @@ export default new VueRouter({
                 {path: 'paid', name: 'paid', component: ProfilePaid, meta: {title: '已购课程', requireAuth: true}},
                 {path: 'course', name: 'course', component: ProfileCourse, meta: {title: '我的课程', requireAuth: true}},
                 {path: 'exam', name: 'exam', component: ProfileExam, meta: {title: '我的考试', requireAuth: true}},
-                {path: 'invite', name: 'invite', component: ProfileInvite, meta: {title: '我的邀请', requireAuth: true}},
+                /*{path: 'invite', name: 'invite', component: ProfileInvite, meta: {title: '我的邀请', requireAuth: true}},*/
                 {
                     path: 'certificate',
                     name: 'certificate',
@@ -156,7 +156,7 @@ export default new VueRouter({
         {path: '/wallet', name: 'Wallet', component: Wallet, meta: {title: '我的钱包', requireAuth: true},},
 
         //积分商城
-        {path: '/points-mall', name: 'PointsMall', component: PointsMall, meta: {title: '积分商城'}, requireAuth: true},
+        /*{path: '/points-mall', name: 'PointsMall', component: PointsMall, meta: {title: '积分商城'}, requireAuth: true},*/
 
         //404
         {path: '/404', name: 'Error', component: Error, meta: {title: '错误'}}

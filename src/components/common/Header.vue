@@ -47,12 +47,12 @@
                                         我的钱包
                                     </router-link>
                                 </li>
-                                <li v-if="!$store.state.isTeacher">
+                                <!--<li v-if="!$store.state.isTeacher">
                                     <router-link to="/points-mall">
                                         <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
                                         积分商城
                                     </router-link>
-                                </li>
+                                </li>-->
                                 <li>
                                     <router-link :to="{name:'personal'}">
                                         <font-awesome-icon icon="cog"></font-awesome-icon>
