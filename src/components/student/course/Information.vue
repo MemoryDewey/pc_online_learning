@@ -9,7 +9,7 @@
                     <!--课程详情 S-->
                     <div class="study-img-text">
                         <div class="study-img-left">
-                            <el-image :src="course.images">
+                            <el-image v-if="course.info['courseImage']" :src="course.info['courseImage']">
                                 <template slot="error">
                                     <img src="../../../assets/image/commodity-error.jpg" alt>
                                 </template>
@@ -427,9 +427,8 @@
             async getInfo() {
                 let response = await getInfo({courseID: this.$route.params.courseID});
                 if (response) {
-                    this.course.info = response.course.info;
-                    this.course.details = response.course.details;
-                    this.course.images = response.courses.info['CourseImages'];
+                    this.$set(this.course, 'info', response.course.info);
+                    this.$set(this.course, 'details', response.course.details);
                     let course = this.course;
                     this.courseRate = course.info['favorableRate'] * 10;
                     this.applyCount = course.info.applyCount;
@@ -583,10 +582,10 @@
             }
         },
         async mounted() {
-            await this.getInfo();
             await checkBstConfirmation({courseID: this.$route.params.courseID});
         },
         async created() {
+            await this.getInfo();
             this.getLive();
             this.getClass();
         },
