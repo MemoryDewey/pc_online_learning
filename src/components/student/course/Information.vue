@@ -586,8 +586,8 @@
         },
         async created() {
             await this.getInfo();
-            await this.getLive();
-            await this.getClass();
+            this.getLive();
+            this.getClass();
         },
         async beforeCreate() {
             if (!this.$store.state.web3.web3Instance) {
