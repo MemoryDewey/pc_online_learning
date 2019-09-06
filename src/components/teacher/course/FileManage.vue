@@ -274,7 +274,7 @@
             chooseFile(file) {
                 if (this.beforeCoverUpload(file.raw)) {
                     this.fileChoose = true;
-                    this.ruleForm.name = file.name;
+                    this.ruleForm.name = file.name.split(".")[0];
                     this.ruleForm.size = file.size > (1024 * 1024) ? `${(file.size / (1024 * 1024)).toFixed(2)}MB` :
                         `${(file.size / 1024).toFixed(2)}KB`;
                     this.ruleForm.type = this.mimeTypeToExtension(file.raw.type);

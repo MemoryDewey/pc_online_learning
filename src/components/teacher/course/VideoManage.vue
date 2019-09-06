@@ -228,7 +228,7 @@
             /* 获取视频信息 */
             getFileInfo() {
                 let file = this.$refs.file.files[0];
-                this.ruleForm.name = file.name;
+                this.ruleForm.name = file.name.split(".")[0];
             },
             /* 上传视频 */
             uploadVideo() {
