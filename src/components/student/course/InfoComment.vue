@@ -1,5 +1,5 @@
 <template>
-    <div :class="{'tabs-comment':true,hide:!comment.hide}">
+    <div class="tabs-comment" :class="{hide:comment.hide}">
         <!--课程评论头部 S-->
         <div class="comment-head">
             <!--好评度 S-->
@@ -63,11 +63,11 @@
         <div class="comment-list">
             <div class="comment-list-item clearfix" v-for="comment in comments" :key="comment.id">
                 <div class="comment-list-item-avatar">
-                    <img :src="`${comment.UserInformation.avatarUrl}`" alt="">
+                    <img :src="`${comment['UserInformation'].avatarUrl}`" alt="">
                 </div>
                 <div class="comment-list-item-body">
                     <div class="user-info">
-                        <a>{{comment.UserInformation.nickname}}</a>
+                        <a>{{comment['UserInformation'].nickname}}</a>
                         <div class="user-info-rating">
                             <div class="stars">
                                 <font-awesome-icon icon="star" v-if="comment.star>=1"></font-awesome-icon>
@@ -85,7 +85,7 @@
                 </div>
             </div>
             <div class="page-sort">
-                <el-pagination background layout="prev, pager, next"
+                <el-pagination background layout="prev, pager, next" :hide-on-single-page="true"
                                @current-change="pageChanged" :pager-count="5"
                                :total="commentPage*10" :current-page.sync="pageCurrent">
                 </el-pagination>
@@ -279,13 +279,13 @@
                 handler(val) {
                     this.courseRate = val.courseRate;
                     this.dialogFormInfo.title = val.courseName;
+                    if (!val.hide) {
+                        this.getCommentCount(0);
+                        this.getComment(1, 0);
+                    }
                     this.setRateStars();
                 }
             },
-        },
-        created() {
-            this.getCommentCount(0);
-            this.getComment(1, 0);
         }
     }
 </script>

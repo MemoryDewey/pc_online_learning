@@ -88,8 +88,8 @@
                         </div>
                         <!--课程排序 E-->
                         <!--课程列表 S-->
-                        <div class="study-list">
-                            <div class="no-study" v-if="courses.length === 0">
+                        <div class="study-list" v-loading="loading">
+                            <div class="no-study" v-if="courses.length === 0 && !loading">
                                 <div class="message">
                                     <font-awesome-icon icon="info-circle"></font-awesome-icon>
                                     <div class="text">该分类下无课程</div>
@@ -137,7 +137,7 @@
                         <!--课程列表 E-->
                         <!--分页 S-->
                         <div class="study-sort-page" v-if="courses.length > 0">
-                            <el-pagination background layout="prev, pager, next"
+                            <el-pagination background layout="prev, pager, next" :hide-on-single-page="true"
                                            :total="pageCount * 10" @current-change="pageChanged">
                             </el-pagination>
                         </div>
@@ -190,11 +190,13 @@
                 //筛选URL
                 filterUrl: '',
                 //课程
-                courses: '',
+                courses: [],
                 //分页相关
                 pageCount: 0,
                 //搜索课程总数
-                searchCount: 0
+                searchCount: 0,
+                //加载中
+                loading: true
             }
         },
         methods: {
@@ -248,8 +250,12 @@
         watch: {
             async '$route.query'(to) {
                 this.getPageCount();
+                this.loading = true;
                 let response = await getList(this.$route.query);
-                if (response) this.courses = response.course;
+                if (response) {
+                    this.courses = response.course;
+                    this.loading = false;
+                }
                 this.changeUrl(to);
             },
             async '$route.params'(to) {
@@ -279,7 +285,10 @@
             if (response) this.recommendCourse = response.course;
             /* 获取课程 */
             response = await getList(this.$route.query);
-            if (response) this.courses = response.course;
+            if (response) {
+                this.courses = response.course;
+                this.loading = false;
+            }
             this.changeUrl(val);
         }
     }

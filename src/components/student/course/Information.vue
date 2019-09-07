@@ -100,65 +100,11 @@
                                     </div>
                                 </div>
                                 <!--课程详情 E-->
-                                <!--课程目录 S-->
-                                <div class="tabs-list" :class="{hide:!tabsTitle.chapterList}">
-                                    <div class="tabs-item" v-for="chapter in courseChapter" :key="chapter.number">
-                                        <div class="tabs-item-title">
-                                            <span>{{chapter.number}}</span>
-                                            <h3>{{chapter.name}}</h3>
-                                        </div>
-                                        <div class="tabs-item-list">
-                                            <a class="tabs-study-item" v-for="video in chapter.video"
-                                               :key="video.id" @click="gotoVideo(video.id,video.ware,video.url)">
-                                                <font-awesome-icon icon="play-circle"></font-awesome-icon>
-                                                <p class="study-item-title">
-                                                    <span :title="video.name" class="text">{{video.name}}</span>
-                                                    <span class="duration">({{video.duration}}分钟)</span>
-                                                </p>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="tabs-item" v-if="courseForm==='L'">
-                                        <div class="tabs-item-title">
-                                            <span>##</span>
-                                            <h3>直播</h3>
-                                        </div>
-                                        <div class="tabs-item-list">
-                                            <a class="tabs-study-item" @click="gotoLive">
-                                                <font-awesome-icon icon="video"></font-awesome-icon>
-                                                <p class="study-item-title" v-if="live.exist">
-                                                    <span title="直播课程" class="text">{{live.name}}</span>
-                                                    <span class="duration">{{live.state?'(直播中)':'(未开始)'}}</span>
-                                                </p>
-                                                <p class="study-item-title" v-else>
-                                                    <span title="无直播">无直播</span>
-                                                    <span class="duration">(该课程无直播课)</span>
-                                                </p>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--课程目录 E-->
+                                <!--课程视频 S-->
+                                <info-video :video="video"></info-video>
+                                <!--课程视频 E-->
                                 <!--课程资料 S-->
-                                <div class="tabs-list" :class="{hide:!tabsTitle.fileList}" @click="getFile">
-                                    <div class="tabs-item" v-for="chapter in courseFile" :key="chapter.number">
-                                        <div class="tabs-item-title">
-                                            <span>{{chapter.number}}</span>
-                                            <h3>{{chapter.name}}</h3>
-                                        </div>
-                                        <div class="tabs-item-list">
-                                            <a class="tabs-study-item" v-for="file in chapter.file"
-                                               :key="file.id" @click="downloadFile(file.str,file.name,file.type)">
-                                                <font-awesome-icon far
-                                                                   :icon="setFileIcon(file.type)"></font-awesome-icon>
-                                                <p class="study-item-title">
-                                                    <span :title="file.name" class="text">{{file.name}}</span>
-                                                    <span class="duration">({{file.type}}, {{setFileSize(file.size)}})</span>
-                                                </p>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                                <info-file :file="file"></info-file>
                                 <!--课程资料 E-->
                                 <!--课程评论 S-->
                                 <info-comment :comment="comment" @getCommentCount="setCommentCount"></info-comment>
@@ -226,52 +172,30 @@
 <script>
     import CourseBread from './CourseBread'
     import InfoComment from './InfoComment'
+    import InfoVideo from './InfoVideo'
+    import InfoFile from './InfoFile'
     import {Message} from 'element-ui'
-    import {saveAs} from 'file-saver'
     import {mapState} from 'vuex'
     import {
-        applyChargeByBst,
-        applyCourseByCash,
-        applyFree, checkBstConfirmation, checkBstStatue,
-        examCheck,
-        getClass,
-        getExamTime,
-        getFile,
-        getInfo,
-        getLive, getShareUrl,
-        getVideo
+        applyChargeByBst, applyCourseByCash, applyFree,
+        checkBstConfirmation, checkBstStatue, examCheck,
+        getClass, getExamTime, getInfo
     } from "../../../api/course";
     import {getWalletInfo} from '../../../api/wallet'
     // import wsClient from 'socket.io-client'
 
     export default {
         name: "Information",
+        components: {InfoVideo, CourseBread, InfoComment, InfoFile},
         data() {
             return {
                 //传给子组件
-                bread: {
-                    systemName: '', systemUrl: '',
-                    typeName: '', typeUrl: '',
-                    courseName: '', courseUrl: ''
-                },
-                course: {
-                    details: {}, info: {}, images: null
-                },
-                tabsTitle: {
-                    courseDetail: true,
-                    chapterList: false,
-                    fileList: false,
-                    comment: false
-                },
-                //传给子组件
-                comment: {
-                    courseRate: 8,
-                    courseName: null,
-                    hide: false
-                },
-                courseChapter: null,
-                courseFile: null,
-                downloadUrl: `${process.env.VUE_APP_BASE_API}/course/information/file-download?courseID=${this.$route.params.courseID}&file=`,
+                bread: {systemName: '', systemUrl: '', typeName: '', typeUrl: '', courseName: '', courseUrl: ''},
+                course: {details: {}, info: {}, images: null},
+                tabsTitle: {courseDetail: true, chapterList: false, fileList: false, comment: false},
+                comment: {courseRate: 0, courseName: null, hide: true},
+                file: {hide: true, apply: false},
+                video: {hide: true, form: null},
                 courseRate: 8,
                 commentCount: 0,
                 applyCount: 0,
@@ -280,13 +204,6 @@
                     startTime: null,
                     finishTime: null
                 },
-                fileIcon: {},
-                courseForm: null,
-                live: {
-                    exist: false,
-                    name: null,
-                    state: false,
-                },
                 buyDialogVisible: false,
                 payType: 0,
                 bstPrice: 0,
@@ -294,59 +211,21 @@
                 walletInfo: {balance: 0.00}
             }
         },
-        components: {
-            'course-bread': CourseBread,
-            'info-comment': InfoComment
-        },
         computed: {
-            //设置文件图标
-            setFileIcon() {
-                return function getIcon(type) {
-                    let icon = null;
-                    switch (type) {
-                        case 'txt':
-                            icon = 'file-alt';
-                            break;
-                        case 'png':
-                            icon = 'file-image';
-                            break;
-                        case 'jpg':
-                            icon = 'file-image';
-                            break;
-                        case 'zip':
-                            icon = 'file-archive';
-                            break;
-                        case 'pdf':
-                            icon = 'file-pdf';
-                            break;
-                        case 'docx':
-                            icon = 'file-word';
-                            break;
-                        case 'doc':
-                            icon = 'file-word';
-                            break;
-                        case 'ppt':
-                            icon = 'file-powerpoint';
-                            break;
-                        case 'pptx':
-                            icon = 'file-powerpoint';
-                            break;
-                        case 'xls':
-                            icon = 'file-excel';
-                            break;
-                        case 'xlsx':
-                            icon = 'file-excel';
-                            break;
-                    }
-                    return icon;
-                }
-            },
             ...mapState({
                 contractInstance: state => state.contractInstance,
                 coinbase: state => state.web3.coinbase
             })
         },
         methods: {
+            //设置bread
+            setBread(systemName, systemID, typeName, typeID, courseName) {
+                this.bread.systemName = systemName;
+                this.bread.systemUrl = `/course/list?system=${systemID}`;
+                this.bread.typeName = typeName;
+                this.bread.typeUrl = `/course/list?system=${systemID}&type=${typeID}`;
+                this.bread.courseName = courseName;
+            },
             //报名课程
             applyFree() {
                 if (this.$store.state.loginState) {
@@ -372,42 +251,13 @@
             tabsChange(val) {
                 this.tabsInit();
                 this.tabsTitle[val] = true;
-                switch (val) {
-                    case 'chapterList':
-                        this.getVideo();
-                        break;
-                    case 'fileList':
-                        this.getFile();
-                        break;
-                }
-                this.comment.hide = val === 'comment';
+                this.video.hide = val !== 'chapterList';
+                this.file.hide = val !== 'fileList';
+                this.comment.hide = val !== 'comment';
             },
             //设置课程评价条数
             setCommentCount(val) {
                 this.commentCount = val;
-            },
-            //跳转到视频页
-            gotoVideo(videoID, ware, videoUrl) {
-                this.$router.push({
-                    name: 'CourseVideo',
-                    params: {
-                        courseID: this.$route.params.courseID,
-                        ware, videoID, videoUrl
-                    }
-                })
-            },
-            //跳转到直播界面
-            gotoLive() {
-                if (this.live.exist && this.live.state)
-                    this.$router.push({
-                        name: 'CourseVideo',
-                        params: {
-                            courseID: this.$route.params.courseID,
-                            live: "true"
-                        },
-                    });
-                else if (!this.live.exist) Message.info('直播不存在');
-                else Message.info('老师还未开播');
             },
             //跳转到课程页
             async gotoExam() {
@@ -416,12 +266,6 @@
                     let url = this.$router.resolve({path: `/course/${this.$route.params.courseID}/exam`});
                     window.open(url.href, "_blank")
                 }
-            },
-            //下载课程资料
-            downloadFile(fileStr, fileName, fileType) {
-                if (this.hadApply && this.$store.state.loginState)
-                    saveAs(`${this.downloadUrl}${fileStr}.${fileType}&fileName=${fileName}.${fileType}`);
-                else Message.info('需要报名后才能下载课程资料哦');
             },
             //获取课程基本信息
             async getInfo() {
@@ -432,49 +276,20 @@
                     let course = this.course;
                     this.courseRate = course.info['favorableRate'] * 10;
                     this.applyCount = course.info.applyCount;
-                    this.comment.courseRate = this.courseRate;
-                    this.comment.courseName = course.info.courseName;
-                    this.bread.systemName = course.info.systemName;
-                    this.bread.systemUrl = `/course/list?system=${course.info['systemID']}`;
-                    this.bread.typeName = course.info.typeName;
-                    this.bread.typeUrl = `/course/list?system=${course.info['systemID']}&type=${course.info['typeID']}`;
-                    this.bread.courseName = course.info.courseName;
-                    this.courseForm = course.info.courseForm;
+                    this.$set(this.comment, 'courseRate', this.courseRate);
+                    this.$set(this.comment, 'courseName', course.info.courseName);
+                    this.setBread(course.info.systemName, course.info['systemID'], course.info.typeName,
+                        course.info['typeID'], course.info.courseName
+                    );
+                    this.video.form = course.info['courseForm'];
                     document.title = course.info.courseName;
                 }
-            },
-            //获取直播课程信息
-            async getLive() {
-                if (this.courseForm === 'L') {
-                    let response = await getLive({courseID: this.$route.params.courseID});
-                    if (response) {
-                        if (response.live) {
-                            this.live.name = response.title;
-                            this.live.exist = true;
-                            this.live.state = response.state;
-                        }
-                    }
-                }
-            },
-            //获取视频信息
-            async getVideo() {
-                let response = await getVideo({courseID: this.$route.params.courseID});
-                if (response) this.courseChapter = response.data;
-            },
-            //获取视频与文件信息
-            async getFile() {
-                let response = await getFile({courseID: this.$route.params.courseID});
-                if (response) this.courseFile = response.data;
-            },
-            //处理文件大小显示
-            setFileSize(size) {
-                return size > 1024 * 1024 ? `${(size / (1024 * 1024)).toFixed(2)}MB` :
-                    `${(size / 1024).toFixed(2)}KB`
             },
             //获取其他信息
             async getClass() {
                 let response = await getClass({courseID: this.$route.params.courseID});
                 this.hadApply = response.status === 1;
+                this.file.apply = this.hadApply;
                 response = await getExamTime({courseID: this.$route.params.courseID});
                 this.examTime = response.time;
             },
@@ -586,8 +401,7 @@
         },
         async created() {
             await this.getInfo();
-            this.getLive();
-            this.getClass();
+            await this.getClass();
         },
         async beforeCreate() {
             if (!this.$store.state.web3.web3Instance) {

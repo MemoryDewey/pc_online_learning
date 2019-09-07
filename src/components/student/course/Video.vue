@@ -47,10 +47,18 @@
                             <div class="video-list-wrapper">
                                 <div class="tabs">
                                     <div class="tabs-title-bar">
-                                        <h2 :class="{'tabs-title':true,active:showVideo}" @click="showVideo=true">
-                                            视频</h2>
-                                        <h2 :class="{'tabs-title':true,active:!showVideo}" @click="showVideo=false">
-                                            课件</h2>
+                                        <el-row>
+                                            <el-col :span="12">
+                                                <h2 class="tabs-title" :class="{active:showVideo}"
+                                                    @click="showVideo=true">
+                                                    视频</h2>
+                                            </el-col>
+                                            <el-col :span="12">
+                                                <h2 class="tabs-title" :class="{active:!showVideo}"
+                                                    @click="showVideo=false">
+                                                    课件</h2>
+                                            </el-col>
+                                        </el-row>
                                     </div>
                                 </div>
                                 <div class="tabs-content">
@@ -59,8 +67,9 @@
                                             :key="chapter.number">
                                             <h4 class="chapter-title">{{chapter.name}}</h4>
                                             <ol>
-                                                <li v-for="video in chapter.video" :key="video.id"
-                                                    :class="{'video-item':true,selected:videoID===video.id && replay}"
+                                                <li v-for="video in chapter.video" class="video-item" :key="video.id"
+                                                    :class="{selected:videoID===video.id && replay}"
+                                                    :id="`video-item-${video.id}`"
                                                     @click="changeVideo(video.id,video.name,video.url,video.ware)">
                                                     <div class="video-item-prefix">
                                                         <span class="video-item-number">{{video.number}}</span>
@@ -145,9 +154,9 @@
                     videoName: null
                 },
                 bread: {
-                    systemName: '测试体系', systemUrl: '',
-                    typeName: '测试类别', typeUrl: '',
-                    courseName: '测试课程', courseUrl: ''
+                    systemName: '', systemUrl: '',
+                    typeName: '', typeUrl: '',
+                    courseName: '', courseUrl: ''
                 },
                 replay: false,
                 live: {
@@ -160,6 +169,9 @@
                 }
             }
         },
+        /*mounted(){
+          window.addEventListener("scroll",this.handleScroll);
+        },*/
         methods: {
             //改变视频时触发
             changeVideo(videoID, videoName, url, ware) {
@@ -189,6 +201,7 @@
                     this.bread.typeName = course.info.typeName;
                     this.bread.typeUrl = `/course/list?system=${course.info['systemID']}&type=${course.info['typeID']}`;
                     this.bread.courseName = course.info.courseName;
+                    this.bread.courseUrl = `/course/${this.$route.params.courseID}/information`;
                     this.live.exist = course.info.courseForm === 'L';
                     document.title = course.info.courseName;
                 }
@@ -247,10 +260,9 @@
                         }
                     }
                 }
-            },
+            }
         },
         async created() {
-            window.scrollTo(0, 0);
             this.videoID = this.$route.params.videoID;
             let ware = this.$route.params.ware;
             this.videoUrl = this.$route.params.videoUrl;
@@ -266,6 +278,8 @@
             } catch (e) {
                 console.log(e);
             }
+            document.getElementById(`video-item-${this.videoID}`).scrollIntoView();
+            window.scrollTo(0, 0);
         }
     }
 </script>
@@ -365,19 +379,16 @@
                         padding: 0 20px 5px;
                         background: transparent;
                         box-sizing: border-box;
-                        border-bottom: 1px solid;
+                        border-bottom: 1px solid #ddd;
 
                         .tabs-title-bar {
                             height: 35px;
                             margin-bottom: 20px;
 
                             .tabs-title {
-                                margin-top: 0;
-                                border-top: 5px solid transparent;
+                                margin-top: 5px;
                                 line-height: 40px;
-                                padding: 0 40px;
                                 font-size: 16px;
-                                float: left;
                                 cursor: pointer;
                                 font-weight: 400;
                             }
@@ -392,7 +403,7 @@
                     .tabs-content {
                         display: inline-block;
                         vertical-align: top;
-                        height: 490px;
+                        height: 520px;
                         width: 330px;
                         position: relative;
                     }
