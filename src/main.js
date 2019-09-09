@@ -4,14 +4,14 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import ELEMENT from 'element-ui'
-import VueClipboard from 'vue-clipboard2'
+// import VueClipboard from 'vue-clipboard2'
 // import 'element-ui/lib/theme-chalk/index.css'
 import FontAwesomeIcon from "./icons/font-awesome";
 import {checkLogin} from './api/passport'
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-VueClipboard.config.autoSetContainer = true;
-Vue.use(VueClipboard);
+//VueClipboard.config.autoSetContainer = true;
+//Vue.use(VueClipboard);
 Vue.use({
     install() {
         Vue.prototype.destroy = Vue.prototype.$destroy;

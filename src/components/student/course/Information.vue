@@ -38,7 +38,10 @@
                                         </el-tooltip>-->
                                     </div>
                                     <div class="enroll-apply-btn" v-if="!hadApply">
-                                        <div class="info-button enroll-button" v-if="course.info['price']===0"
+                                        <el-button v-if="bstApplyBtn" type="info" disabled>
+                                            账单确认中...
+                                        </el-button>
+                                        <div class="info-button enroll-button" v-else-if="course.info['price']===0"
                                              @click="applyFree">
                                             免费报名
                                         </div>
@@ -208,7 +211,8 @@
                 payType: 0,
                 bstPrice: 0,
                 getBstSuccess: false,
-                walletInfo: {balance: 0.00}
+                walletInfo: {balance: 0.00},
+                bstApplyBtn: false
             }
         },
         computed: {
@@ -397,7 +401,8 @@
             }*/
         },
         async mounted() {
-            await checkBstConfirmation({courseID: this.$route.params.courseID});
+            let res = await checkBstConfirmation({courseID: this.$route.params.courseID});
+            this.bstApplyBtn = parseInt(res.toString()) === 3;
         },
         async created() {
             await this.getInfo();
