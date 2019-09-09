@@ -1,63 +1,59 @@
 <template>
     <div class="main">
         <h4 class="title">
-            <div class="">
-                <router-link to="/passport/login">登录</router-link>
-                <b>·</b>
-                <router-link class="active" to="/passport/register">注册</router-link>
-            </div>
+            <router-link to="/passport/login">登录</router-link>
+            <b>·</b>
+            <router-link class="active" to="/passport/register">注册</router-link>
         </h4>
-        <div class="">
-            <form>
-                <div v-bind:class="inputCss.phone">
-                    <label>
-                        <input v-model="registerForm.phone"
-                               v-on:keyup="checkInput(inputName[0])"
-                               type="text" placeholder="手机号">
-                    </label>
-                    <font-awesome-icon icon="mobile-alt"></font-awesome-icon>
-                </div>
-                <div class="error-show" v-if="inputEmpty.phone">{{ inputCheck.phone }}</div>
+        <form>
+            <div v-bind:class="inputCss.phone">
+                <label>
+                    <input v-model="registerForm.phone"
+                           v-on:keyup="checkInput(inputName[0])"
+                           type="text" placeholder="手机号">
+                </label>
+                <font-awesome-icon icon="mobile-alt"></font-awesome-icon>
+            </div>
+            <div class="error-show" v-if="inputEmpty.phone">{{ inputCheck.phone }}</div>
 
-                <div v-bind:class="inputCss.password">
-                    <label>
-                        <input
-                                v-model="registerForm.password"
-                                v-on:keyup="checkInput(inputName[1])"
-                                type="password" placeholder="设置密码(8-16位)">
-                    </label>
-                    <font-awesome-icon icon="lock"></font-awesome-icon>
-                </div>
-                <div class="error-show" v-if="inputEmpty.password">{{ inputCheck.password }}</div>
+            <div v-bind:class="inputCss.password">
+                <label>
+                    <input autocomplete="new-password"
+                           v-model="registerForm.password"
+                           v-on:keyup="checkInput(inputName[1])"
+                           type="password" placeholder="设置密码(8-16位)">
+                </label>
+                <font-awesome-icon icon="lock"></font-awesome-icon>
+            </div>
+            <div class="error-show" v-if="inputEmpty.password">{{ inputCheck.password }}</div>
 
-                <div v-bind:class="inputCss.confirm">
-                    <label>
-                        <input
-                                v-model="registerForm.confirm"
-                                v-on:keyup="checkInput(inputName[2])"
-                                type="password" placeholder="再输一遍密码">
-                    </label>
-                    <font-awesome-icon icon="lock"></font-awesome-icon>
-                </div>
-                <div class="error-show" v-if="inputEmpty.confirm">{{ inputCheck.confirm }}</div>
+            <div v-bind:class="inputCss.confirm">
+                <label>
+                    <input
+                            v-model="registerForm.confirm"
+                            v-on:keyup="checkInput(inputName[2])"
+                            type="password" placeholder="再输一遍密码">
+                </label>
+                <font-awesome-icon icon="lock"></font-awesome-icon>
+            </div>
+            <div class="error-show" v-if="inputEmpty.confirm">{{ inputCheck.confirm }}</div>
 
-                <div v-bind:class="inputCss.verify">
-                    <label>
-                        <input v-model="registerForm.verify"
-                               v-on:keyup="checkInput(inputName[3])"
-                               v-on:keyup.exact.enter="registerButtonClick"
-                               type="text" placeholder="验证码">
-                    </label>
-                    <font-awesome-icon icon="shield-alt"></font-awesome-icon>
-                    <a v-bind:class="sendCodeCss" v-on:click="sendVerifyCode">{{ verifyCodeText }}</a>
-                </div>
+            <div v-bind:class="inputCss.verify">
+                <label>
+                    <input v-model="registerForm.verify"
+                           v-on:keyup="checkInput(inputName[3])"
+                           v-on:keyup.exact.enter="registerButtonClick"
+                           type="text" placeholder="验证码">
+                </label>
+                <font-awesome-icon icon="shield-alt"></font-awesome-icon>
+                <a v-bind:class="sendCodeCss" v-on:click="sendVerifyCode">{{ verifyCodeText }}</a>
+            </div>
 
-                <div class="error-show" v-if="inputEmpty.verify">{{ inputCheck.verify }}</div>
-                <button class="register-button" type="button" v-on:click="registerButtonClick">
-                    注册
-                </button>
-            </form>
-        </div>
+            <div class="error-show" v-if="inputEmpty.verify">{{ inputCheck.verify }}</div>
+            <button class="register-button" type="button" v-on:click="registerButtonClick">
+                注册
+            </button>
+        </form>
     </div>
 </template>
 
@@ -77,7 +73,7 @@
                 },
                 //整个表单控件
                 registerForm: {
-                    phone: "", password: "", confirm: "", verify: "", inviteID: null
+                    phone: "", password: "", confirm: "", verify: ""
                 },
                 //用户输入框CSS
                 inputCss: {
@@ -186,9 +182,6 @@
                 if (this.inputCss.hasOwnProperty(item))
                     this.inputCss[item] = this.prepend[item];
             }
-        },
-        created() {
-            if (this.$route.query.uid) this.registerForm.inviteID = this.$route.query.uid;
         }
     }
 </script>

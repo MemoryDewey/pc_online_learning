@@ -112,12 +112,8 @@
         </table>
         <input class="btn setting-save" value="保存" @click="saveInformation" type="button"></input>
         <!--更换手机号对话框 S-->
-        <el-dialog :show-close="false" :visible.asnc="dialogFormVisible" top="20vh" width="400px">
-            <!--对话框标题 S-->
-            <div slot="title" class="dialog-title">绑定手机号
-                <button class="close" @click="dialogFormVisible = false">×</button>
-            </div>
-            <!--对话框标题 E-->
+        <el-dialog title="绑定手机号" :visible.asnc="dialogFormVisible" width="400px"
+                   @close="dialogFormVisible = false">
             <!--更换手机号 S-->
             <el-steps :active="stepsActive" finish-status="success" align-center>
                 <el-step title="安全验证"></el-step>
@@ -169,12 +165,7 @@
         </el-dialog>
         <!--更换手机号对话框 E-->
         <!--绑定邮箱对话框 S-->
-        <el-dialog :show-close="false" :visible.asnc="emailDialog" top="20vh" width="400px">
-            <!--对话框标题 S-->
-            <div slot="title" class="dialog-title">绑定邮箱
-                <button class="close" @click="emailDialog = false">×</button>
-            </div>
-            <!--对话框标题 E-->
+        <el-dialog title="绑定邮箱" :visible.asnc="emailDialog" width="400px" @close="emailDialog = false">
             <!--绑定邮箱 S-->
             <form>
                 <div class="input-area">
@@ -625,13 +616,6 @@
 
         .el-dialog__footer {
             padding: 15px;
-        }
-
-        .dialog-title {
-            padding-bottom: 5px;
-            color: #333;
-            font-size: 18px;
-            width: 100%;
         }
 
         .dialog-footer {

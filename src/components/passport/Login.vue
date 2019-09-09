@@ -1,64 +1,58 @@
 <template>
     <div class="main">
         <h4 class="title">
-            <div class="">
-                <router-link class="active" to="/passport/login">登录</router-link>
-                <b>·</b>
-                <router-link to="/passport/register">注册</router-link>
-            </div>
+            <router-link class="active" to="/passport/login">登录</router-link>
+            <b>·</b>
+            <router-link to="/passport/register">注册</router-link>
         </h4>
-        <div class="">
-            <form>
-                <div v-bind:class="inputCss.account">
-                    <label>
-                        <input v-model="loginForm.account"
-                               v-on:keyup="checkInputNull(inputName[0])"
-                               type="text" placeholder="手机号或邮箱">
-                    </label>
-                    <font-awesome-icon icon="user"></font-awesome-icon>
-                </div>
-                <div class="error-show" v-if="inputEmpty.account">请输入账号</div>
-                <div v-bind:class="inputCss.password">
-                    <label>
-                        <input
-                                v-model="loginForm.password"
-                                v-on:keyup="checkInputNull(inputName[1])"
-                                type="password" placeholder="密码">
-                    </label>
-                    <font-awesome-icon icon="lock"></font-awesome-icon>
-                </div>
+        <form>
+            <div v-bind:class="inputCss.account">
+                <label>
+                    <input v-model="loginForm.account"
+                           v-on:keyup="checkInputNull(inputName[0])"
+                           type="text" placeholder="手机号或邮箱">
+                </label>
+                <font-awesome-icon icon="user"></font-awesome-icon>
+            </div>
+            <div class="error-show" v-if="inputEmpty.account">请输入账号</div>
+            <div v-bind:class="inputCss.password">
+                <label>
+                    <input
+                            v-model="loginForm.password"
+                            v-on:keyup="checkInputNull(inputName[1])"
+                            type="password" placeholder="密码">
+                </label>
+                <font-awesome-icon icon="lock"></font-awesome-icon>
+            </div>
 
-                <div class="error-show" v-if="inputEmpty.password">请输入密码</div>
-                <div v-bind:class="inputCss.verify">
-                    <label>
-                        <input v-model="loginForm.verify"
-                               v-on:blur="checkInputNull(inputName[2])"
-                               v-on:keyup.exact.enter="loginButtonClick"
-                               type="text" placeholder="验证码">
-                    </label>
-                    <font-awesome-icon icon="shield-alt"></font-awesome-icon>
-                    <a class="btn-image">
-                        <img v-bind:src="imageVerifyUrl" alt="验证码"
-                             v-on:click="changeImage">
-                    </a>
-                </div>
-                <div class="error-show" v-if="inputEmpty.verify">请输入验证码</div>
+            <div class="error-show" v-if="inputEmpty.password">请输入密码</div>
+            <div v-bind:class="inputCss.verify">
+                <label>
+                    <input v-model="loginForm.verify"
+                           v-on:blur="checkInputNull(inputName[2])"
+                           v-on:keyup.exact.enter="loginButtonClick"
+                           type="text" placeholder="验证码">
+                </label>
+                <font-awesome-icon icon="shield-alt"></font-awesome-icon>
+                <a class="btn-image">
+                    <img v-bind:src="imageVerifyUrl" alt="验证码"
+                         v-on:click="changeImage">
+                </a>
+            </div>
+            <div class="error-show" v-if="inputEmpty.verify">请输入验证码</div>
 
-                <div class="remember-btn">
-                    <label>
-                        <input type="checkbox" v-model="loginForm.checked">
-                        <span>记住我</span>
-                    </label>
+            <div class="remember-btn">
+                <label>
+                    <input type="checkbox" v-model="loginForm.checked">
+                    <span>记住我</span>
+                </label>
 
-                </div>
-                <div class="forget-btn">
-                    <router-link to="/passport/reset">忘记密码?</router-link>
-                </div>
-                <button class="login-button" type="button" v-on:click="loginButtonClick">
-                    登录
-                </button>
-            </form>
-        </div>
+            </div>
+            <div class="forget-btn">
+                <router-link to="/passport/reset">忘记密码?</router-link>
+            </div>
+            <el-button class="login-button" @click="loginButtonClick" :disabled="loginClick">登录</el-button>
+        </form>
     </div>
 </template>
 
@@ -95,7 +89,8 @@
                 //输入错误时显示的CSS
                 warn: {"input-warn": true},
                 //图片验证码url
-                imageVerifyUrl: "/api/passport/image-captcha"
+                imageVerifyUrl: "/api/passport/image-captcha",
+                loginClick: false
             }
         },
         methods: {
@@ -114,7 +109,8 @@
                 if (this.loginForm.account === '') this.checkInputNull('account');
                 else if (this.loginForm.password === '') this.checkInputNull('password');
                 else if (this.loginForm.verify === '') this.checkInputNull('verify');
-                else {
+                else if (!this.loginClick) {
+                    this.loginClick = true;
                     this.rememberMe();
                     login(this.loginForm).then(res => {
                         if (!res) this.changeImage();
@@ -124,6 +120,7 @@
                                 this.$router.push(this.fromPath);
                             }, 500);
                         }
+                        this.loginClick = false;
                     });
                 }
             },

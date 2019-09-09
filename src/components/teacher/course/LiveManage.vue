@@ -25,12 +25,8 @@
             <!--分页 E-->
         </div>
         <!--对话框 S-->
-        <el-dialog :show-close="false" top="20vh" width="650px" :visible.asnc="dialogFormVisible">
-            <!--对话框标题 S-->
-            <div slot="title" class="dialog-title">
-                {{dialogFormInfo.title}}
-                <button class="close" @click="dialogFormVisible = false">×</button>
-            </div>
+        <el-dialog :title="dialogFormInfo.title" width="650px" :visible.asnc="dialogFormVisible"
+                   @close="dialogFormVisible = false">
             <!--对话框标题 E-->
             <div class="dialog-content">
                 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -98,7 +94,7 @@
                 let res = await getLive({page});
                 if (res) {
                     let data = res.live;
-                    for(let live of data){
+                    for (let live of data) {
                         this.tableData.push({
                             course: live['CourseInformation.CourseName'],
                             title: live.title,
@@ -140,7 +136,7 @@
                 this.course = res.course;
             },
             /* 下载文件 */
-            downloadHelp(){
+            downloadHelp() {
                 saveAs(`${process.env.VUE_APP_BASE_API}/teacher/course/live/help`);
             }
         },

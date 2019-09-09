@@ -67,14 +67,9 @@
             <!--分页 E-->
         </div>
         <!--对话框 S-->
-        <el-dialog :show-close="false" top="20vh" width="384px" :visible.asnc="dialogFormVisible">
-            <!--对话框标题 S-->
-            <div slot="title" class="dialog-title">
-                {{dialogFormInfo.title}}
-                <button class="close" @click="dialogFormVisible = false">×</button>
-            </div>
-            <!--对话框标题 E-->
-            <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-dialog :title="dialogFormInfo.title" width="384px" :visible.asnc="dialogFormVisible"
+                   @close="dialogFormVisible = false">
+            <el-form :inline="true" :model="formInline">
                 <el-form-item label="学员账号">
                     <el-input v-model="formInline.user" placeholder="学员账号"></el-input>
                 </el-form-item>

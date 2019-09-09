@@ -39,13 +39,8 @@
             <!--分页 E-->
         </div>
         <!--对话框 S-->
-        <el-dialog :show-close="false" top="20vh" width="650px" :visible.asnc="dialogFormVisible">
-            <!--对话框标题 S-->
-            <div slot="title" class="dialog-title">
-                {{dialogFormInfo.title}}
-                <button class="close" @click="dialogFormVisible = false">×</button>
-            </div>
-            <!--对话框标题 E-->
+        <el-dialog :title="dialogFormInfo.title" width="650px" :visible.asnc="dialogFormVisible"
+                   @close="dialogFormVisible = false">
             <div class="dialog-content">
                 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                     <el-form-item label="视频名称" prop="name">

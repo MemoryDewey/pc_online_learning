@@ -94,13 +94,8 @@
         <!--评论列表 E-->
         <!--对话框 S-->
         <div class="comment-dialog">
-            <el-dialog :show-close="false" :visible.asnc="dialogVisible" top="20vh" width="476px">
-                <!--对话框标题 S-->
-                <div slot="title" class="dialog-title">
-                    {{dialogFormInfo.title}}
-                    <button class="close" @click="dialogVisible = false">×</button>
-                </div>
-                <!--对话框标题 E-->
+            <el-dialog :title="dialogFormInfo.title" width="500px" :visible.asnc="dialogVisible"
+                       @close="dialogVisible = false">
                 <!--评分 S-->
                 <div class="verbose-rating">
                     <div class="label-rate">

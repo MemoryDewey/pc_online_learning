@@ -82,13 +82,7 @@
         </div>
         <!--列表 E-->
         <!--对话框 S-->
-        <el-dialog :show-close="false" top="20vh" width="650px" :visible.asnc="dialogVisible">
-            <!--对话框标题 S-->
-            <div slot="title" class="dialog-title">
-                {{dialogFormInfo.title}}
-                <button class="close" @click="dialogVisible = false">×</button>
-            </div>
-            <!--对话框标题 E-->
+        <el-dialog :title="dialogFormInfo.title" width="650px" :visible.asnc="dialogVisible" @close="dialogVisible = false">
             <!--对话框内容 S-->
             <div class="dialog-content" id="course">
                 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm"
@@ -96,16 +90,16 @@
                     <el-form-item label="课程名称" prop="name">
                         <el-input v-model="ruleForm.name"></el-input>
                     </el-form-item>
-                    <el-form-item label="课程体系" required>
-                        <el-col :span="11">
-                            <el-form-item prop="system">
+                    <el-row>
+                        <el-col :span="12">
+                            <el-form-item label="课程体系" required prop="system">
                                 <el-select v-model="ruleForm.system" placeholder="选择课程体系" @change="getType" value="">
                                     <el-option v-for="sys in system" :key="sys.id"
                                                :label="sys.name" :value="sys.id"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="11">
+                        <el-col :span="12">
                             <el-form-item label="课程类别" prop="type">
                                 <el-select v-model="ruleForm.type" placeholder="选择课程类别" value="">
                                     <el-option v-for="tp in type" :key="tp.id"
@@ -113,7 +107,7 @@
                                 </el-select>
                             </el-form-item>
                         </el-col>
-                    </el-form-item>
+                    </el-row>
                     <el-form-item label="课程时间" required>
                         <el-col :span="11">
                             <el-form-item prop="start">
@@ -174,7 +168,8 @@
                         </el-upload>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="submitForm('ruleForm')">{{dialogFormInfo.type}}</el-button>
+                        <el-button type="primary" :disabled="formSubmit"
+                                   @click="submitForm('ruleForm')">{{dialogFormInfo.type}}</el-button>
                         <el-button @click="resetForm('ruleForm')">重置</el-button>
                     </el-form-item>
                 </el-form>
@@ -282,6 +277,7 @@
                 },
                 imageUrl: false,
                 imageSubmit: false,
+                formSubmit: false
             }
         },
         methods: {
@@ -407,6 +403,7 @@
             submitForm(formName) {
                 this.$refs[formName].validate(async (valid) => {
                     if (valid) {
+                        this.formSubmit = true;
                         if (this.imageSubmit) this.$refs.upload.submit();
                         else {
                             let res = await updateCourseInfo(this.ruleForm);
@@ -438,6 +435,7 @@
             },
             /* 添加/更改提交成功后执行 */
             handleSuccess(res) {
+                this.formSubmit = false;
                 if (res.status === 1) {
                     Message.success(res.msg);
                     this.dialogVisible = false;
