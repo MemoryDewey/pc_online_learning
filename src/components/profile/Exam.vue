@@ -34,7 +34,7 @@
                     <router-link :to="`/course/${course['courseID']}`">
                         <el-image :src="course.image">
                             <template slot="error">
-                                <img src="../../assets/image/commodity-error.jpg" alt>
+                                <img src="../../assets/image/load-error.jpg" alt>
                             </template>
                         </el-image>
                         <div class="title">{{course['courseName']}}</div>

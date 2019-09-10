@@ -4,21 +4,10 @@
         <div id="index">
             <div class="banner-slide">
                 <el-carousel trigger="click" height="400px">
-                    <el-carousel-item>
-                        <a style="background-color: #313692" class="banner-slide-a">
-                            <img alt="" src="../../assets/image/bass-study.jpg">
-                        </a>
-                    </el-carousel-item>
-                    <el-carousel-item>
-                        <a style="background-color:#000000" class="banner-slide-a" href="https://bitcoin.org/zh_CN/"
-                           target="_blank">
-                            <img alt="" src="../../assets/image/bitcoin.jpg" class="banner-slide-img">
-                        </a>
-                    </el-carousel-item>
-                    <el-carousel-item>
-                        <a style="background-color: #101010" class="banner-slide-a" href="https://www.ethereum.org/"
-                           target="_blank">
-                            <img alt="" src="../../assets/image/ethereum.png" class="banner-slide-img">
+                    <el-carousel-item v-for="banner in banners" :key="banner.id">
+                        <a :style="{'background-color': banner.fillColor}" :href="banner.url"
+                           class="banner-slide-a">
+                            <img :src="banner.image" alt class="banner-slide-img">
                         </a>
                     </el-carousel-item>
                 </el-carousel>
@@ -40,7 +29,7 @@
                                 <router-link :to="{path:`/course/${course.courseID}/information`}">
                                     <el-image :src="course.courseImage" lazy>
                                         <template slot="error">
-                                            <img src="../../assets/image/commodity-error.jpg" alt>
+                                            <img src="../../assets/image/load-error.jpg" alt>
                                         </template>
                                     </el-image>
                                     <div class="course-title">{{course.courseName}}</div>
@@ -60,7 +49,7 @@
                                 <router-link :to="{path:`/course/${course.courseID}/information`}">
                                     <el-image :src="course.courseImage" lazy>
                                         <template slot="error">
-                                            <img src="../../assets/image/commodity-error.jpg" alt>
+                                            <img src="../../assets/image/load-error.jpg" alt>
                                         </template>
                                     </el-image>
                                     <div class="course-title">{{course.courseName}}</div>
@@ -82,7 +71,7 @@
 <script>
     import Header from '../../components/common/Header'
     import Footer from '../../components/common/Footer'
-    import {getIndexCourse} from "../../api/course";
+    import {getIndexBanner, getIndexCourse} from "../../api/course";
 
     export default {
         name: "index",
@@ -95,7 +84,8 @@
                 newActive: {active: true},
                 hotActive: {active: false},
                 freeCourse: [],
-                chargeCourse: []
+                chargeCourse: [],
+                banners: []
             }
         },
         methods: {
@@ -104,6 +94,10 @@
                 let temp = this.chargeActive.active;
                 this.chargeActive.active = this.freeActive.active;
                 this.freeActive.active = temp;
+            },
+            async getBanner() {
+                let res = await getIndexBanner();
+                this.banners = res.banners;
             }
         },
         components: {
@@ -115,6 +109,7 @@
                 let course = await getIndexCourse();
                 this.freeCourse = course.freeCourse;
                 this.chargeCourse = course.chargeCourse;
+                await this.getBanner();
             } catch (e) {
                 console.log(e);
             }
@@ -151,7 +146,7 @@
 
         .banner-slide {
             position: relative;
-            height: 400px;
+            height: 405px;
             min-width: 1240px;
             z-index: 10;
             display: block;
@@ -160,12 +155,13 @@
         .banner-slide-a {
             display: block;
             width: 100%;
-            height: 400px;
+            height: 405px;
         }
 
         .banner-slide-img {
             display: block;
-            height: 400px;
+            height: 405px;
+            width: 720px;
             margin: 0 auto;
             position: relative;
         }
@@ -184,7 +180,7 @@
 
                 img {
                     display: inline-block;
-                    width: 100%;
+                    width: 270px;
                     height: 170px;
                     border-radius: 6px;
                 }

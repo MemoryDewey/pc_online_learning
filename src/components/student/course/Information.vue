@@ -11,7 +11,7 @@
                         <div class="study-img-left">
                             <el-image v-if="course.info['courseImage']" :src="course.info['courseImage']">
                                 <template slot="error">
-                                    <img src="../../../assets/image/commodity-error.jpg" alt>
+                                    <img src="../../../assets/image/load-error.jpg" alt>
                                 </template>
                             </el-image>
                         </div>
