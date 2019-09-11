@@ -7,6 +7,10 @@ const service = axios.create({
 });
 
 // 请求拦截器
+service.interceptors.request.use(config => {
+    config.headers.common['Authorization'] = localStorage.getItem('token');
+    return config;
+});
 service.interceptors.response.use(
     response => {
         const res = response.data;
