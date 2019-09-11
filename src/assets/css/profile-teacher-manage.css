@@ -251,12 +251,6 @@
   background-color: #F56C6C;
   border: 1px solid #F56C6C;
 }
-.teacher-manage .inner-center .main .dialog-title {
-  padding-bottom: 5px;
-  color: #333;
-  font-size: 18px;
-  width: 100%;
-}
 .teacher-manage .inner-center .main .dialog-content {
   text-align: left;
   display: block;

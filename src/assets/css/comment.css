@@ -1,95 +1,76 @@
-.comment-dialog .dialog-title {
-    padding-bottom: 5px;
-    color: #333;
-    font-size: 18px;
-    width: 100%;
-}
-
 .comment-dialog .verbose-rating {
-    margin: 0;
-    padding: 0;
-    outline: none;
+  margin: 0;
+  padding: 0;
+  outline: none;
 }
-
 .comment-dialog .rating-text-area {
-    margin-top: 20px;
+  margin-top: 20px;
 }
-
 .comment-dialog .rating-text-area textarea {
-    width: 100%;
-    height: 300px;
-    margin-bottom: 5px;
-    padding: 10px 15px;
-    box-sizing: border-box;
-    line-height: 24px;
-    font-size: 14px;
-    color: #333;
-    border: 1px solid #e6e6e6;
+  width: 100%;
+  height: 300px;
+  margin-bottom: 5px;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  line-height: 24px;
+  font-size: 14px;
+  color: #333;
+  border: 1px solid #e6e6e6;
 }
-
 .comment-dialog .label-rate {
-    margin-bottom: 9px;
-    line-height: 19px;
-    font-size: 14px;
-    color: #151515;
+  margin-bottom: 9px;
+  line-height: 19px;
+  font-size: 14px;
+  color: #151515;
 }
-
 .comment-dialog .text-area-remain {
-    margin-top: -30px;
-    position: absolute;
-    right: 35px;
-    color: #999;
+  margin-top: -30px;
+  position: absolute;
+  right: 35px;
+  color: #999;
 }
-
 .comment-dialog .tip-error {
-    color: #F56C6C;
+  color: #F56C6C;
 }
-
 .comment-dialog .dialog-footer {
-    margin-top: 25px;
-    padding: 0;
+  margin-top: 25px;
+  padding: 0;
 }
-
 .comment-dialog .dialog-button {
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    height: 34px;
-    line-height: 34px;
-    border-radius: 3px;
-    cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  height: 34px;
+  line-height: 34px;
+  border-radius: 3px;
+  cursor: pointer;
 }
-
 .comment-dialog .dialog-button-submit {
-    margin-right: 14px;
-    width: 120px;
-    color: white;
-    background-color: #409ef0;
-    border: 1px solid #409ef0;
+  margin-right: 14px;
+  width: 120px;
+  color: white;
+  background-color: #409ef0;
+  border: 1px solid #409ef0;
 }
-
 .comment-dialog .dialog-button-cancer {
-    width: 80px;
-    color: #409ef0;
-    border: 1px solid #409ef0;
+  width: 80px;
+  color: #409ef0;
+  border: 1px solid #409ef0;
 }
-
 .comment-dialog .dialog-button-cancer:hover {
-    color: white;
-    background-color: #409ef0;
+  color: white;
+  background-color: #409ef0;
 }
-
 .comment-dialog .close {
-    padding: 0;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-    font-weight: 200;
-    color: #999999;
-    font-size: 26px;
-    outline: none;
-    text-shadow: none;
-    float: right;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  font-weight: 200;
+  color: #999999;
+  font-size: 26px;
+  outline: none;
+  text-shadow: none;
+  float: right;
 }
-
 /*# sourceMappingURL=comment.css.map */

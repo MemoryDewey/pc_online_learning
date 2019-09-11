@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import store from './store'
 //import VueRouter from 'vue-router'
 
 const Index = () => import('./views/student/Index');
@@ -73,12 +74,15 @@ export default new VueRouter({
                 }
             ],
             beforeEnter(to, from, next) {
-                checkLogin().then((res) => {
-                    if (res.level === 1) next('/teacher/course/student');
-                    else next();
-                }).catch(() => {
-                    next();
-                });
+                if (store.state.isTeacher) next('/teacher/course/student');
+                else {
+                    checkLogin().then((res) => {
+                        if (res.level === 1) next('/teacher/course/student');
+                        else next();
+                    }).catch(() => {
+                        next();
+                    });
+                }
             }
         },
 
@@ -98,12 +102,15 @@ export default new VueRouter({
                 {path: 'exam', name: 'CEM', component: CEM, meta: {title: '试卷管理'}}
             ],
             beforeEnter(to, from, next) {
-                checkLogin().then((res) => {
-                    if (res.level === 1) next();
-                    else next('/404');
-                }).catch(() => {
-                    next('/404');
-                });
+                if (store.state.isTeacher) next();
+                else {
+                    checkLogin().then((res) => {
+                        if (res.level === 1) next();
+                        else next('/404');
+                    }).catch(() => {
+                        next('/404');
+                    });
+                }
             }
         },
 
@@ -120,12 +127,15 @@ export default new VueRouter({
         {
             path: '/', name: 'Index', component: Index, meta: {title: "区块链在线学习平台"},
             beforeEnter(to, from, next) {
-                checkLogin().then((res) => {
-                    if (res.level === 1) next('/teacher/course/student');
-                    else next();
-                }).catch(() => {
-                    next();
-                });
+                if (store.state.isTeacher) next('/teacher/course/student');
+                else {
+                    checkLogin().then((res) => {
+                        if (res.level === 1) next('/teacher/course/student');
+                        else next();
+                    }).catch(() => {
+                        next();
+                    });
+                }
             }
         },
 

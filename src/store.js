@@ -28,6 +28,7 @@ export default new Vuex.Store({
             state.loginState = true;
         },
         exit: state => {
+            localStorage.removeItem('token');
             state.loginState = false;
         },
         changeAvatarUrl: (state, payload) => {

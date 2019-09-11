@@ -29,16 +29,21 @@ router.beforeEach((to, from, next) => {
     } else {
         /* 路由发生变化修改页面title */
         if (to.meta.requireAuth) {
-            checkLogin().then((res) => {
-                if (res.status === 1) {
-                    if (to.meta.title) document.title = to.meta.title;
-                    next();
-                }
-                else next('/passport/login');
-            }).catch(() => {
-                next('/passport/login');
-            });
-        } else  {
+            if (store.state.loginState) {
+                if (to.meta.title) document.title = to.meta.title;
+                next();
+            } else {
+                checkLogin().then((res) => {
+                    if (res.status === 1) {
+                        if (to.meta.title) document.title = to.meta.title;
+                        next();
+                    }
+                    else next('/passport/login');
+                }).catch(() => {
+                    next('/passport/login');
+                });
+            }
+        } else {
             if (to.meta.title) document.title = to.meta.title;
             next()
         }

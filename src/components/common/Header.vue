@@ -208,7 +208,9 @@
                 });
             },
             search() {
-                let url = this.page === 'course' ? `/course/list/${this.searchContent}` : `/project/list/${this.searchContent}`;
+                let url = this.page === 'course' ?
+                    `/course/list/${this.searchContent}` :
+                    `/project/list/${this.searchContent}`;
                 this.$router.push(url);
             }
         },

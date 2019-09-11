@@ -169,6 +169,7 @@
                     register(this.registerForm).then(res => {
                         if (res) {
                             Message.success(res.msg);
+                            localStorage.setItem('token', res.token);
                             setTimeout(() => {
                                 window.location.href = '/';
                             }, 1000);
