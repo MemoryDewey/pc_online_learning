@@ -176,7 +176,7 @@
 
 <script>
     import ListHeader from './ListHeader'
-    import {getListPage, getList, getRecommend} from '../../../api/course'
+    import {getListPage, getList, getRecommend} from '@/api/course'
 
     export default {
         name: "List",

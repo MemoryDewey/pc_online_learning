@@ -101,7 +101,7 @@
         addVideo,
         checkVideo,
         updateVideo
-    } from '../../../api/course-manage'
+    } from '@/api/course-manage'
 
     export default {
         name: "VideoManage",

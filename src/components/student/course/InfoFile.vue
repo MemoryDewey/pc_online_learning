@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import {getFile} from "../../../api/course";
+    import {getFile} from "@/api/course";
     import {Message} from "element-ui";
     import {saveAs} from "file-saver";
 

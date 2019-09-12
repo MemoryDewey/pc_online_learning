@@ -183,8 +183,8 @@
         applyChargeByBst, applyCourseByCash, applyFree,
         checkBstConfirmation, checkBstStatue, examCheck,
         getClass, getExamTime, getInfo
-    } from "../../../api/course";
-    import {getWalletInfo} from '../../../api/wallet'
+    } from "@/api/course";
+    import {getWalletInfo} from '@/api/wallet'
     // import wsClient from 'socket.io-client'
 
     export default {

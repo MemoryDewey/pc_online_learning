@@ -46,7 +46,7 @@
 
 <script>
     import CourseBread from './CourseBread'
-    import {getCourseSystem, getCourseType} from "../../../api/course";
+    import {getCourseSystem, getCourseType} from "@/api/course";
 
     export default {
         name: "ListHeader",

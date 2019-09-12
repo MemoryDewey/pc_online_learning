@@ -40,7 +40,7 @@
 
 <script>
     import {Message} from 'element-ui'
-    import {getLive, getVideo} from "../../../api/course";
+    import {getLive, getVideo} from "@/api/course";
 
     export default {
         name: "InfoVideo",

@@ -65,7 +65,7 @@
 
 <script>
     import {Message, MessageBox} from "element-ui"
-    import {getExam, addExam, getClass} from '../../../api/course'
+    import {getExam, addExam, getClass} from '@/api/course'
 
     export default {
         name: "CourseExam",

@@ -138,7 +138,7 @@
 
 <script>
     import {Message, MessageBox} from 'element-ui'
-    import {getChapter, deleteFile, updateFile, getFile, getCourse, recoverFile} from "../../../api/course-manage";
+    import {getChapter, deleteFile, updateFile, getFile, getCourse, recoverFile} from "@/api/course-manage";
 
     export default {
         name: "FileManage",

@@ -69,9 +69,9 @@
 </template>
 
 <script>
-    import Header from '../../components/common/Header'
-    import Footer from '../../components/common/Footer'
-    import {getIndexBanner, getIndexCourse} from "../../api/course";
+    import Header from '@/components/common/Header'
+    import Footer from '@/components/common/Footer'
+    import {getIndexBanner, getIndexCourse} from "@/api/course";
 
     export default {
         name: "index",

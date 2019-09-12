@@ -128,7 +128,7 @@
     import {videoPlayer} from 'vue-video-player'
     import 'videojs-contrib-hls'
     import {Message} from 'element-ui'
-    import {getInfo, getVideo, getLive} from "../../../api/course";
+    import {getInfo, getVideo, getLive} from "@/api/course";
 
     export default {
         name: "Video",

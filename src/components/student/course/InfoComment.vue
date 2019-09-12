@@ -137,7 +137,7 @@
 
 <script>
     import {Message} from 'element-ui'
-    import {getClass, addComment, getComment, getCommentCount} from "../../../api/course";
+    import {getClass, addComment, getComment, getCommentCount} from "@/api/course";
 
     export default {
         name: "InfoComment",

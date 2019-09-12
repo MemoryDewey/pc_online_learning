@@ -59,7 +59,7 @@
 
 <script>
     import {Message} from 'element-ui'
-    import {checkPhone, sendMessage, register} from '../../api/passport'
+    import {checkPhone, sendMessage, register} from '@/api/passport'
 
     export default {
         name: "Register",

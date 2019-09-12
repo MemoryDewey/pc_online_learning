@@ -93,10 +93,10 @@
 </template>
 
 <script>
-    import Header from "../../components/common/Header";
-    import Footer from "../../components/common/Footer";
-    import {getPersonalInfo, updateBstAddress} from "../../api/profile";
-    import {getWalletInfo, getWalletLog, recharge, toCash} from "../../api/wallet";
+    import Header from "@/components/common/Header";
+    import Footer from "@/components/common/Footer";
+    import {getPersonalInfo, updateBstAddress} from "@/api/profile";
+    import {getWalletInfo, getWalletLog, recharge, toCash} from "@/api/wallet";
     import {Message, MessageBox} from 'element-ui'
 
     export default {

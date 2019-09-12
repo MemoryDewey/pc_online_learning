@@ -47,7 +47,7 @@
 
 <script>
     import {Message} from 'element-ui'
-    import {login} from '../../api/passport'
+    import {login} from '@/api/passport'
 
     export default {
         name: "Login",

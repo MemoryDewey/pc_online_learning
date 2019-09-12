@@ -58,7 +58,7 @@
 </template>
 
 <script>
-    import {getExam} from '../../api/profile'
+    import {getExam} from '@/api/profile'
 
     export default {
         name: "Exam",

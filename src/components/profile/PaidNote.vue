@@ -94,7 +94,7 @@
 
 
 <script>
-    import {getWalletBstCourse, getWalletCourse} from "../../api/course";
+    import {getWalletBstCourse, getWalletCourse} from "@/api/course";
 
     export default {
         name: "Wallet",

@@ -228,8 +228,8 @@
 </template>
 
 <script>
-    import Header from "../../components/common/Header";
-    import Footer from "../../components/common/Footer";
+    import Header from "@/components/common/Header";
+    import Footer from "@/components/common/Footer";
     import {Message, MessageBox} from 'element-ui'
     import regions from "china-citys"
     import {
@@ -238,8 +238,8 @@
         getPointCommodity,
         getPointDetail,
         getPointInfo
-    } from "../../api/point-mall";
-    import {addAddress, deleteAddress, getAddress, setDefualtAddress, updateAddress} from "../../api/shipping-address";
+    } from "@/api/point-mall";
+    import {addAddress, deleteAddress, getAddress, setDefualtAddress, updateAddress} from "@/api/shipping-address";
 
     export default {
         name: "PointsMall",

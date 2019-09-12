@@ -43,7 +43,7 @@
 </template>
 
 <script>
-    import {getInvite} from '../../api/profile'
+    import {getInvite} from '@/api/profile'
 
     export default {
         name: "Invite",

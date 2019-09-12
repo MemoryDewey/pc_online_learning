@@ -109,8 +109,8 @@
 
 <script>
     import {Message, MessageBox} from 'element-ui'
-    import {addComment} from '../../api/course'
-    import {getCourse, cancelFree} from '../../api/profile'
+    import {addComment} from '@/api/course'
+    import {getCourse, cancelFree} from '@/api/profile'
 
     export default {
         name: "Course",

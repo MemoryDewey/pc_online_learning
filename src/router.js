@@ -1,44 +1,44 @@
 import Vue from 'vue'
-import store from './store'
+import store from '@/store'
 //import VueRouter from 'vue-router'
 
-const Index = () => import('./views/student/Index');
+const Index = () => import('@/views/student/Index');
 
-const Wallet = () => import('./views/student/Wallet');
+const Wallet = () => import('@/views/student/Wallet');
 
-const Error = () => import('./views/404');
-const Passport = () => import('./views/Passport');
-const Login = () => import('./components/passport/Login');
-const Register = () => import( './components/passport/Register');
-const Reset = () => import( './components/passport/Reset');
+const Error = () => import('@/views/404');
+const Passport = () => import('@/views/Passport');
+const Login = () => import('@/components/passport/Login');
+const Register = () => import( '@/components/passport/Register');
+const Reset = () => import( '@/components/passport/Reset');
 
-const Course = () => import( './views/student/Course');
-const CourseList = () => import( './components/student/course/List');
-const CourseInformation = () => import( './components/student/course/Information');
-const CourseVideo = () => import( './components/student/course/Video');
-const CourseExam = () => import( './components/student/course/CourseExam');
-const CourseWare = () => import( './components/student/course/CourseWare');
+const Course = () => import( '@/views/student/Course');
+const CourseList = () => import( '@/components/student/course/List');
+const CourseInformation = () => import( '@/components/student/course/Information');
+const CourseVideo = () => import( '@/components/student/course/Video');
+const CourseExam = () => import( '@/components/student/course/CourseExam');
+const CourseWare = () => import( '@/components/student/course/CourseWare');
 
-const PointsMall = () => import('./views/student/PointsMall');
+const PointsMall = () => import('@/views/student/PointsMall');
 
-const Profile = () => import( './views/Profile');
-const ProfileCourse = () => import( './components/profile/Course');
-const ProfileCertificate = () => import( './components/profile/Certificate');
-const ProfileExam = () => import( './components/profile/Exam');
-const ProfilePersonal = () => import( './components/profile/Personal');
-const ProfileInvite = () => import('./components/profile/Invite');
-const ProfilePaid = () => import( './components/profile/PaidNote');
+const Profile = () => import( '@/views/Profile');
+const ProfileCourse = () => import( '@/components/profile/Course');
+const ProfileCertificate = () => import( '@/components/profile/Certificate');
+const ProfileExam = () => import( '@/components/profile/Exam');
+const ProfilePersonal = () => import( '@/components/profile/Personal');
+const ProfileInvite = () => import('@/components/profile/Invite');
+const ProfilePaid = () => import( '@/components/profile/PaidNote');
 
 
-const TeacherCourse = () => import( './views/teacher/Course');
-const CSM = () => import( './components/teacher/course/StudentManage');
-const CM = () => import( './components/teacher/course/CourseManage');
-const CCM = () => import( './components/teacher/course/ChapterManage');
-const CVM = () => import( './components/teacher/course/VideoManage');
-const CPM = () => import( './components/teacher/course/PDFMange');
-const CFM = () => import( './components/teacher/course/FileManage');
-const CLM = () => import( './components/teacher/course/LiveManage');
-const CEM = () => import( './components/teacher/course/ExamManage');
+const TeacherCourse = () => import( '@/views/teacher/Course');
+const CSM = () => import( '@/components/teacher/course/StudentManage');
+const CM = () => import( '@/components/teacher/course/CourseManage');
+const CCM = () => import( '@/components/teacher/course/ChapterManage');
+const CVM = () => import( '@/components/teacher/course/VideoManage');
+const CPM = () => import( '@/components/teacher/course/PDFMange');
+const CFM = () => import( '@/components/teacher/course/FileManage');
+const CLM = () => import( '@/components/teacher/course/LiveManage');
+const CEM = () => import( '@/components/teacher/course/ExamManage');
 
 import {checkLogin} from './api/passport'
 

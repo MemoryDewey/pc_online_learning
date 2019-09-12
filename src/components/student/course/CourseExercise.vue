@@ -56,7 +56,7 @@
 
 <script>
     import {Message, MessageBox} from 'element-ui'
-    import {addExam, getExercise} from '../../../api/course'
+    import {addExam, getExercise} from '@/api/course'
 
     export default {
         name: "CourseExercise",

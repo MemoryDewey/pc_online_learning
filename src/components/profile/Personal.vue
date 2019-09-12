@@ -203,8 +203,8 @@
 
 <script>
     import {Message, MessageBox} from 'element-ui'
-    import {sendEmail, sendMessage, changePhone, addEmail, deleteEmail} from "../../api/passport";
-    import {getPersonalInfo, updatePersonal} from "../../api/profile"
+    import {sendEmail, sendMessage, changePhone, addEmail, deleteEmail} from "@/api/passport";
+    import {getPersonalInfo, updatePersonal} from "@/api/profile"
 
     export default {
         name: "Personal",

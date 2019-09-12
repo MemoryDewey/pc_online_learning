@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import getWeb3 from './utils/getWeb3'
-import getContract from './utils/getContract'
+import getWeb3 from '@/utils/getWeb3'
+import getContract from '@/utils/getContract'
 
 Vue.use(Vuex);
 

@@ -58,8 +58,8 @@
 </template>
 
 <script>
-    import {Message, MessageBox, Loading} from 'element-ui'
-    import {getVideo, deleteWare} from "../../../api/course-manage";
+    import {Message, MessageBox} from 'element-ui'
+    import {getVideo, deleteWare} from "@/api/course-manage";
 
     export default {
         name: "PDFManage",

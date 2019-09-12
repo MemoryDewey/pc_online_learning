@@ -79,7 +79,7 @@
         updateChapter,
         recoverChapter,
         getCourse
-    } from '../../../api/course-manage'
+    } from '@/api/course-manage'
 
     export default {
         name: "ChapterManage",

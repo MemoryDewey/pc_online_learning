@@ -172,8 +172,8 @@
 
 <script>
     import moment from 'moment'
-    import {logout, checkLogin} from '../../api/passport'
-    import {getCourseSystem} from '../../api/course'
+    import {logout, checkLogin} from '@/api/passport'
+    import {getCourseSystem} from '@/api/course'
 
     export default {
         name: "Header",

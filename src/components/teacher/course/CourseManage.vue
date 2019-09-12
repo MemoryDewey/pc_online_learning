@@ -187,8 +187,8 @@
         deleteCourse,
         recoverCourse,
         updateCourseInfo,
-    } from "../../../api/course-manage";
-    import {getCourseType, getCourseSystem} from "../../../api/course";
+    } from "@/api/course-manage";
+    import {getCourseType, getCourseSystem} from "@/api/course";
 
     export default {
         name: "CourseManage",

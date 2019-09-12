@@ -119,7 +119,7 @@
 
 <script>
     import {Message} from 'element-ui'
-    import {getCoursePaper, addPaper, getPaper, getCourseVideo, updatePaper} from "../../../api/course-manage";
+    import {getCoursePaper, addPaper, getPaper, getCourseVideo, updatePaper} from "@/api/course-manage";
 
     export default {
         name: "ExamManage",

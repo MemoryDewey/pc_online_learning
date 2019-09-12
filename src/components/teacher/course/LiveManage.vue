@@ -54,7 +54,7 @@
 <script>
     import {Message} from 'element-ui'
     import moment from 'moment'
-    import {getLive, setLive, getLiveCourse} from '../../../api/course-manage'
+    import {getLive, setLive, getLiveCourse} from '@/api/course-manage'
     import {saveAs} from 'file-saver'
 
     export default {

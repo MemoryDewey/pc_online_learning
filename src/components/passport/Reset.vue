@@ -70,7 +70,7 @@
 
 <script>
     import {Message} from 'element-ui'
-    import {sendMessage, sendEmail, reset} from '../../api/passport'
+    import {sendMessage, sendEmail, reset} from '@/api/passport'
 
     export default {
         name: "Reset",
