@@ -89,6 +89,7 @@
                             <template slot="append" v-if="dialogFormInfo.type==='add'">
                                 <el-upload ref="upload" action="/api/teacher/course/file/add"
                                            :auto-upload="false" :show-file-list="false" :data="ruleForm"
+                                           :headers="headers"
                                            :on-change="chooseFile" :on-success="handleSuccess">
                                     <el-button type="primary">选取文件</el-button>
                                 </el-upload>
@@ -178,7 +179,8 @@
                     ]
                 },
                 fileChoose: false,
-                preDefined: {fileID: '', fileType: '', fileSize: '', deletedAt: '', chapterName: ''}
+                preDefined: {fileID: '', fileType: '', fileSize: '', deletedAt: '', chapterName: ''},
+                headers: {Authorization: localStorage.getItem('token')}
             }
         },
         methods: {

@@ -25,7 +25,7 @@
                 <font-awesome-icon icon="lock"></font-awesome-icon>
             </div>
 
-            <div class="error-show" v-if="inputEmpty.password">请输入密码</div>
+            <div class="error-show" @keyup.exact.enter="loginButtonClick" v-if="inputEmpty.password">请输入密码</div>
 
             <div class="remember-btn">
                 <label>

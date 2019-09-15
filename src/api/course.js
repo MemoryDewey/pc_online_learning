@@ -1,5 +1,4 @@
-import {get, post} from '../utils/request';
-import da from "element-ui/src/locale/lang/da";
+import {get, post} from '@/utils/request';
 
 export const getCourseType = params => get('/course/list/type', params);
 export const getCourseSystem = () => get('/course/list/system');

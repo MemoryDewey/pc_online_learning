@@ -82,7 +82,8 @@
         </div>
         <!--列表 E-->
         <!--对话框 S-->
-        <el-dialog :title="dialogFormInfo.title" width="650px" :visible.asnc="dialogVisible" @close="dialogVisible = false">
+        <el-dialog :title="dialogFormInfo.title" width="650px" :visible.asnc="dialogVisible"
+                   @close="dialogVisible = false">
             <!--对话框内容 S-->
             <div class="dialog-content" id="course">
                 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm"
@@ -156,7 +157,7 @@
                         <el-upload class="cover" enctype="multipart/form-data" name="cover" :auto-upload="false"
                                    action="/api/teacher/course/info/deal" :show-file-list="false"
                                    :before-upload="beforeCoverUpload" :on-change="chooseCover"
-                                   :data="ruleForm" :on-success="handleSuccess" ref="upload">
+                                   :headers="headers" :data="ruleForm" :on-success="handleSuccess" ref="upload">
                             <el-image :src="imageUrl" v-if="imageUrl">
                                 <div slot="error" class="image-slot">
                                     <i class="el-icon-picture-outline"></i>
@@ -169,7 +170,8 @@
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" :disabled="formSubmit"
-                                   @click="submitForm('ruleForm')">{{dialogFormInfo.type}}</el-button>
+                                   @click="submitForm('ruleForm')">{{dialogFormInfo.type}}
+                        </el-button>
                         <el-button @click="resetForm('ruleForm')">重置</el-button>
                     </el-form-item>
                 </el-form>
@@ -277,7 +279,8 @@
                 },
                 imageUrl: false,
                 imageSubmit: false,
-                formSubmit: false
+                formSubmit: false,
+                headers: {Authorization: localStorage.getItem('token')}
             }
         },
         methods: {

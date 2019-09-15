@@ -46,7 +46,7 @@
             <div class="dialog-content">
                 <el-upload class="upload-demo" drag :data="uploadData" :before-upload="beforeUpload"
                            action="/api/teacher/course/ware" :on-success="uploadSuccess"
-                           name="pdf" :show-file-list="false">
+                           name="pdf" :show-file-list="false" :headers="headers">
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                     <div class="el-upload__tip" slot="tip">只能上传PDF文件，且不超过5MB</div>
@@ -77,7 +77,7 @@
                 },
                 tableData: [],
                 uploadData: {},
-                percent: 0
+                headers: {Authorization: localStorage.getItem('token')}
             }
         },
         methods: {
@@ -90,7 +90,7 @@
                     await getVideo({page, search});
                 if (res) {
                     let data = res.video;
-                    for(let video of data){
+                    for (let video of data) {
                         this.tableData.push({
                             id: video.videoID, name: video.videoName,
                             chapter: video['CourseChapter.chapterName'],
