@@ -231,12 +231,14 @@
                     search: this.$route.params.search
                 }).then(res => {
                     if (res) {
-                        this.pageCount = res.page
+                        this.pageCount = res.page;
+                        this.searchCount = res.count
                     }
                 })
             },
             pageChanged(val) {
                 this.$router.push(`${this.pageUrl}page=${val}`);
+                window.scrollTo(0, 0);
             },
             async searchCourseCount() {
                 if (this.$route.params.search !== undefined) {
@@ -251,21 +253,14 @@
             async '$route.query'(to) {
                 this.getPageCount();
                 this.loading = true;
-                let response = await getList(this.$route.query);
+                let params = this.$route.query;
+                params.search = this.$route.params.search ? this.$route.params.search : undefined;
+                let response = await getList(params);
                 if (response) {
                     this.courses = response.course;
                     this.loading = false;
                 }
                 this.changeUrl(to);
-            },
-            async '$route.params'(to) {
-                if (this.$route.params.search) {
-                    let res = await getList(this.$route.params);
-                    this.courses = [];
-                    if (res) this.courses = res.course;
-                    this.searchCourseCount();
-                    this.changeUrl(to);
-                }
             }
         },
         async created() {
@@ -278,13 +273,13 @@
             };
             this.getPageCount();
             let response;
-            /* 如果有搜索课程先获取符合条件的课程总数 */
-            this.searchCourseCount();
             /* 获取推荐课程 */
             response = await getRecommend();
             if (response) this.recommendCourse = response.course;
             /* 获取课程 */
-            response = await getList(this.$route.query);
+            let params = this.$route.query;
+            params.search = this.$route.params.search ? this.$route.params.search : undefined;
+            response = await getList(params);
             if (response) {
                 this.courses = response.course;
                 this.loading = false;

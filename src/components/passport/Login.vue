@@ -19,13 +19,14 @@
                 <label>
                     <input
                             v-model="loginForm.password"
-                            v-on:keyup="checkInputNull(inputName[1])"
+                            @keyup="checkInputNull(inputName[1])"
+                            @keyup.exact.enter="loginButtonClick"
                             type="password" placeholder="密码">
                 </label>
                 <font-awesome-icon icon="lock"></font-awesome-icon>
             </div>
 
-            <div class="error-show" @keyup.exact.enter="loginButtonClick" v-if="inputEmpty.password">请输入密码</div>
+            <div class="error-show" v-if="inputEmpty.password">请输入密码</div>
 
             <div class="remember-btn">
                 <label>
