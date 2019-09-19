@@ -11,6 +11,7 @@
                             action="/api/profile/personal/avatar"
                             :show-file-list="false"
                             :on-success="handleAvatarSuccess"
+                            :headers="headers"
                             :before-upload="beforeAvatarUpload">
                         <img v-if="imageUrl" :src="imageUrl" alt="">
                         <div v-else class="avatar-uploader-icon">
@@ -24,6 +25,7 @@
                             name="avatar"
                             :on-success="handleAvatarSuccess"
                             :before-upload="beforeAvatarUpload"
+                            :headers="headers"
                             :show-file-list="false">
                         <a class="btn btn-normal">更换头像</a>
                     </el-upload>
@@ -238,7 +240,8 @@
                 dialogForm: {
                     account: '',
                     verifyCode: ''
-                }
+                },
+                headers: {Authorization: localStorage.getItem('token')}
             }
         },
         async created() {
