@@ -247,7 +247,7 @@
         async created() {
             let response = await getPersonalInfo();
             if (response) {
-                let data = response.msg;
+                let data = response.data;
                 this.informationForm.nickname = data.nickname;
                 this.informationForm.realName = data.realName;
                 this.informationForm.sex = data.sex;
