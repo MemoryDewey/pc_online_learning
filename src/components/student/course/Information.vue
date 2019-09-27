@@ -401,8 +401,10 @@
             }*/
         },
         async mounted() {
-            let res = await checkBstConfirmation({courseID: this.$route.params.courseID});
-            this.bstApplyBtn = parseInt(res.toString()) === 3;
+            if(this.$store.state.loginState){
+                let res = await checkBstConfirmation({courseID: this.$route.params.courseID});
+                this.bstApplyBtn = parseInt(res.toString()) === 3;
+            }
         },
         async created() {
             await this.getInfo();
