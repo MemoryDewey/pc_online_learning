@@ -10,7 +10,7 @@
                             <div class="info">
                                 <div class="name">{{nickname}}</div>
                                 <div class="bst-bind" v-if="!bstAddress" @click="bindBstAddress">点击绑定BST钱包账号</div>
-                                <el-tooltip v-else effect="light" placement="bottom" :content="`钱包地址:${bstAddress}`">
+                                <el-tooltip v-else effect="light" placement="bottom" :content="`私钥地址:${bstAddress}`">
                                     <div class="bst-bind" @click="bindBstAddress">已绑定BST钱包账号</div>
                                 </el-tooltip>
                             </div>
@@ -98,6 +98,7 @@
     import {getPersonalInfo, updateBstAddress} from "@/api/profile";
     import {getWalletInfo, getWalletLog, recharge, toCash} from "@/api/wallet";
     import {Message, MessageBox} from 'element-ui'
+    import NodeRSA from 'node-rsa'
 
     export default {
         name: "Wallet",
@@ -142,6 +143,7 @@
                 nickname: null,
                 avatarUrl: null,
                 bstAddress: null,
+                publicKey: null,
                 balanceMain: 0,
                 balanceSub: .00,
                 pageSum: 1,
@@ -178,14 +180,15 @@
             async getPersonalInfo() {
                 let res = await getPersonalInfo();
                 if (res) {
-                    this.nickname = res.msg.nickname;
-                    this.avatarUrl = res.msg.avatarUrl;
-                    this.bstAddress = res.msg.bstAddress;
+                    this.nickname = res.data.nickname;
+                    this.avatarUrl = res.data.avatarUrl;
+                    this.bstAddress = res.data.bstAddress;
                 }
             },
             async getWalletInfo() {
                 let res = await getWalletInfo();
                 if (res) {
+                    this.publicKey = res.key;
                     let balance = res.wallet.balance.split(".");
                     this.balanceMain = balance[0];
                     this.balanceSub = `.${balance[1]}`;
@@ -199,13 +202,15 @@
                 }
             },
             async bindBstAddress() {
-                this.$prompt('请输入您的BST钱包地址', '绑定/更换BST钱包地址', {
+                this.$prompt('请输入您的BST私钥，我们会为你妥善保存', '绑定/更换BST钱包地址', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
-                    inputPattern: /^0x[a-fA-F0-9]{40}$/,
+                    inputPattern: /^0x[a-fA-F0-9]*$/,
                     inputErrorMessage: '地址格式不正确'
                 }).then(async ({value}) => {
-                    let res = await updateBstAddress({address: value});
+                    const rsa = new NodeRSA();
+                    rsa.importKey(this.publicKey, 'pkcs8-public');
+                    let res = await updateBstAddress({address: rsa.encrypt(value, 'base64', 'utf8')});
                     if (res) {
                         Message.success(res.msg);
                         await this.getPersonalInfo();
@@ -269,7 +274,7 @@
                     this.getWalletLogs(1);
                 }
             },
-            payFinished(){
+            payFinished() {
                 this.moneyDialogVisible = false;
                 this.codeDialogVisible = false;
                 this.recharge();
@@ -383,8 +388,9 @@
             }
         }
 
-        .el-table{
+        .el-table {
             margin-bottom: 20px;
+
             .success {
                 color: #67c23a
             }
