@@ -341,16 +341,6 @@
                     Message.warning('您的浏览器不支持BST方式购买，请安装MetaMask插件');
                 else try {
                     if (this.$store.state.web3.coinbase) {
-                        /!*const socket = wsClient.connect(`${location.origin}`);
-                            socket.emit('buyCourse', "");
-                            socket.on('message', data => {
-                                if (data.status === 1) {
-                                    Message.success(data.msg);
-                                    this.hadApply = true;
-                                    this.applyCount = data.result.applyCount;
-                                } else Message.error(data.msg);
-                                socket.close();
-                            });*!/
                         let value = await this.$store.state.web3.web3Instance().utils.toWei(this.bstPrice.toString(), 'ether');
                         let res = await checkBstStatue({courseID: this.$route.params.courseID});
                         if (res) this.$store.state.contractInstance().methods.transfer(res.address, value)
@@ -370,7 +360,10 @@
                 } catch (e) {
                     console.log(e);
                 }*/
-                await applyChargeByBst();
+                let data = {
+                    courseID: this.$route.params.courseID, amount: this.bstPrice
+                };
+                await applyChargeByBst(data);
             },
             //通过余额购买课程
             async byBalance() {

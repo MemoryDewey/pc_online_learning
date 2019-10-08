@@ -204,9 +204,7 @@
             async bindBstAddress() {
                 this.$prompt('请输入您的BST私钥，我们会为你妥善保存', '绑定/更换BST钱包地址', {
                     confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    inputPattern: /^0x[a-fA-F0-9]*$/,
-                    inputErrorMessage: '地址格式不正确'
+                    cancelButtonText: '取消'
                 }).then(async ({value}) => {
                     const rsa = new NodeRSA();
                     rsa.importKey(this.publicKey, 'pkcs8-public');
