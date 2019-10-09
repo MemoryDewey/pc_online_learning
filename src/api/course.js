@@ -16,6 +16,7 @@ export const applyFree = data => post('/course/information/apply-free', data);
 export const applyChargeByBst = data => post('/course/information/buy-course-bst', data);
 export const checkBstStatue = params => get('/course/information/buy-course-bst/statue', params);
 export const checkBstConfirmation = params => get('/course/information/check-bst-confirmation', params);
+export const getBstPrice = data => post('/course/information/bst-price', data);
 export const applyCourseByCash = data => post('/course/information/buy-course', data);
 export const examCheck = params => get('/examine/exam-check', params);
 export const getLive = params => get('/course/information/live', params);

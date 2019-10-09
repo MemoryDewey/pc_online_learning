@@ -182,7 +182,7 @@
     import {
         applyChargeByBst, applyCourseByCash, applyFree,
         checkBstConfirmation, checkBstStatue, examCheck,
-        getClass, getExamTime, getInfo
+        getClass, getExamTime, getInfo, getBstPrice
     } from "@/api/course";
     import {getWalletInfo} from '@/api/wallet'
     // import wsClient from 'socket.io-client'
@@ -312,13 +312,11 @@
             },
             //获取BST换算信息
             async getBstPrice() {
-                let res = await this.$axios.get('https://api1.zg.com/tickers');
-                let data = res.data.ticker;
-                let bstInfo = data.find((x) => {
-                    return x.symbol = "BST_USDT";
-                });
-                this.getBstSuccess = true;
-                this.bstPrice = ((1 / bstInfo.sell) / 7 * this.course.info.price).toFixed(2)
+                let res = await getBstPrice({price: this.course.info.price});
+                if(res){
+                    this.getBstSuccess = true;
+                    this.bstPrice = res.price;
+                }
             },
             //购买课程
             async buyCourse() {
@@ -395,7 +393,7 @@
             }*/
         },
         async mounted() {
-            if(this.$store.state.loginState){
+            if (this.$store.state.loginState) {
                 let res = await checkBstConfirmation({courseID: this.$route.params.courseID});
                 this.bstApplyBtn = parseInt(res.toString()) === 3;
             }
