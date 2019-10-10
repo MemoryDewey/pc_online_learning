@@ -2,7 +2,7 @@
     <div class="flex-list">
         <!--课程列表顶部信息 S-->
         <el-tabs v-model="activeName" type="card">
-            <el-tab-pane label="R M B" name="first">
+            <el-tab-pane label="R M B" name="rmb">
                 <div class="flex-list-header">
                     <div class="flex-row">
                         <div class="flex-cell first">课程信息</div>
@@ -45,11 +45,12 @@
                     </el-pagination>
                 </div>
             </el-tab-pane>
-            <el-tab-pane label="B S T">
+            <el-tab-pane label="B S T" name="bst">
                 <div class="flex-list-header">
                     <div class="flex-row">
                         <div class="flex-cell first">课程信息</div>
-                        <div class="flex-cell first">支付金额</div>
+                        <div class="flex-cell first">支付代币</div>
+                        <div class="flex-cell first">区块信息</div>
                     </div>
                 </div>
                 <div class="flex-list-no-data" v-if="bstCourses.length===0">
@@ -79,11 +80,16 @@
                             <div class="title">{{course['CourseInformation'].courseName}}</div>
                         </div>
                         <div class="flex-cell first state">{{course.amount}} BST</div>
+                        <div class="flex-cell first hash">{{course['txHash']}}</div>
                     </div>
                 </div>
                 <div class="sort-page">
-                    <el-pagination background layout="prev, pager, next"
+                    <el-pagination v-if="activeName==='rmb'" background layout="prev, pager, next"
                                    :pager-count="10" @current-change="getRmbCourse"
+                                   :total="10*rmbPageSum" :hide-on-single-page="true">
+                    </el-pagination>
+                    <el-pagination v-else background layout="prev, pager, next"
+                                   :pager-count="10" @current-change="getBstCourse"
                                    :total="10*bstPageSum" :hide-on-single-page="true">
                     </el-pagination>
                 </div>
@@ -100,11 +106,11 @@
         name: "Wallet",
         data() {
             return {
-                activeName: 'first',
+                activeName: 'rmb',
                 rmbPageSum: 1,
-                rmbCourses:[],
-                bstPageSum:1,
-                bstCourses:[]
+                rmbCourses: [],
+                bstPageSum: 1,
+                bstCourses: []
             }
         },
         methods: {
@@ -117,9 +123,9 @@
                 }
             },
             //获取BST支付课程信息
-            async getBstCourse(page){
+            async getBstCourse(page) {
                 let res = await getWalletBstCourse({page});
-                if(res){
+                if (res) {
                     this.bstCourses = res.courses;
                     this.bstPageSum = res.pageSum;
                 }
