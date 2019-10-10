@@ -53,7 +53,8 @@ export default new VueRouter({
     routes: [
         //课程
         {
-            path: '/course', name: 'Course', component: Course, children: [
+            path: '/course', name: 'Course', redirect: {name: 'CourseList'},
+            component: Course, children: [
                 {path: 'list', name: 'CourseList', component: CourseList, meta: {title: '在线学习'}},
                 {path: 'list/:search', name: 'CourseListSearch', component: CourseList, meta: {title: '在线学习'}},
                 {
@@ -88,7 +89,7 @@ export default new VueRouter({
             }
         },
 
-        ///课件
+        //课件
         {path: '/course-ware', name: 'CourseWare', component: CourseWare, meta: {title: '课件'}},
 
         //课程管理
@@ -143,7 +144,8 @@ export default new VueRouter({
 
         //个人中心
         {
-            path: '/profile', name: 'Profile', component: Profile,
+            path: '/profile', name: 'Profile', redirect: {name: 'personal'},
+            component: Profile,
             children: [
                 {
                     path: 'personal',

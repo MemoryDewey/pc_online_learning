@@ -78,15 +78,11 @@
         <div class="nav-wrap" v-if="!$store.state.isTeacher">
             <div class="nav">
                 <ul class="left">
-                    <li :class="navActive.home">
-                        <div class="first">
-                            <router-link to="/">首页</router-link>
-                        </div>
-                    </li>
-                    <li :class="navActive.course">
-                        <div class="first">
-                            <router-link to="/course/list">在线学习</router-link>
-                        </div>
+                    <router-link :to="{name:'Index'}" tag="li" active-class="active" exact>
+                        <div class="first">首页</div>
+                    </router-link>
+                    <router-link to="/course" tag="li" active-class="active">
+                        <div class="first">在线学习</div>
                         <div class="second">
                             <ul>
                                 <li v-for="system in courseSystem" :key="system.id">
@@ -96,22 +92,23 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
-                    <li :class="navActive.profile">
-                        <router-link tag="div" class="first" :to="{name:'personal'}">个人中心</router-link>
+                    </router-link>
+                    <router-link to="/profile" tag="li" active-class="active">
+                        <div class="first">个人中心</div>
                         <div class="second">
                             <ul>
                                 <li>
                                     <router-link to="/profile/course">我的课程</router-link>
                                 </li>
                                 <li>
-                                    <router-link to="/profile/certificate">
-                                        我的证书
-                                    </router-link>
+                                    <router-link to="/profile/exam">我的考试</router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/profile/certificate">我的证书</router-link>
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                    </router-link>
                 </ul>
             </div>
         </div>
