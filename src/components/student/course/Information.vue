@@ -32,10 +32,8 @@
                                 </div>
                                 <div class="enroll">
                                     <div class="study-apply">已有{{applyCount}}人报名
-                                        <!--<el-tooltip effect="light" placement="bottom" content="复制分享链接">
-                                            <span v-if="course.info.price!==0" @click="shareCourse"><font-awesome-icon
-                                                    icon="share-alt"></font-awesome-icon>分享</span>
-                                        </el-tooltip>-->
+                                        <span v-if="course.info.price!==0" @click=""><font-awesome-icon
+                                                icon="star"></font-awesome-icon>收藏课程</span>
                                     </div>
                                     <div class="enroll-apply-btn" v-if="!hadApply">
                                         <el-button v-if="bstApplyBtn" type="info" disabled>
@@ -160,8 +158,16 @@
             </div>
             <div class="bst">
                 <el-radio v-model="payType" :label="1" border>BST支付</el-radio>
-                <div class="info">
-                    <div class="need" v-loading="!getBstSuccess">价格：{{bstPrice}} BST</div>
+                <div class="info" v-loading="!getBstSuccess">
+                    <div class="have" v-if="parseInt(bstBalance)>=0">
+                        余额：{{bstBalance}} BST
+                        <span class="refresh" @click="getBstBalance">刷新</span>
+                    </div>
+                    <div class="have" v-else>
+                        请先绑定BST账号
+                        <router-link tag="span" class="refresh" to="/wallet">去绑定</router-link>
+                    </div>
+                    <div class="need">价格：{{bstPrice}} BST</div>
                 </div>
             </div>
             <span slot="footer" class="dialog-footer">
@@ -178,14 +184,13 @@
     import InfoVideo from './InfoVideo'
     import InfoFile from './InfoFile'
     import {Message} from 'element-ui'
-    import {mapState} from 'vuex'
     import {
         applyChargeByBst, applyCourseByCash, applyFree,
         checkBstConfirmation, checkBstStatue, examCheck,
         getClass, getExamTime, getInfo, getBstPrice
     } from "@/api/course";
-    import {getWalletInfo} from '@/api/wallet'
-    // import wsClient from 'socket.io-client'
+    import {getWalletInfo, getBstBalance} from '@/api/wallet'
+    import wsClient from 'socket.io-client'
 
     export default {
         name: "Information",
@@ -210,16 +215,11 @@
                 buyDialogVisible: false,
                 payType: 0,
                 bstPrice: 0,
+                bstBalance: 0,
                 getBstSuccess: false,
                 walletInfo: {balance: 0.00},
                 bstApplyBtn: false
             }
-        },
-        computed: {
-            ...mapState({
-                contractInstance: state => state.contractInstance,
-                coinbase: state => state.web3.coinbase
-            })
         },
         methods: {
             //设置bread
@@ -303,6 +303,7 @@
                     this.buyDialogVisible = true;
                     await this.getUserBalance();
                     await this.getBstPrice();
+                    await this.getBstBalance();
                 } else Message.warning('请登录后再进行该操作');
             },
             //获取账户余额
@@ -310,10 +311,15 @@
                 let res = await getWalletInfo();
                 this.walletInfo = res.wallet;
             },
+            //获取BST余额
+            async getBstBalance() {
+                let res = await getBstBalance();
+                if (res) this.bstBalance = res.balance;
+            },
             //获取BST换算信息
             async getBstPrice() {
                 let res = await getBstPrice({price: this.course.info.price});
-                if(res){
+                if (res) {
                     this.getBstSuccess = true;
                     this.bstPrice = res.price;
                 }
@@ -335,33 +341,28 @@
             },
             //通过BST购买课程
             async byBst() {
-                /*if (!window.web3 && !window.ethereum)
-                    Message.warning('您的浏览器不支持BST方式购买，请安装MetaMask插件');
-                else try {
-                    if (this.$store.state.web3.coinbase) {
-                        let value = await this.$store.state.web3.web3Instance().utils.toWei(this.bstPrice.toString(), 'ether');
-                        let res = await checkBstStatue({courseID: this.$route.params.courseID});
-                        if (res) this.$store.state.contractInstance().methods.transfer(res.address, value)
-                            .send({from: this.$store.state.web3.coinbase, data: ""})
-                            .on('transactionHash', async hash => {
+                if (parseFloat(this.bstPrice) > parseFloat(this.bstBalance)) Message.error('BST余额不足，请充值');
+                else {
+                    let res = await checkBstStatue({courseID: this.$route.params.courseID});
+                    if (res) {
+                        const loading = this.$loading({
+                            lock: true,
+                            text: '支付中，请稍等',
+                            spinner: 'el-icon-loading',
+                            background: 'rgba(0, 0, 0, 0.7)'
+                        });
+                        await applyChargeByBst({courseID: this.$route.params.courseID});
+                        const socket = wsClient.connect('ws://localhost:3000');
+                        socket.emit('buyCourseByBst');
+                        socket.on('message', data => {
+                            loading.close();
+                            if (data.status === 1) {
                                 Message.success('已发起交易，请等待交易结果');
-                                let data = {
-                                    courseID: this.$route.params.courseID,
-                                    hash, amount: this.bstPrice
-                                };
-                                await applyChargeByBst(data);
-                            })
-                            .on('error', error => {
-                                Message.error('支付失败！')
-                            })
-                    } else Message.error('MetaMask未登录！')
-                } catch (e) {
-                    console.log(e);
-                }*/
-                let data = {
-                    courseID: this.$route.params.courseID, amount: this.bstPrice
-                };
-                await applyChargeByBst(data);
+                                this.bstApplyBtn = true;
+                            } else Message.error('交易失败');
+                        })
+                    }
+                }
             },
             //通过余额购买课程
             async byBalance() {
@@ -392,21 +393,16 @@
                 }
             }*/
         },
-        async mounted() {
-            if (this.$store.state.loginState) {
-                let res = await checkBstConfirmation({courseID: this.$route.params.courseID});
-                this.bstApplyBtn = parseInt(res.toString()) === 3;
-            }
-        },
         async created() {
             await this.getInfo();
-            await this.getClass();
-        },
-        async beforeCreate() {
-            if (!this.$store.state.web3.web3Instance) {
-                await this.$store.dispatch('registerWeb3');
-                await this.$store.dispatch('getContractInstance');
+            if (this.$store.state.loginState || localStorage.getItem('token')) {
+                let res = await checkBstConfirmation({courseID: this.$route.params.courseID});
+                if (res) {
+                    this.bstApplyBtn = res.status === 3;
+                    if (res.status === 1) this.hadApply = true;
+                }
             }
-        },
+            await this.getClass();
+        }
     }
 </script>

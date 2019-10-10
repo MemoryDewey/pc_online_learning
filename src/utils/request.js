@@ -20,9 +20,7 @@ service.interceptors.response.use(
                 duration: 5 * 1000
             });
             return false;
-        } else if (res.status === 1) {
-            return res;
-        } else return res.status;
+        } else return res;
     }
 );
 
