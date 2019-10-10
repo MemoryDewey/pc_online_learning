@@ -295,8 +295,8 @@
                     margin: 10px 0 10px 0;
 
                     img {
-                        height: auto;
-                        width: 220px;
+                        height: 60px;
+                        width: auto;
                     }
                 }
 
