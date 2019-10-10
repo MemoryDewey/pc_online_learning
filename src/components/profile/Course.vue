@@ -60,8 +60,8 @@
         <!--分页 S-->
         <div class="sort-page" v-if="courses.length>0">
             <el-pagination background layout="prev, pager, next"
-                           :pager-count="5" @current-change="pageChanged"
-                           :total="10*count">
+                           :pager-count="5" @current-change="getCourse"
+                           :total="10*count" :hide-on-single-page="true">
             </el-pagination>
         </div>
         <!--分页 E-->
@@ -185,10 +185,6 @@
                 }).catch(() => {
                     Message.info("已取消操作");
                 })
-            },
-            //页码改变
-            pageChanged(val) {
-                this.getCourse(val);
             }
         },
         created() {

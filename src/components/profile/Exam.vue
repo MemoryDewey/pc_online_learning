@@ -49,8 +49,8 @@
         <!--分页 S-->
         <div class="sort-page" v-if="courses.length>0">
             <el-pagination background layout="prev, pager, next"
-                           :pager-count="5" @current-change="pageChanged"
-                           :total="10*count">
+                           :pager-count="5" @current-change="getExam"
+                           :total="10*count" :hide-on-single-page="true">
             </el-pagination>
         </div>
         <!--分页 E-->
@@ -76,10 +76,6 @@
                     this.count = response.pageSum;
                     this.courses = response.course;
                 }
-            },
-            //页码改变
-            pageChanged(val) {
-                this.getExam(val);
             }
         },
         created() {
