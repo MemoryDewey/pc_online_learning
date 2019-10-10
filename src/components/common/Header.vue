@@ -117,10 +117,8 @@
         <div class="nav-wrap" v-else>
             <div class="nav">
                 <ul class="left">
-                    <li :class="navActive.courseMng">
-                        <div class="first">
-                            <router-link to="/teacher/course/student">课程管理</router-link>
-                        </div>
+                    <router-link tag="li" to="/teacher/course" active-class="active">
+                        <div class="first">课程管理</div>
                         <div class="second">
                             <ul>
                                 <li>
@@ -140,25 +138,10 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
-                    <li :class="navActive.profile">
-                        <router-link tag="div" class="first" :to="{name:'personal'}">个人中心</router-link>
-                        <div class="second">
-                            <ul>
-                                <li>
-                                    <a>个人信息</a>
-                                </li>
-                                <li v-if="false">
-                                    <a>直播课表</a>
-                                </li>
-                                <li v-if="false">
-                                    <a>
-                                        我的钱包
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                    </router-link>
+                    <router-link to="/profile" tag="li" active-class="active">
+                        <div class="first">个人中心</div>
+                    </router-link>
                 </ul>
             </div>
         </div>

@@ -94,7 +94,9 @@ export default new VueRouter({
 
         //课程管理
         {
-            path: '/teacher/course', name: 'TeacherCourse', component: TeacherCourse, children: [
+            path: '/teacher/course', name: 'TeacherCourse', redirect: {name: 'CSM'},
+            component: TeacherCourse,
+            children: [
                 {path: 'student', name: 'CSM', component: CSM, meta: {title: '学生管理'}},
                 {path: 'list', name: 'CM', component: CM, meta: {title: '课程管理'}},
                 {path: 'chapter', name: 'CCM', component: CCM, meta: {title: '章节管理'}},
