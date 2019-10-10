@@ -6,12 +6,12 @@
                 <!--Logo S-->
                 <div class="logo">
                     <router-link class="active" to="/">
-                        <img src="../../assets/image/logo-text.png" alt="">
+                        <img src="../../assets/image/logo-text.png" alt>
                     </router-link>
                 </div>
                 <!--Logo E-->
                 <!--搜索框 S-->
-                <div class="search clearfix" v-if="!$store.state.isTeacher && page === 'course'">
+                <div class="search clearfix" v-if="!this.$store.state.isTeacher && page === 'course'">
                     <font-awesome-icon icon="search"></font-awesome-icon>
                     <label>
                         <input type="text" :placeholder="`搜索课程`"
@@ -75,7 +75,7 @@
         <!--第一排布局 E-->
         <!--第二排布局 S-->
         <!--学生端 S-->
-        <div class="nav-wrap" v-if="!$store.state.isTeacher">
+        <div class="nav-wrap" v-if="!this.$store.state.isTeacher">
             <div class="nav">
                 <ul class="left">
                     <router-link :to="{name:'Index'}" tag="li" active-class="active" exact>
@@ -93,6 +93,9 @@
                             </ul>
                         </div>
                     </router-link>
+                    <li>
+                        <div class="first" @click="waitOpen">行业资讯</div>
+                    </li>
                     <router-link to="/profile" tag="li" active-class="active">
                         <div class="first">个人中心</div>
                         <div class="second">
@@ -109,6 +112,9 @@
                             </ul>
                         </div>
                     </router-link>
+                    <li>
+                        <div class="first" @click="waitOpen">关于我们</div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -166,15 +172,6 @@
             return {
                 avatarUrl: '/images/avatar/default-avatar.jpg',
                 nickname: '',
-                navActive: {
-                    home: {active: false},
-                    course: {active: false},
-                    profile: {active: false},
-                    courseMng: {active: false},
-                    notFound: {active: false},
-                    wallet: {active: false},
-                    pointsMall: {active: false}
-                },
                 loginState: false,
                 courseSystem: null,
                 searchContent: '',
@@ -188,10 +185,11 @@
                 });
             },
             search() {
-                let url = this.page === 'course' ?
-                    `/course/list/${this.searchContent}` :
-                    `/project/list/${this.searchContent}`;
+                let url = `/course/list/${this.searchContent}`;
                 this.$router.push(url);
+            },
+            waitOpen(){
+                this.$message.info('敬请期待');
             }
         },
         watch: {
@@ -201,9 +199,6 @@
             '$store.state.nickname'(val) {
                 this.nickname = val;
             }
-        },
-        mounted() {
-            this.navActive[this.page].active = true;
         },
         async created() {
             if (this.$store.state.loginState) {
