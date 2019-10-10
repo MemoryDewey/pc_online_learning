@@ -32,12 +32,20 @@
                                         <span>我的课程</span>
                                     </router-link>
                                 </li>
-                                <li :class="{'active':active.course}">
+                                <li :class="{'active':active.browse}">
                                     <router-link :to="{name:'latestBrowse'}">
                                         <div class="setting-icon">
                                             <font-awesome-icon icon="eye"></font-awesome-icon>
                                         </div>
                                         <span>最近再看</span>
+                                    </router-link>
+                                </li>
+                                <li :class="{'active':active.collection}">
+                                    <router-link :to="{name:'collection-course'}">
+                                        <div class="setting-icon">
+                                            <font-awesome-icon icon="star"></font-awesome-icon>
+                                        </div>
+                                        <span>收藏课程</span>
                                     </router-link>
                                 </li>
                                 <li :class="{'active':active.exam}">
@@ -48,14 +56,6 @@
                                         <span>我的考试</span>
                                     </router-link>
                                 </li>
-                                <!--<li :class="{'active':active.invite}">
-                                    <router-link :to="{name:'invite'}">
-                                        <div class="setting-icon">
-                                            <font-awesome-icon icon="share-alt"></font-awesome-icon>
-                                        </div>
-                                        <span>我的邀请</span>
-                                    </router-link>
-                                </li>-->
                                 <li :class="{'active':active.certificate}">
                                     <router-link :to="{name:'certificate'}">
                                         <div class="setting-icon">
@@ -118,9 +118,7 @@
                 page: "profile",
                 active: {
                     personal: false, paid: false, course: false,
-                    exam: false, certificate: false, invite:false,
-                    project: false, projectTeacher: false, attendApply: false, createApply: false,
-                    projectMember: false
+                    exam: false, certificate: false, browse: false, collection: false
                 }
             }
         },

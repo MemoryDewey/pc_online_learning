@@ -610,23 +610,23 @@
   min-height: 360px;
   position: relative;
 }
-.study-main .study-information .study-banner .study-img-text .study-img-left {
+.study-main .study-information .study-banner .study-img-left {
   position: absolute;
   top: 0;
   left: 0;
 }
-.study-main .study-information .study-banner .study-img-text .study-img-left img {
+.study-main .study-information .study-banner .study-img-left img {
   border: 0;
   width: 600px;
   height: 338px;
   vertical-align: middle;
 }
-.study-main .study-information .study-banner .study-img-text .study-text-right {
+.study-main .study-information .study-banner .study-text-right {
   margin-left: 630px;
   width: 570px;
   text-align: left;
 }
-.study-main .study-information .study-banner .study-img-text .study-text-right .text-title {
+.study-main .study-information .study-banner .study-text-right .text-title {
   word-wrap: break-word;
   white-space: pre-wrap;
   font-size: 22px;
@@ -634,53 +634,52 @@
   margin-bottom: 10px;
   font-weight: 400;
 }
-.study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info:after {
+.study-main .study-information .study-banner .study-text-right .enroll-info:after {
   display: block;
   visibility: hidden;
 }
-.study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .enroll-study-info {
+.study-main .study-information .study-banner .study-text-right .enroll-study-info {
   padding: 15px;
   margin-bottom: 30px;
   background-color: #f5f5f5;
 }
-.study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .teacher-name {
+.study-main .study-information .study-banner .study-text-right .teacher-name {
   margin-bottom: 8px;
   color: #409eff;
   font-size: 14px;
 }
-.study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .workload {
+.study-main .study-information .study-banner .study-text-right .workload {
   background: transparent;
   line-height: 32px;
   font-size: 14px;
   color: #333;
   margin-bottom: 8px;
 }
-.study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .study-time {
+.study-main .study-information .study-banner .study-text-right .study-time {
   margin-bottom: 8px;
   color: #67c23a;
   font-size: 12px;
 }
-.study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .enroll {
+.study-main .study-information .study-banner .study-text-right .enroll {
   margin-top: 10px;
 }
-.study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .enroll .study-apply {
+.study-main .study-information .study-banner .study-text-right .enroll .study-apply {
   margin-bottom: 10px;
   font-size: 13px;
   color: #999999;
 }
-.study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .enroll .study-apply span {
+.study-main .study-information .study-banner .study-text-right .enroll .collection {
   float: right;
-  color: #409eff;
   cursor: pointer;
 }
-.study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .enroll .study-apply span svg {
+.study-main .study-information .study-banner .study-text-right .enroll .collection svg {
   margin-right: 5px;
 }
-.study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .enroll .enroll-apply-btn {
+.study-main .study-information .study-banner .study-text-right .enroll .enroll-apply-btn {
   margin-top: 30px;
   margin-bottom: 10px;
 }
-.study-main .study-information .study-banner .study-img-text .study-text-right .enroll-info .enroll .enroll-button {
+.study-main .study-information .study-banner .study-text-right .enroll .enroll-button {
   height: 52px;
   line-height: 52px;
   width: 220px;

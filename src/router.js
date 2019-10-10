@@ -29,6 +29,7 @@ const ProfilePersonal = () => import( '@/components/profile/Personal');
 const ProfileInvite = () => import('@/components/profile/Invite');
 const ProfilePaid = () => import( '@/components/profile/PaidNote');
 const ProfileLatestBrowse = () => import('@/components/profile/LatestBrowse');
+const ProfileCollection = () => import('@/components/profile/Collection');
 
 
 const TeacherCourse = () => import( '@/views/teacher/Course');
@@ -163,6 +164,10 @@ export default new VueRouter({
                 {
                     path: 'latest-browse', name: 'latestBrowse',
                     component: ProfileLatestBrowse, meta: {title: '最近浏览', requireAuth: true}
+                },
+                {
+                    path: 'collection', name: 'collection-course',
+                    component: ProfileCollection, meta: {title: '收藏课程', requireAuth: true}
                 }
             ]
         },

@@ -11,6 +11,7 @@ export const getIndexBanner = () => get('/course/list/banner');
 export const getWalletCourse = params => get('/course/list/user-course-rmb', params);
 export const getWalletBstCourse = params => get('/course/list/user-course-bst', params);
 export const getLatestBrowseCourse = () => get('/course/list/latest-browse');
+export const getCollectionCourse = params => get('/course/list/collection', params);
 
 export const getInfo = params => get('/course/information', params);
 export const applyFree = data => post('/course/information/apply-free', data);
@@ -24,7 +25,7 @@ export const getLive = params => get('/course/information/live', params);
 export const getVideo = params => get('/course/information/video', params);
 export const getFile = params => get('/course/information/file', params);
 export const getClass = data => post('/course/information/class', data);
-export const getShareUrl = () => get('/course/information/share');
+export const collectCourse = params => get('/course/information/collect-course', params);
 export const getExamTime = params => get('/examine/exam-time', params);
 
 export const getComment = params => get('/course/information/comment', params);

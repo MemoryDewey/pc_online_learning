@@ -31,9 +31,13 @@
                                     </div>
                                 </div>
                                 <div class="enroll">
-                                    <div class="study-apply">已有{{applyCount}}人报名
-                                        <span v-if="course.info.price!==0" @click=""><font-awesome-icon
-                                                icon="star"></font-awesome-icon>收藏课程</span>
+                                    <div class="study-apply">
+                                        <span>已有{{applyCount}}人报名</span>
+                                        <div class="collection" :style="{color:collection?'#409eff':'#666'}"
+                                             @click="collectCourse">
+                                            <font-awesome-icon icon="star"></font-awesome-icon>
+                                            <span>{{collection?'取消收藏':'收藏课程'}}</span>
+                                        </div>
                                     </div>
                                     <div class="enroll-apply-btn" v-if="!hadApply">
                                         <el-button v-if="bstApplyBtn" type="info" disabled>
@@ -187,7 +191,7 @@
     import {
         applyChargeByBst, applyCourseByCash, applyFree,
         checkBstConfirmation, checkBstStatue, examCheck,
-        getClass, getExamTime, getInfo, getBstPrice
+        getClass, getExamTime, getInfo, getBstPrice, collectCourse
     } from "@/api/course";
     import {getWalletInfo, getBstBalance} from '@/api/wallet'
     import wsClient from 'socket.io-client'
@@ -218,7 +222,8 @@
                 bstBalance: 0,
                 getBstSuccess: false,
                 walletInfo: {balance: 0.00},
-                bstApplyBtn: false
+                bstApplyBtn: false,
+                collection: false
             }
         },
         methods: {
@@ -280,6 +285,7 @@
                     let course = this.course;
                     this.courseRate = course.info['favorableRate'] * 10;
                     this.applyCount = course.info.applyCount;
+                    this.collection = response.collection;
                     this.$set(this.comment, 'courseRate', this.courseRate);
                     this.$set(this.comment, 'courseName', course.info.courseName);
                     this.setBread(course.info.systemName, course.info['systemID'], course.info.typeName,
@@ -377,21 +383,18 @@
                     }
                 }
             },
-            //分享课程
-            /*async shareCourse() {
-                if (!this.hadApply) Message.warning('需要购买此课程才有权限分享该课程');
+            //收藏课程
+            async collectCourse() {
+                const value = this.collection ? 0 : 1;
+                if (!localStorage.getItem('token')) Message.warning('需要登录才能收藏该课程');
                 else {
-                    let res = await getShareUrl();
+                    const res = await collectCourse({courseID: this.$route.params.courseID, value});
                     if (res) {
-                        let url = `${location.origin}${res.url}`;
-                        this.$copyText(url).then(() => {
-                            Message.success('已将链接复制到粘贴板');
-                        }).catch(err => {
-                            console.log(err);
-                        });
+                        Message.success(res.msg);
+                        this.collection = !this.collection;
                     }
                 }
-            }*/
+            }
         },
         async created() {
             await this.getInfo();

@@ -726,94 +726,95 @@
       .study-img-text {
         min-height: 360px;
         position: relative;
+      }
 
-        .study-img-left {
-          position: absolute;
-          top: 0;
-          left: 0;
+      .study-img-left {
+        position: absolute;
+        top: 0;
+        left: 0;
 
-          img {
-            border: 0;
-            width: 600px;
-            height: 338px;
-            vertical-align: middle;
+        img {
+          border: 0;
+          width: 600px;
+          height: 338px;
+          vertical-align: middle;
+        }
+      }
+
+      .study-text-right {
+        margin-left: 630px;
+        width: 570px;
+        text-align: left;
+
+        .text-title {
+          word-wrap: break-word;
+          white-space: pre-wrap;
+          font-size: 22px;
+          line-height: 1.2;
+          margin-bottom: 10px;
+          font-weight: 400;
+        }
+
+        .enroll-info {
+          &:after {
+            display: block;
+            visibility: hidden;
           }
         }
 
-        .study-text-right {
-          margin-left: 630px;
-          width: 570px;
-          text-align: left;
+        .enroll-study-info {
+          padding: 15px;
+          margin-bottom: 30px;
+          background-color: #f5f5f5;
+        }
 
-          .text-title {
-            word-wrap: break-word;
-            white-space: pre-wrap;
-            font-size: 22px;
-            line-height: 1.2;
+        .teacher-name {
+          margin-bottom: 8px;
+          color: #409eff;
+          font-size: 14px;
+        }
+
+        .workload {
+          background: transparent;
+          line-height: 32px;
+          font-size: 14px;
+          color: #333;
+          margin-bottom: 8px;
+        }
+
+        .study-time {
+          margin-bottom: 8px;
+          color: #67c23a;
+          font-size: 12px;
+        }
+
+        .enroll {
+          margin-top: 10px;
+
+          .study-apply {
             margin-bottom: 10px;
-            font-weight: 400;
+            font-size: 13px;
+            color: #999999;
           }
 
-          .enroll-info {
-            &:after {
-              display: block;
-              visibility: hidden;
+          .collection {
+            svg {
+              margin-right: 5px;
             }
 
-            .enroll-study-info {
-              padding: 15px;
-              margin-bottom: 30px;
-              background-color: #f5f5f5;
-            }
+            float: right;
+            cursor: pointer;
+          }
 
-            .teacher-name {
-              margin-bottom: 8px;
-              color: #409eff;
-              font-size: 14px;
-            }
+          .enroll-apply-btn {
+            margin-top: 30px;
+            margin-bottom: 10px;
+          }
 
-            .workload {
-              background: transparent;
-              line-height: 32px;
-              font-size: 14px;
-              color: #333;
-              margin-bottom: 8px;
-            }
-
-            .study-time {
-              margin-bottom: 8px;
-              color: #67c23a;
-              font-size: 12px;
-            }
-
-            .enroll {
-              margin-top: 10px;
-
-              .study-apply {
-                margin-bottom: 10px;
-                font-size: 13px;
-                color: #999999;
-                span{
-                  svg{
-                    margin-right: 5px;
-                  }
-                  float: right;
-                  color: #409eff;
-                  cursor: pointer;
-                }
-              }
-
-              .enroll-apply-btn {
-                margin-top: 30px;
-                margin-bottom: 10px;
-              }
-
-              .enroll-button {
-                height: 52px;
-                line-height: 52px;
-                width: 220px;
-              }
-            }
+          .enroll-button {
+            height: 52px;
+            line-height: 52px;
+            width: 220px;
           }
         }
       }
