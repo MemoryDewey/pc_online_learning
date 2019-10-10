@@ -32,6 +32,14 @@
                                         <span>我的课程</span>
                                     </router-link>
                                 </li>
+                                <li :class="{'active':active.course}">
+                                    <router-link :to="{name:'latestBrowse'}">
+                                        <div class="setting-icon">
+                                            <font-awesome-icon icon="eye"></font-awesome-icon>
+                                        </div>
+                                        <span>最近再看</span>
+                                    </router-link>
+                                </li>
                                 <li :class="{'active':active.exam}">
                                     <router-link :to="{name:'exam'}">
                                         <div class="setting-icon">

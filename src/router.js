@@ -28,6 +28,7 @@ const ProfileExam = () => import( '@/components/profile/Exam');
 const ProfilePersonal = () => import( '@/components/profile/Personal');
 const ProfileInvite = () => import('@/components/profile/Invite');
 const ProfilePaid = () => import( '@/components/profile/PaidNote');
+const ProfileLatestBrowse = () => import('@/components/profile/LatestBrowse');
 
 
 const TeacherCourse = () => import( '@/views/teacher/Course');
@@ -158,6 +159,10 @@ export default new VueRouter({
                     name: 'certificate',
                     component: ProfileCertificate,
                     meta: {title: '我的证书', requireAuth: true}
+                },
+                {
+                    path: 'latest-browse', name: 'latestBrowse',
+                    component: ProfileLatestBrowse, meta: {title: '最近浏览', requireAuth: true}
                 }
             ]
         },
