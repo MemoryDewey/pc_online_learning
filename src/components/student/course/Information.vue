@@ -302,8 +302,8 @@
                 if (this.$store.state.loginState) {
                     this.buyDialogVisible = true;
                     await this.getUserBalance();
-                    await this.getBstPrice();
                     await this.getBstBalance();
+                    await this.getBstPrice();
                 } else Message.warning('请登录后再进行该操作');
             },
             //获取账户余额
