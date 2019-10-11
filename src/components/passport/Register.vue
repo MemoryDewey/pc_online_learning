@@ -144,7 +144,7 @@
             //发送验证码
             async sendVerifyCode() {
                 this.sendCodeCss.disable = true;
-                let times = 60;   //按钮点击间隔
+                let times = 90;   //按钮点击间隔
                 let self = this;
                 let timer = await setInterval(() => {
                     self.verifyCodeText = "重新发送(" + times + "s)";
@@ -154,7 +154,7 @@
                 setTimeout(() => {
                     self.verifyCodeText = "发送验证码";
                     self.sendCodeCss.disable = false;
-                }, 61000);
+                }, 91000);
                 sendMessage({account: this.registerForm.phone, option: "register"}).then(res => {
                     if (res) Message.success(res.msg);
                 });

@@ -330,7 +330,7 @@
                 if (option === 'bindEmail') this.emailDialogInfo.sending = true;
                 else if (option === 'stepOne') this.dialogFormInfo.oldMobile.sending = true;
                 else if (option === 'stepTwo') this.dialogFormInfo.newMobile.sending = true;
-                let times = 60;   //按钮点击间隔
+                let times = 90;   //按钮点击间隔
                 let self = this;
                 let timer = await setInterval(() => {
                     if (option === 'bindEmail')
@@ -353,7 +353,7 @@
                         self.dialogFormInfo.newMobile.sending = true;
                         this.dialogFormInfo.newMobile.sendButtonText = "发送验证码";
                     }
-                }, 61000);
+                }, 91000);
                 let data = {account: this.dialogForm.account, option: "change"};
                 if (option === 'bindEmail') data = {account: this.emailDialogInfo.account, option: "change"};
                 let res = (option === 'bindEmail') ? await sendEmail(data) : await sendMessage(data);

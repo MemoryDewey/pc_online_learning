@@ -26,7 +26,7 @@
                         <ul class="clear">
                             <li v-for="course in chargeCourse" :key="course.courseID">
                                 <router-link :to="{path:`/course/${course.courseID}/information`}">
-                                    <el-image :src="course.courseImage" fit="contain" lazy>
+                                    <el-image :src="course.courseImage" lazy>
                                         <template slot="error">
                                             <img src="../../assets/image/load-error.jpg" alt>
                                         </template>
@@ -47,7 +47,7 @@
                         <ul class="clear">
                             <li v-for="course in freeCourse" :key="course.courseID">
                                 <router-link :to="{path:`/course/${course.courseID}/information`}">
-                                    <el-image :src="course.courseImage" fit="contain" lazy>
+                                    <el-image :src="course.courseImage" lazy>
                                         <template slot="error">
                                             <img src="../../assets/image/load-error.jpg" alt>
                                         </template>
