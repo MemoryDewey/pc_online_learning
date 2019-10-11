@@ -3,10 +3,10 @@ import store from '@/store'
 //import VueRouter from 'vue-router'
 
 const Index = () => import('@/views/student/Index');
-
 const Wallet = () => import('@/views/student/Wallet');
-
 const Error = () => import('@/views/404');
+const About = () => import('@/views/student/About');
+
 const Passport = () => import('@/views/Passport');
 const Login = () => import('@/components/passport/Login');
 const Register = () => import( '@/components/passport/Register');
@@ -90,7 +90,10 @@ export default new VueRouter({
         },
 
         //课件
-        {path: '/course-ware', name: 'CourseWare', component: CourseWare, meta: {title: '课件'}},
+        {
+            path: '/course-ware', name: 'CourseWare',
+            component: CourseWare, meta: {title: '课件'}
+        },
 
         //课程管理
         {
@@ -144,6 +147,12 @@ export default new VueRouter({
             }
         },
 
+        //关于我们
+        {
+            path: '/about', name: 'About', component: About,
+            meta: {title: '关于我们'}
+        },
+
         //个人中心
         {
             path: '/profile', name: 'Profile', redirect: {name: 'personal'},
@@ -177,12 +186,18 @@ export default new VueRouter({
         },
 
         //钱包
-        {path: '/wallet', name: 'Wallet', component: Wallet, meta: {title: '我的钱包', requireAuth: true},},
+        {
+            path: '/wallet', name: 'Wallet',
+            component: Wallet, meta: {title: '我的钱包', requireAuth: true},
+        },
 
         //积分商城
         /*{path: '/points-mall', name: 'PointsMall', component: PointsMall, meta: {title: '积分商城'}, requireAuth: true},*/
 
         //404
-        {path: '/404', name: 'Error', component: Error, meta: {title: '错误'}}
+        {
+            path: '/404', name: 'Error',
+            component: Error, meta: {title: '错误'}
+        }
     ]
 })

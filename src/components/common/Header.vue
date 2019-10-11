@@ -112,9 +112,9 @@
                             </ul>
                         </div>
                     </router-link>
-                    <li>
-                        <div class="first" @click="waitOpen">关于我们</div>
-                    </li>
+                    <router-link to="/about" tag="li" avtive-class="active">
+                        <div class="first">关于我们</div>
+                    </router-link>
                 </ul>
             </div>
         </div>
@@ -230,7 +230,7 @@
 </script>
 
 <style lang="less">
-    @header-color: #409eff;
+    @header-color: #22272f;
     .header-wrap {
         * {
             margin: 0;

@@ -27,6 +27,7 @@ export const getFile = params => get('/course/information/file', params);
 export const getClass = data => post('/course/information/class', data);
 export const collectCourse = params => get('/course/information/collect-course', params);
 export const getExamTime = params => get('/examine/exam-time', params);
+export const getIntroduction = () => get('/course/information/introduction');
 
 export const getComment = params => get('/course/information/comment', params);
 export const getCommentCount = params => get('/course/information/comment/count', params);
