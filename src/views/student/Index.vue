@@ -26,10 +26,11 @@
                         <ul class="clear">
                             <li v-for="course in chargeCourse" :key="course.courseID">
                                 <router-link :to="{path:`/course/${course.courseID}/information`}">
-                                    <el-image :src="course.courseImage" lazy>
+                                    <el-image :src="course.courseImage" fit="contain" lazy>
                                         <template slot="error">
                                             <img src="../../assets/image/load-error.jpg" alt>
                                         </template>
+                                        <div slot="placeholder" class="image-slot"></div>
                                     </el-image>
                                     <div class="course-title">{{course.courseName}}</div>
                                     <div class="course-info clear">
@@ -46,10 +47,11 @@
                         <ul class="clear">
                             <li v-for="course in freeCourse" :key="course.courseID">
                                 <router-link :to="{path:`/course/${course.courseID}/information`}">
-                                    <el-image :src="course.courseImage" lazy>
+                                    <el-image :src="course.courseImage" fit="contain" lazy>
                                         <template slot="error">
                                             <img src="../../assets/image/load-error.jpg" alt>
                                         </template>
+                                        <div slot="placeholder" class="image-slot"></div>
                                     </el-image>
                                     <div class="course-title">{{course.courseName}}</div>
                                     <div class="course-info clear">
@@ -170,6 +172,11 @@
                 a {
                     text-decoration: none;
                     background-color: transparent;
+                }
+
+                .image-slot{
+                    width: 270px;
+                    height: 170px;
                 }
 
                 img {
