@@ -1,6 +1,5 @@
 <template>
     <div id="container">
-        <header-mall page="pointsMall"></header-mall>
         <div class="points-mall">
             <div class="banner">
                 <div class="user-card clearfix">
@@ -223,13 +222,10 @@
                 </el-pagination>
             </el-dialog>
         </div>
-        <footer-mall></footer-mall>
     </div>
 </template>
 
 <script>
-    import Header from "@/components/common/Header";
-    import Footer from "@/components/common/Footer";
     import {Message, MessageBox} from 'element-ui'
     import regions from "china-citys"
     import {
@@ -243,10 +239,6 @@
 
     export default {
         name: "PointsMall",
-        components: {
-            "header-mall": Header,
-            "footer-mall": Footer
-        },
         data() {
             const checkPhone = (rule, value, callback) => {
                 const regPhone = /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3-8])|(18[0-9])|166|198|199|(147))\d{8}$/;
@@ -428,6 +420,9 @@
                     }
                 })
             }
+        },
+        beforeCreate() {
+            this.$emit('setHeader', 'pointMall');
         },
         async created() {
             await this.getPointInfo();

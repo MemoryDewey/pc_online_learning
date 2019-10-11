@@ -1,6 +1,5 @@
 <template>
     <div id="container">
-        <app-header :page="page"></app-header>
         <div id="index">
             <div class="banner-slide">
                 <el-carousel trigger="click" height="400px">
@@ -64,20 +63,16 @@
                 </div>
             </div>
         </div>
-        <app-footer></app-footer>
     </div>
 </template>
 
 <script>
-    import Header from '@/components/common/Header'
-    import Footer from '@/components/common/Footer'
     import {getIndexBanner, getIndexCourse} from "@/api/course";
 
     export default {
         name: "index",
         data() {
             return {
-                page: "home",
                 chargeActive: {active: true},
                 freeActive: {active: false},
                 courseFee: true,
@@ -100,9 +95,8 @@
                 this.banners = res.banners;
             }
         },
-        components: {
-            "app-header": Header,
-            "app-footer": Footer
+        beforeCreate() {
+            this.$emit('setHeader', 'index');
         },
         async created() {
             try {

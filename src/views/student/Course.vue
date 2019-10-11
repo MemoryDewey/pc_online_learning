@@ -1,8 +1,6 @@
 <template>
     <div id="container">
-        <header-course :page="page"></header-course>
         <router-view></router-view>
-        <footer-course></footer-course>
     </div>
 </template>
 
@@ -20,6 +18,9 @@
         components: {
             "header-course": Header,
             "footer-course": Footer
+        },
+        beforeCreate() {
+            this.$emit('setHeader', 'course');
         }
     }
 </script>

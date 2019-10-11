@@ -1,6 +1,5 @@
 <template>
     <div id="container">
-        <app-header :page="page"></app-header>
         <div class="profile-container">
             <div class="row">
                 <el-container>
@@ -103,13 +102,10 @@
             </div>
 
         </div>
-        <app-footer></app-footer>
     </div>
 </template>
 
 <script>
-    import Header from '@/components/common/Header'
-    import Footer from '@/components/common/Footer'
 
     export default {
         name: "Layout",
@@ -122,9 +118,8 @@
                 }
             }
         },
-        components: {
-            "app-header": Header,
-            "app-footer": Footer
+        beforeCreate() {
+            this.$emit('setHeader', 'profile');
         },
         beforeRouteEnter(to, from, next) {
             let type = to.name;
@@ -145,7 +140,6 @@
 <style lang="less">
     .profile-container {
         width: 1200px;
-        min-height: 700px;
         margin: 0 auto;
         padding: 0 15px 0 15px;
 

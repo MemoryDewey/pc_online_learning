@@ -1,6 +1,5 @@
 <template>
     <div id="container">
-        <header-wallet page="wallet"></header-wallet>
         <div class="wallet">
             <el-row style="margin-top: 20px">
                 <el-col :span="24">
@@ -88,13 +87,10 @@
                 </span>
             </el-dialog>
         </div>
-        <footer-wallet></footer-wallet>
     </div>
 </template>
 
 <script>
-    import Header from "@/components/common/Header";
-    import Footer from "@/components/common/Footer";
     import {getPersonalInfo, updateBstAddress} from "@/api/profile";
     import {getWalletInfo, getWalletLog, recharge, toCash} from "@/api/wallet";
     import {Message, MessageBox} from 'element-ui'
@@ -102,10 +98,6 @@
 
     export default {
         name: "Wallet",
-        components: {
-            "header-wallet": Header,
-            "footer-wallet": Footer
-        },
         filters: {
             typeFilter(type) {
                 const typeMap = {
@@ -277,6 +269,9 @@
                 this.codeDialogVisible = false;
                 this.recharge();
             }
+        },
+        beforeCreate() {
+            this.$emit('setHeader', 'wallet');
         },
         created() {
             this.getPersonalInfo();

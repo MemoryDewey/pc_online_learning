@@ -11,6 +11,9 @@
 
 <script>
     export default {
-        name: "Passport"
+        name: "Passport",
+        beforeCreate() {
+            this.$emit('setHeader', 'passport');
+        }
     }
 </script>

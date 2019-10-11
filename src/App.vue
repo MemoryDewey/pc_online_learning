@@ -1,15 +1,29 @@
 <template>
     <div id="app">
-        <router-view/>
+        <app-header :page="name" v-if="name!=='passport'"></app-header>
+        <router-view @setHeader="setHeader"/>
+        <app-footer v-if="name!=='passport'"></app-footer>
     </div>
 </template>
 <script>
+    import Header from '@/components/common/Header'
+    import Footer from '@/components/common/Footer'
+
     export default {
         name: 'App',
-        components: {},
+        components: {
+            'app-header': Header,
+            'app-footer': Footer
+        },
         data() {
             return {
                 activeIndex: '1',
+                name: '',
+            }
+        },
+        methods: {
+            setHeader(name) {
+                this.name = name;
             }
         }
     }
@@ -20,12 +34,7 @@
     @import "assets/css/passport";
     @import "assets/css/comment";
 
-    #app {
-        font-family: "Arial", "Hiragino Sans GB", "Microsoft YaHei", \5fae\8f6f\96c5\9ed1, "Helvetica", "sans-serif";
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
+    html {
         height: 100%;
     }
 
@@ -36,16 +45,24 @@
         line-height: 1.42857;
     }
 
-    html {
+    #app {
+        font-family: "Arial", "Hiragino Sans GB", "Microsoft YaHei", \5fae\8f6f\96c5\9ed1, "Helvetica", "sans-serif";
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
         height: 100%;
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: column;
+        -webkit-flex-direction: column;
     }
 
     #container {
-        position: relative;
         width: 100%;
-        min-height: 100%;
-        padding-bottom: 245px;
         box-sizing: border-box;
+        flex: 1 0 auto;
+        -webkit-flex: 1 0 auto;
     }
 
     .clearfix:after {

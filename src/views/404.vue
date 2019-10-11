@@ -1,6 +1,5 @@
 <template>
     <div class="not-found">
-        <header-course page="notFound"></header-course>
         <div class="inner-center">
             <div class="section-msg">
                 <div class="msg-inner">
@@ -9,19 +8,15 @@
                 </div>
             </div>
         </div>
-        <footer-course></footer-course>
     </div>
 </template>
 
 <script>
-    import Header from '@/components/common/Header'
-    import Footer from '@/components/common/Footer'
 
     export default {
         name: "404",
-        components: {
-            "header-course": Header,
-            "footer-course": Footer
+        beforeCreate() {
+            this.$emit('setHeader', '404');
         }
     }
 </script>

@@ -16,11 +16,12 @@
 
 <style lang="less">
     .footer-warp {
-        padding-top: 40px;
+        flex: 0 0 auto;
+        -webkit-flex: 0 0 auto;
+        padding-top: 20px;
         height: 245px;
         box-sizing: border-box;
         text-align: center;
-        position: absolute;
         min-width: 1280px;
         width: 100%;
         left: 0;

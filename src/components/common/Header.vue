@@ -164,9 +164,7 @@
     export default {
         name: "Header",
         props: {
-            page: {
-                type: String
-            }
+            page: {type: String, required: true}
         },
         data() {
             return {
@@ -188,7 +186,7 @@
                 let url = `/course/list/${this.searchContent}`;
                 this.$router.push(url);
             },
-            waitOpen(){
+            waitOpen() {
                 this.$message.info('敬请期待');
             }
         },
@@ -253,6 +251,9 @@
         a {
             text-decoration: none;
         }
+
+        flex: 0 0 auto;
+        -webkit-flex: 0 0 auto;
 
         .top-wrap {
             height: 80px;
