@@ -35,13 +35,12 @@
                             </a>
                         </div>-->
                         <div class="info">
-                            <a>
+                            <a class="avatar-info">
                                 <img alt="头像" :src="avatarUrl">
                                 <span>{{nickname}}</span>
                             </a>
-                            //:class="{'dropdown-list':true,'teacher-dropdown':$store.state.isTeacher}"
                             <ul class="dropdown-list">
-                                <li v-if="!$store.state.isTeacher">
+                                <li v-if="!this.$store.state.isTeacher">
                                     <router-link to="/wallet">
                                         <font-awesome-icon icon="wallet"></font-awesome-icon>
                                         我的钱包
@@ -367,10 +366,10 @@
                         .info {
                             float: right;
                             font-size: 0;
-                            cursor: pointer;
 
-                            a {
+                            .avatar-info {
                                 color: #fff;
+                                cursor: pointer;
                             }
 
                             img {
@@ -393,71 +392,70 @@
                                 text-align: left;
                                 font-size: 14px;
                             }
+                        }
+                        .dropdown-list {
+                            display: none;
+                            position: absolute;
+                            box-sizing: border-box;
+                            width: 112px;
+                            border: 1px solid #e5e5e5;
+                            background: #fff;
+                            box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .12);
+                            z-index: 15;
 
-                            .dropdown-list {
-                                display: none;
+                            &:before {
+                                content: '';
+                                width: 0;
+                                height: 0;
+                                border-width: 0 8px 8px;
+                                border-style: solid;
+                                border-color: transparent transparent #e5e5e5;
                                 position: absolute;
-                                box-sizing: border-box;
-                                width: 112px;
-                                border: 1px solid #e5e5e5;
+                                left: 47px;
+                                top: -9px;
+                            }
+
+                            &:after {
+                                content: '';
+                                width: 0;
+                                height: 0;
+                                border-width: 0 8px 8px;
+                                border-style: solid;
+                                border-color: transparent transparent #fff;
+                                position: absolute;
+                                left: 47px;
+                                top: -8px;
+                            }
+
+                            a {
+                                display: block;
+                                text-align: left;
+                                margin: 20px 15px;
+                                line-height: 20px;
+                                height: 20px;
                                 background: #fff;
-                                box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .12);
-                                z-index: 15;
+                                color: #333;
+                                font-size: 14px;
 
-                                &:before {
-                                    content: '';
-                                    width: 0;
-                                    height: 0;
-                                    border-width: 0 8px 8px;
-                                    border-style: solid;
-                                    border-color: transparent transparent #e5e5e5;
-                                    position: absolute;
-                                    left: 47px;
-                                    top: -9px;
-                                }
-
-                                &:after {
-                                    content: '';
-                                    width: 0;
-                                    height: 0;
-                                    border-width: 0 8px 8px;
-                                    border-style: solid;
-                                    border-color: transparent transparent #fff;
-                                    position: absolute;
-                                    left: 47px;
-                                    top: -8px;
-                                }
-
-                                a {
-                                    display: block;
-                                    text-align: left;
-                                    margin: 20px 15px;
-                                    line-height: 20px;
-                                    height: 20px;
-                                    background: #fff;
-                                    color: #333;
-                                    font-size: 14px;
-
-                                    &:hover {
-                                        color: @header-color;
-                                        cursor: pointer;
-                                    }
+                                &:hover {
+                                    color: #409eff;
+                                    cursor: pointer;
                                 }
                             }
+                        }
 
-                            .teacher-dropdown {
-                                margin-left: -25px;
-                            }
+                        .teacher-dropdown {
+                            margin-left: -25px;
+                        }
 
-                            .message-dropdown {
-                                width: 150px;
-                                display: block;
-                                margin-left: -80px;
-                            }
+                        .message-dropdown {
+                            width: 150px;
+                            display: block;
+                            margin-left: -80px;
+                        }
 
-                            &:hover .dropdown-list {
-                                display: block;
-                            }
+                        &:hover .dropdown-list {
+                            display: block;
                         }
                     }
 
@@ -523,7 +521,7 @@
                         }
 
                         &:hover, &:hover > div > a {
-                            color: @header-color;
+                            color: #409eff;
                         }
 
                         &:hover .second {
@@ -532,10 +530,10 @@
                     }
 
                     .active {
-                        color: @header-color;
+                        color: #409eff;
 
                         & > div > a {
-                            color: @header-color;
+                            color: #409eff;
                         }
 
                         .first:after {
