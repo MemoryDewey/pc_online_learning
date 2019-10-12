@@ -60,6 +60,9 @@
                 this.loadingText = '暂无课件'
             }
         },
+        beforeCreate() {
+            this.$emit('setHeader', 'ware');
+        },
         created() {
             let courseID = this.$route.query.courseID;
             let wareID = this.$route.query.wareID;
