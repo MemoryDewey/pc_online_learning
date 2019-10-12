@@ -184,11 +184,11 @@ export default new VueRouter({
                     meta: {title: '我的证书', requireAuth: true}
                 },
                 {
-                    path: 'latest-browse', name: 'latestBrowse',
+                    path: 'latest-browse', name: 'browse',
                     component: ProfileLatestBrowse, meta: {title: '最近浏览', requireAuth: true}
                 },
                 {
-                    path: 'collection', name: 'collection-course',
+                    path: 'collection', name: 'collection',
                     component: ProfileCollection, meta: {title: '收藏课程', requireAuth: true}
                 }
             ]

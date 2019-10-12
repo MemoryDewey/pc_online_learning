@@ -6,7 +6,7 @@
                     <!-- 导航栏 -->
                     <el-aside>
                         <div class="aside">
-                            <ul v-if="!$store.state.isTeacher">
+                            <ul v-if="!this.$store.state.isTeacher">
                                 <li :class="{'active':active.personal}">
                                     <router-link :to="{name:'personal'}">
                                         <div class="setting-icon">
@@ -32,7 +32,7 @@
                                     </router-link>
                                 </li>
                                 <li :class="{'active':active.browse}">
-                                    <router-link :to="{name:'latestBrowse'}">
+                                    <router-link :to="{name:'browse'}">
                                         <div class="setting-icon">
                                             <font-awesome-icon icon="eye"></font-awesome-icon>
                                         </div>
@@ -40,7 +40,7 @@
                                     </router-link>
                                 </li>
                                 <li :class="{'active':active.collection}">
-                                    <router-link :to="{name:'collection-course'}">
+                                    <router-link :to="{name:'collection'}">
                                         <div class="setting-icon">
                                             <font-awesome-icon icon="star"></font-awesome-icon>
                                         </div>
@@ -100,7 +100,6 @@
                     </el-main>
                 </el-container>
             </div>
-
         </div>
     </div>
 </template>
