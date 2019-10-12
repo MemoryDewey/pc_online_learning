@@ -137,7 +137,7 @@
 
 <script>
     import {Message} from 'element-ui'
-    import {getClass, addComment, getComment, getCommentCount} from "@/api/course";
+    import {checkApply, addComment, getComment, getCommentCount} from "@/api/course";
 
     export default {
         name: "InfoComment",
@@ -186,7 +186,7 @@
             },
             //评论课程
             async setComment() {
-                let response = await getClass({courseID: this.$route.params.courseID,});
+                let response = await checkApply({courseID: this.$route.params.courseID,});
                 if (response) this.dialogVisible = true;
             },
             //获取评论

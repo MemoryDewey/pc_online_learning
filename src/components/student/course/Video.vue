@@ -24,9 +24,12 @@
                                     </iframe>
                                     <!--视频 E-->
                                     <!--课件 S-->
-                                    <iframe class="study course-ware" :src="wareUrl" width="100%"
+                                    <div v-if="!showVideo" class="study">
+                                        <course-ware :ware="wareUrl"></course-ware>
+                                    </div>
+                                    <!--<iframe class="study course-ware" :src="wareUrl" width="100%"
                                             scrolling="no" allowfullscreen v-if="!showVideo">
-                                    </iframe>
+                                    </iframe>-->
                                     <!--课件 E-->
                                 </div>
                                 <!--视频下方 S-->
@@ -124,6 +127,7 @@
 <script>
     import CourseBread from './CourseBread'
     import CourseExercise from './CourseExercise'
+    import CourseWare from "@/components/student/course/CourseWare";
     import 'video.js/dist/video-js.css'
     import {videoPlayer} from 'vue-video-player'
     import 'videojs-contrib-hls'
@@ -133,9 +137,7 @@
     export default {
         name: "Video",
         components: {
-            "course-bread": CourseBread,
-            "course-exercise": CourseExercise,
-            videoPlayer
+            CourseBread, CourseExercise, CourseWare, videoPlayer
         },
         data() {
             return {
@@ -169,14 +171,6 @@
                 }
             }
         },
-        beforeRouteEnter(from, to, next) {
-            next();
-            /*let courseID = this.$route.params.courseID;
-            let response = checkApply({courseID}).then(res => {
-                if (res.status === 1) next();
-                else next(`/course/${}/information`)
-            });*/
-        },
         methods: {
             //改变视频时触发
             changeVideo(videoID, videoName, url, ware) {
@@ -184,7 +178,7 @@
                 this.videoID = videoID;
                 this.videoName = videoName;
                 this.videoUrl = url;
-                this.wareUrl = `/course-ware?courseID=${this.$route.params.courseID}&wareID=${ware}`;
+                this.wareUrl = ware;
                 this.exercise = {videoID, videoName}
             },
             //改变为直播时触发
@@ -230,8 +224,7 @@
                         this.videoID = this.courseChapter[0].video[0].id;
                         this.videoName = this.courseChapter[0].video[0].name;
                         this.videoUrl = this.courseChapter[0].video[0].url;
-                        let ware = this.courseChapter[0].video[0].ware;
-                        this.wareUrl = `/course-ware?courseID=${this.$route.params.courseID}&wareID=${ware}`;
+                        this.wareUrl = this.courseChapter[0].video[0].ware;
                         this.exercise = {videoID: this.videoID, videoName: this.videoName}
                     }
                 }
@@ -269,9 +262,8 @@
         },
         async created() {
             this.videoID = this.$route.params.videoID;
-            let ware = this.$route.params.ware;
+            this.wareUrl = this.$route.params.ware;
             this.videoUrl = this.$route.params.videoUrl;
-            this.wareUrl = `/course-ware?courseID=${this.$route.params.courseID}&wareID=${ware}`;
             if (this.$route.params.live) this.live.state = true;
             try {
                 //获取课程相关信息
@@ -340,13 +332,6 @@
                     left: 0;
                     width: 100%;
                     height: 100%;
-                }
-
-                .course-ware {
-                    border-top: 1px solid #f5f5f5;
-                    border-right: 0;
-                    border-bottom: 0;
-                    border-left: 1px solid #f5f5f5;
                 }
 
                 .course-video {

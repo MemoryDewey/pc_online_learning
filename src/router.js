@@ -42,7 +42,8 @@ const CFM = () => import( '@/components/teacher/course/FileManage');
 const CLM = () => import( '@/components/teacher/course/LiveManage');
 const CEM = () => import( '@/components/teacher/course/ExamManage');
 
-import {checkLogin} from './api/passport'
+import {checkLogin} from '@/api/passport'
+import {checkApply} from "@/api/course";
 
 
 Vue.use(VueRouter);
@@ -61,7 +62,15 @@ export default new VueRouter({
                     path: ':courseID',
                     name: 'CourseVideo',
                     component: CourseVideo,
-                    meta: {title: '课程视频', requireAuth: true}
+                    meta: {title: '课程视频', requireAuth: true},
+                    beforeEnter(to, from, next) {
+                        checkApply({courseID: to.params.courseID}).then(res => {
+                            if (res.status === 1) next();
+                            else next('/404');
+                        }).catch(()=>{
+                            next(false);
+                        });
+                    }
                 },
                 {
                     path: ':courseID/exam',

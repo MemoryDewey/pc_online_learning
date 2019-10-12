@@ -65,7 +65,7 @@
 
 <script>
     import {Message, MessageBox} from "element-ui"
-    import {getExam, addExam, getClass} from '@/api/course'
+    import {getExam, addExam, checkApply} from '@/api/course'
 
     export default {
         name: "CourseExam",
@@ -129,7 +129,7 @@
         },
         beforeRouteEnter(to, from, next) {
             next((vm => {
-                getClass({courseID: vm.$route.params.courseID}).then(response => {
+                checkApply({courseID: vm.$route.params.courseID}).then(response => {
                     if (!response) vm.$router.push('/passport/login');
                 })
             }));

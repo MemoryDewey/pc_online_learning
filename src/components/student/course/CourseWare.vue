@@ -1,6 +1,6 @@
 <template>
     <div class="course-ware" v-loading="loading" :element-loading-text="loadingText"
-         element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+         element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0)">
         <!--翻页按钮 S-->
         <div class="arrow clearfix">
             <i class="left" @click="prePage">
@@ -25,6 +25,7 @@
 
     export default {
         name: "CourseWare",
+        props: {ware: {type: String, required: true, default: null}},
         data() {
             return {
                 pageTotalNum: 1,
@@ -33,6 +34,8 @@
                 loading: true,
                 loadingText: '加载中',
                 loadingProgress: 0,
+                baseWareUrl: '',
+                headers: {Authorization: localStorage.getItem('token')}
             }
         },
         components: {pdf},
@@ -60,13 +63,21 @@
                 this.loadingText = '暂无课件'
             }
         },
-        beforeCreate() {
-            this.$emit('setHeader', 'ware');
+        watch: {
+            ware(val) {
+                this.pdfUrl = pdf.createLoadingTask({
+                    url: `${this.baseWareUrl}&wareID=${val}`,
+                    httpHeaders: this.headers
+                });
+            }
         },
         created() {
-            let courseID = this.$route.query.courseID;
-            let wareID = this.$route.query.wareID;
-            this.pdfUrl = `${process.env.VUE_APP_BASE_API}/course/information/course-ware?courseID=${courseID}&wareID=${wareID}`;
+            let courseID = this.$route.params.courseID;
+            this.baseWareUrl = `${process.env.VUE_APP_BASE_API}/course/information/course-ware?courseID=${courseID}`;
+            this.pdfUrl = {
+                url: `${this.baseWareUrl}&wareID=${this.ware}`,
+                httpHeaders: this.headers
+            };
         }
     }
 </script>
@@ -75,18 +86,21 @@
     .course-ware {
         width: 100%;
         height: 100%;
+        display: flex;
+        display: -webkit-flex;
+        justify-content: center;
+        -webkit-justify-content: center;
+        align-items: center;
+        -webkit-align-items: center;
 
         &:hover .arrow {
             display: inline-block;
         }
 
         .arrow {
-            width: 100%;
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
+            width: 870px;
+            position: absolute;
+
             z-index: 10;
             display: none;
 
@@ -105,6 +119,15 @@
                 margin-right: 10px;
                 float: right;
             }
+        }
+
+        canvas {
+            height: 490px !important;
+            width: 870px !important;
+        }
+
+        .annotationLayer {
+            transform: scale(1) !important;
         }
     }
 
