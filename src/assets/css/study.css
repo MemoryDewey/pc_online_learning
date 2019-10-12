@@ -35,6 +35,7 @@
 }
 .study-main .study-all .study-content .content-left .search-bar {
   padding: 20px 0;
+  line-height: 25px;
 }
 .study-main .study-all .study-content .content-left .search-bar span {
   color: #409eff;
