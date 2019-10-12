@@ -24,7 +24,7 @@ export const examCheck = params => get('/examine/exam-check', params);
 export const getLive = params => get('/course/information/live', params);
 export const getVideo = params => get('/course/information/video', params);
 export const getFile = params => get('/course/information/file', params);
-export const getClass = data => post('/course/information/class', data);
+export const checkApply = data => post('/course/information/class', data);
 export const collectCourse = params => get('/course/information/collect-course', params);
 export const getExamTime = params => get('/examine/exam-time', params);
 export const getIntroduction = () => get('/course/information/introduction');

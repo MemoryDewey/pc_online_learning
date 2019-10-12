@@ -372,6 +372,7 @@
 .study-main .study-all .study-content .content-left .study-body .study-sort-page li,
 .study-main .study-all .study-content .content-left .study-body .study-sort-page button {
   height: 35px;
+  line-height: 35px;
   width: 66px;
   font-size: 16px;
   border-radius: 3px;
@@ -602,7 +603,6 @@
   color: #409eff;
 }
 .study-main .study-information .study-banner {
-  padding: 20px 0 30px;
   background: #fff;
   min-height: 400px;
 }

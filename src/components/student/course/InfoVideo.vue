@@ -51,7 +51,8 @@
             }
         },
         props: {
-            video: {type: Object, required: true}
+            video: {type: Object, required: true},
+            apply: {type: Boolean, required: true, default: false}
         },
         watch: {
             "video.hide"(val) {
@@ -82,7 +83,8 @@
             },
             //跳转到视频页
             gotoVideo(videoID, ware, videoUrl) {
-                this.$router.push({
+                if (!this.apply) Message.warning('需要报名后才能学习该课程哦');
+                else this.$router.push({
                     name: 'CourseVideo',
                     params: {
                         courseID: this.$route.params.courseID,
@@ -92,7 +94,8 @@
             },
             //跳转到直播界面
             gotoLive() {
-                if (this.live.exist && this.live.state)
+                if (!this.apply) Message.warning('需要报名后才能学习该课程哦');
+                else if (this.live.exist && this.live.state)
                     this.$router.push({
                         name: 'CourseVideo',
                         params: {

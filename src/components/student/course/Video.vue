@@ -128,7 +128,7 @@
     import {videoPlayer} from 'vue-video-player'
     import 'videojs-contrib-hls'
     import {Message} from 'element-ui'
-    import {getInfo, getVideo, getLive} from "@/api/course";
+    import {getInfo, getVideo, getLive, checkApply} from "@/api/course";
 
     export default {
         name: "Video",
@@ -169,9 +169,14 @@
                 }
             }
         },
-        /*mounted(){
-          window.addEventListener("scroll",this.handleScroll);
-        },*/
+        beforeRouteEnter(from, to, next) {
+            next();
+            /*let courseID = this.$route.params.courseID;
+            let response = checkApply({courseID}).then(res => {
+                if (res.status === 1) next();
+                else next(`/course/${}/information`)
+            });*/
+        },
         methods: {
             //改变视频时触发
             changeVideo(videoID, videoName, url, ware) {

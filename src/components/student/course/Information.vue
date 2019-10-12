@@ -106,7 +106,7 @@
                                 </div>
                                 <!--课程详情 E-->
                                 <!--课程视频 S-->
-                                <info-video :video="video"></info-video>
+                                <info-video :video="video" :apply="hadApply"></info-video>
                                 <!--课程视频 E-->
                                 <!--课程资料 S-->
                                 <info-file :file="file"></info-file>
@@ -191,7 +191,7 @@
     import {
         applyChargeByBst, applyCourseByCash, applyFree,
         checkBstConfirmation, checkBstStatue, examCheck,
-        getClass, getExamTime, getInfo, getBstPrice, collectCourse
+        checkApply, getExamTime, getInfo, getBstPrice, collectCourse
     } from "@/api/course";
     import {getWalletInfo, getBstBalance} from '@/api/wallet'
     import wsClient from 'socket.io-client'
@@ -297,7 +297,7 @@
             },
             //获取其他信息
             async getClass() {
-                let response = await getClass({courseID: this.$route.params.courseID});
+                let response = await checkApply({courseID: this.$route.params.courseID});
                 this.hadApply = response.status === 1;
                 this.file.apply = this.hadApply;
                 response = await getExamTime({courseID: this.$route.params.courseID});
