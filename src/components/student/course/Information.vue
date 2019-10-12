@@ -76,7 +76,7 @@
                                 <h2 class="tabs-title" :class="{active:tabsTitle.fileList}"
                                     @click="tabsChange('fileList')">课程资料</h2>
                                 <h2 class="tabs-title" :class="{active:tabsTitle.comment}"
-                                    @click="tabsChange('comment')">课程评价({{commentCount}})</h2>
+                                    @click="tabsChange('comment')">课程评价</h2>
                             </div>
                             <div class="tabs-content">
                                 <!--课程详情 S-->
@@ -209,7 +209,6 @@
                 file: {hide: true, apply: false},
                 video: {hide: true, form: null},
                 courseRate: 8,
-                commentCount: 0,
                 applyCount: 0,
                 hadApply: false,
                 examTime: {
@@ -263,10 +262,6 @@
                 this.video.hide = val !== 'chapterList';
                 this.file.hide = val !== 'fileList';
                 this.comment.hide = val !== 'comment';
-            },
-            //设置课程评价条数
-            setCommentCount(val) {
-                this.commentCount = val;
             },
             //跳转到课程页
             async gotoExam() {

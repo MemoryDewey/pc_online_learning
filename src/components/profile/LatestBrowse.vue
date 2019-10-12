@@ -39,7 +39,7 @@
 </template>
 
 <script>
-    import {getLatestBrowseCourse} from "@/api/course";
+    import {getLatestBrowseCourse} from "@/api/profile";
 
     export default {
         name: "LatestBrowse",

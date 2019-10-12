@@ -100,7 +100,7 @@
 
 
 <script>
-    import {getWalletBstCourse, getWalletCourse} from "@/api/course";
+    import {getWalletBstCourse, getWalletCourse} from "@/api/profile";
 
     export default {
         name: "Wallet",

@@ -8,10 +8,6 @@ export const getList = params => get('/course/list', params);
 export const getRecommend = () => get('/course/list/recommend');
 export const getIndexCourse = () => get('/course/list/index-show');
 export const getIndexBanner = () => get('/course/list/banner');
-export const getWalletCourse = params => get('/course/list/user-course-rmb', params);
-export const getWalletBstCourse = params => get('/course/list/user-course-bst', params);
-export const getLatestBrowseCourse = () => get('/course/list/latest-browse');
-export const getCollectionCourse = params => get('/course/list/collection', params);
 
 export const getInfo = params => get('/course/information', params);
 export const applyFree = data => post('/course/information/apply-free', data);

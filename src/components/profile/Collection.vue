@@ -49,7 +49,8 @@
 </template>
 
 <script>
-    import {collectCourse, getCollectionCourse} from "@/api/course";
+    import {getCollectionCourse} from "@/api/profile";
+    import {collectCourse} from "@/api/course";
     import {Message} from 'element-ui'
 
     export default {
