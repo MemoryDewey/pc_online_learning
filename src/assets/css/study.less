@@ -745,6 +745,7 @@
       .study-text-right {
         margin-left: 630px;
         width: 570px;
+        height: 338px;
         text-align: left;
 
         .text-title {
@@ -754,6 +755,7 @@
           line-height: 1.2;
           margin-bottom: 10px;
           font-weight: 400;
+          height: 26px;
         }
 
         .enroll-info {
@@ -791,6 +793,8 @@
 
         .enroll {
           margin-top: 10px;
+          height: 150px;
+          position: relative;
 
           .study-apply {
             margin-bottom: 10px;
@@ -798,18 +802,23 @@
             color: #999999;
           }
 
-          .collection {
+          .collection, .share {
             svg {
               margin-right: 5px;
             }
 
-            float: right;
             cursor: pointer;
           }
 
           .enroll-apply-btn {
-            margin-top: 30px;
-            margin-bottom: 10px;
+            position: absolute;
+            bottom: 0;
+          }
+
+          .el-button {
+            font-size: 18px;
+            line-height: 28px;
+            width: 246px;
           }
 
           .enroll-button {

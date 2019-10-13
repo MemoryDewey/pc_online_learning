@@ -625,6 +625,7 @@
 .study-main .study-information .study-banner .study-text-right {
   margin-left: 630px;
   width: 570px;
+  height: 338px;
   text-align: left;
 }
 .study-main .study-information .study-banner .study-text-right .text-title {
@@ -634,6 +635,7 @@
   line-height: 1.2;
   margin-bottom: 10px;
   font-weight: 400;
+  height: 26px;
 }
 .study-main .study-information .study-banner .study-text-right .enroll-info:after {
   display: block;
@@ -663,22 +665,30 @@
 }
 .study-main .study-information .study-banner .study-text-right .enroll {
   margin-top: 10px;
+  height: 150px;
+  position: relative;
 }
 .study-main .study-information .study-banner .study-text-right .enroll .study-apply {
   margin-bottom: 10px;
   font-size: 13px;
   color: #999999;
 }
-.study-main .study-information .study-banner .study-text-right .enroll .collection {
-  float: right;
+.study-main .study-information .study-banner .study-text-right .enroll .collection,
+.study-main .study-information .study-banner .study-text-right .enroll .share {
   cursor: pointer;
 }
-.study-main .study-information .study-banner .study-text-right .enroll .collection svg {
+.study-main .study-information .study-banner .study-text-right .enroll .collection svg,
+.study-main .study-information .study-banner .study-text-right .enroll .share svg {
   margin-right: 5px;
 }
 .study-main .study-information .study-banner .study-text-right .enroll .enroll-apply-btn {
-  margin-top: 30px;
-  margin-bottom: 10px;
+  position: absolute;
+  bottom: 0;
+}
+.study-main .study-information .study-banner .study-text-right .enroll .el-button {
+  font-size: 18px;
+  line-height: 28px;
+  width: 246px;
 }
 .study-main .study-information .study-banner .study-text-right .enroll .enroll-button {
   height: 52px;
