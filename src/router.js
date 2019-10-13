@@ -176,7 +176,7 @@ export default new VueRouter({
                 {path: 'paid', name: 'paid', component: ProfilePaid, meta: {title: '已购课程', requireAuth: true}},
                 {path: 'course', name: 'course', component: ProfileCourse, meta: {title: '我的课程', requireAuth: true}},
                 {path: 'exam', name: 'exam', component: ProfileExam, meta: {title: '我的考试', requireAuth: true}},
-                /*{path: 'invite', name: 'invite', component: ProfileInvite, meta: {title: '我的邀请', requireAuth: true}},*/
+                {path: 'invite', name: 'invite', component: ProfileInvite, meta: {title: '邀请好友', requireAuth: true}},
                 {
                     path: 'certificate',
                     name: 'certificate',

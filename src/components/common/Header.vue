@@ -106,6 +106,9 @@
                                     <router-link to="/profile/exam">我的考试</router-link>
                                 </li>
                                 <li>
+                                    <router-link to="/profile/invite">邀请好友</router-link>
+                                </li>
+                                <li>
                                     <router-link to="/profile/certificate">我的证书</router-link>
                                 </li>
                             </ul>

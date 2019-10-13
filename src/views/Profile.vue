@@ -13,6 +13,12 @@
                                     </div>
                                     <span>个人资料</span>
                                 </router-link>
+                                <router-link tag="li" :to="{name:'invite'}" active-class="active">
+                                    <div class="setting-icon">
+                                        <font-awesome-icon icon="share-alt"></font-awesome-icon>
+                                    </div>
+                                    <span>邀请好友</span>
+                                </router-link>
                                 <router-link tag="li" :to="{name:'paid'}" active-class="active">
                                     <div class="setting-icon">
                                         <font-awesome-icon icon="yen-sign"></font-awesome-icon>
