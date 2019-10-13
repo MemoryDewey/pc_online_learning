@@ -4,6 +4,7 @@ export const getPersonalInfo = () => get('/profile/personal');
 export const updatePersonal = data => post('/profile/personal/update', data);
 export const updateBstAddress = data => post('/profile/personal/user-address', data);
 export const getInvite = params => get('/profile/personal/invite', params);
+export const getInviteCode = () => get('/profile/personal/invite-code');
 
 export const getCourse = params => get('/course/list/user-course', params);
 export const cancelFree = params => get('/course/information/cancel-free', params);
