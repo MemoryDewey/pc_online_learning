@@ -156,7 +156,6 @@
 </template>
 
 <script>
-    import moment from 'moment'
     import {logout, checkLogin} from '@/api/passport'
     import {getCourseSystem} from '@/api/course'
 
@@ -199,14 +198,9 @@
         },
         async created() {
             if (this.$store.state.loginState) {
-                let effectiveTime = this.$store.state.effectiveTime;
-                if (moment().isAfter(effectiveTime)) {
-                    this.loginState = false;
-                } else {
-                    this.loginState = true;
-                    this.avatarUrl = this.$store.state.avatarUrl;
-                    this.nickname = this.$store.state.nickname;
-                }
+                this.loginState = true;
+                this.avatarUrl = this.$store.state.avatarUrl;
+                this.nickname = this.$store.state.nickname;
             } else {
                 let response = await checkLogin();
                 this.loginState = response.status === 1;
@@ -393,6 +387,7 @@
                                 font-size: 14px;
                             }
                         }
+
                         .dropdown-list {
                             display: none;
                             position: absolute;
