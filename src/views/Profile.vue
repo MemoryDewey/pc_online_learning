@@ -7,62 +7,48 @@
                     <el-aside>
                         <div class="aside">
                             <ul v-if="!this.$store.state.isTeacher">
-                                <li :class="{'active':active.personal}">
-                                    <router-link :to="{name:'personal'}">
-                                        <div class="setting-icon">
-                                            <font-awesome-icon icon="address-card"></font-awesome-icon>
-                                        </div>
-                                        <span>个人资料</span>
-                                    </router-link>
-                                </li>
-                                <li :class="{'active':active.paid}">
-                                    <router-link :to="{name:'paid'}">
-                                        <div class="setting-icon">
-                                            <font-awesome-icon icon="yen-sign"></font-awesome-icon>
-                                        </div>
-                                        <span>已购课程</span>
-                                    </router-link>
-                                </li>
-                                <li :class="{'active':active.course}">
-                                    <router-link :to="{name:'course'}">
-                                        <div class="setting-icon">
-                                            <font-awesome-icon icon="book-open"></font-awesome-icon>
-                                        </div>
-                                        <span>我的课程</span>
-                                    </router-link>
-                                </li>
-                                <li :class="{'active':active.browse}">
-                                    <router-link :to="{name:'browse'}">
-                                        <div class="setting-icon">
-                                            <font-awesome-icon icon="eye"></font-awesome-icon>
-                                        </div>
-                                        <span>最近再看</span>
-                                    </router-link>
-                                </li>
-                                <li :class="{'active':active.collection}">
-                                    <router-link :to="{name:'collection'}">
-                                        <div class="setting-icon">
-                                            <font-awesome-icon icon="star"></font-awesome-icon>
-                                        </div>
-                                        <span>收藏课程</span>
-                                    </router-link>
-                                </li>
-                                <li :class="{'active':active.exam}">
-                                    <router-link :to="{name:'exam'}">
-                                        <div class="setting-icon">
-                                            <font-awesome-icon icon="file-alt"></font-awesome-icon>
-                                        </div>
-                                        <span>我的考试</span>
-                                    </router-link>
-                                </li>
-                                <li :class="{'active':active.certificate}">
-                                    <router-link :to="{name:'certificate'}">
-                                        <div class="setting-icon">
-                                            <font-awesome-icon icon="award"></font-awesome-icon>
-                                        </div>
-                                        <span>我的证书</span>
-                                    </router-link>
-                                </li>
+                                <router-link tag="li" :to="{name:'personal'}" active-class="active">
+                                    <div class="setting-icon">
+                                        <font-awesome-icon icon="address-card"></font-awesome-icon>
+                                    </div>
+                                    <span>个人资料</span>
+                                </router-link>
+                                <router-link tag="li" :to="{name:'paid'}" active-class="active">
+                                    <div class="setting-icon">
+                                        <font-awesome-icon icon="yen-sign"></font-awesome-icon>
+                                    </div>
+                                    <span>已购课程</span>
+                                </router-link>
+                                <router-link tag="li" :to="{name:'course'}" active-class="active">
+                                    <div class="setting-icon">
+                                        <font-awesome-icon icon="book-open"></font-awesome-icon>
+                                    </div>
+                                    <span>我的课程</span>
+                                </router-link>
+                                <router-link tag="li" :to="{name:'browse'}" active-class="active">
+                                    <div class="setting-icon">
+                                        <font-awesome-icon icon="eye"></font-awesome-icon>
+                                    </div>
+                                    <span>最近再看</span>
+                                </router-link>
+                                <router-link tag="li" :to="{name:'collection'}" active-class="active">
+                                    <div class="setting-icon">
+                                        <font-awesome-icon icon="heart"></font-awesome-icon>
+                                    </div>
+                                    <span>收藏课程</span>
+                                </router-link>
+                                <router-link tag="li" :to="{name:'exam'}" active-class="active">
+                                    <div class="setting-icon">
+                                        <font-awesome-icon icon="file-alt"></font-awesome-icon>
+                                    </div>
+                                    <span>我的考试</span>
+                                </router-link>
+                                <router-link tag="li" :to="{name:'certificate'}" active-class="active">
+                                    <div class="setting-icon">
+                                        <font-awesome-icon icon="award"></font-awesome-icon>
+                                    </div>
+                                    <span>我的证书</span>
+                                </router-link>
                             </ul>
                             <ul v-else>
                                 <li :class="{'active':active.personal}">
@@ -73,22 +59,18 @@
                                         <span>个人资料</span>
                                     </router-link>
                                 </li>
-                                <li :class="{'active':active.wallet}" v-if="false">
-                                    <router-link :to="{name:'wallet'}">
-                                        <div class="setting-icon">
-                                            <font-awesome-icon icon="wallet"></font-awesome-icon>
-                                        </div>
-                                        <span>我的钱包</span>
-                                    </router-link>
-                                </li>
-                                <li :class="{'active':active.exam}" v-if="false">
-                                    <router-link :to="{name:'exam'}">
-                                        <div class="setting-icon">
-                                            <font-awesome-icon icon="envelope"></font-awesome-icon>
-                                        </div>
-                                        <span>系统消息</span>
-                                    </router-link>
-                                </li>
+                                <router-link tag="li" :to="{name:'personal'}" active-class="active">
+                                    <div class="setting-icon">
+                                        <font-awesome-icon icon="address-card"></font-awesome-icon>
+                                    </div>
+                                    <span>个人资料</span>
+                                </router-link>
+                                <router-link v-if="false" tag="li" :to="{name:'personal'}" active-class="active">
+                                    <div class="setting-icon">
+                                        <font-awesome-icon icon="envelope"></font-awesome-icon>
+                                    </div>
+                                    <span>系统消息</span>
+                                </router-link>
                             </ul>
                         </div>
                     </el-aside>
@@ -110,29 +92,12 @@
         name: "Layout",
         data() {
             return {
-                page: "profile",
-                active: {
-                    personal: false, paid: false, course: false,
-                    exam: false, certificate: false, browse: false, collection: false
-                }
+                page: "profile"
             }
         },
         beforeCreate() {
             this.$emit('setHeader', 'profile');
-        },
-        beforeRouteEnter(to, from, next) {
-            let type = to.name;
-            next((vm => {
-                vm.active[type] = true;
-            }));
-        },
-        beforeRouteUpdate(to, from, next) {
-            let type = from.name;
-            this.active[type] = false;
-            type = to.name;
-            this.active[type] = true;
-            next();
-        },
+        }
     }
 </script>
 
@@ -181,20 +146,16 @@
                 li {
                     line-height: 20px;
                     border-bottom: 1px solid #e6e6e6;
+                    padding: 15px 15px;
+                    font-size: 15px;
+                    display: block;
+                    text-align: left;
                 }
-            }
-
-            a {
-                padding: 15px 15px;
-                font-size: 15px;
-                display: block;
-                text-align: left;
             }
 
             .active, li:hover {
-                a {
-                    background-color: #f0f0f0;
-                }
+                background-color: #f0f0f0;
+                cursor: pointer;
             }
 
             .setting-icon {
