@@ -33,29 +33,28 @@
                                 <div class="enroll">
                                     <div class="study-apply">
                                         <span>已有{{applyCount}}人报名</span>
-                                        <div class="collection" :style="{color:collection?'#409eff':'#666'}"
-                                             @click="collectCourse">
-                                            <font-awesome-icon icon="star"></font-awesome-icon>
-                                            <span>{{collection?'取消收藏':'收藏课程'}}</span>
+                                        <el-divider direction="vertical"></el-divider>
+                                        <span>好评度 {{courseRate*10}}%</span>
+                                        <div style="float: right">
+                                            <span class="collection" :style="{color:collection?'#409eff':'#999'}"
+                                                  @click="collectCourse">
+                                                <font-awesome-icon icon="heart"></font-awesome-icon>
+                                                <span>{{collection?'取消收藏':'收藏课程'}}</span>
+                                            </span>
                                         </div>
                                     </div>
-                                    <div class="enroll-apply-btn" v-if="!hadApply">
-                                        <el-button v-if="bstApplyBtn" type="info" disabled>
+                                    <div v-show="applyButtonLoading" class="enroll-apply-btn">
+                                        <router-link v-if="hadApply" tag="div"
+                                                     :to="`/course/${this.$route.params.courseID}`">
+                                            <el-button type="primary">已报名，进入学习</el-button>
+                                        </router-link>
+                                        <el-button v-else-if="bstApplyBtn" type="info" :loading="true">
                                             账单确认中...
                                         </el-button>
-                                        <div class="info-button enroll-button" v-else-if="course.info['price']===0"
-                                             @click="applyFree">
-                                            免费报名
-                                        </div>
-                                        <div class="info-button enroll-button" v-else @click="buyCourseDialogOpen">
-                                            立即购买
-                                        </div>
-                                    </div>
-                                    <div class="enroll-apply-btn" v-else>
-                                        <router-link tag="div" class="info-button enroll-button"
-                                                     :to="`/course/${$route.params.courseID}`">
-                                            已报名，进入学习
-                                        </router-link>
+                                        <el-button type="primary" v-else-if="course.info['price']===0"
+                                                   @click="applyFree">免费报名
+                                        </el-button>
+                                        <el-button v-else type="primary" @click="buyCourseDialogOpen">立即购买</el-button>
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +111,7 @@
                                 <info-file :file="file"></info-file>
                                 <!--课程资料 E-->
                                 <!--课程评论 S-->
-                                <info-comment :comment="comment" @getCommentCount="setCommentCount"></info-comment>
+                                <info-comment :comment="comment"></info-comment>
                                 <!--课程评论 E-->
                             </div>
                         </div>
@@ -211,6 +210,7 @@
                 courseRate: 8,
                 applyCount: 0,
                 hadApply: false,
+                applyButtonLoading: false,
                 examTime: {
                     startTime: null,
                     finishTime: null
@@ -293,6 +293,7 @@
             //获取其他信息
             async getClass() {
                 let response = await checkApply({courseID: this.$route.params.courseID});
+                this.applyButtonLoading = true;
                 this.hadApply = response.status === 1;
                 this.file.apply = this.hadApply;
                 response = await getExamTime({courseID: this.$route.params.courseID});
