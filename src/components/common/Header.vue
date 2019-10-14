@@ -178,7 +178,7 @@
         },
         methods: {
             exit() {
-                logout().then(res => {
+                logout().then(() => {
                     this.$store.commit('exit');
                     window.location.reload();
                 });
