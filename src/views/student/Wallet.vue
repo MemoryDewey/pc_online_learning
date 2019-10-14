@@ -22,9 +22,18 @@
                             </div>
                         </el-col>
                         <el-col :span="10" class="balance">
-                            <div class="account-money">账户余额</div>
-                            <span class="money-main">{{balanceMain}}</span>
-                            <span class="money-sub">{{balanceSub}}元</span>
+                            <el-row>
+                                <el-col :span="15">
+                                    <div class="account-money">账户余额</div>
+                                    <span class="money-main">{{balanceMain}}</span>
+                                    <span class="money-sub">{{balanceSub}}元</span>
+                                </el-col>
+                                <el-col :span="9" style="line-height: 40px">
+                                    <el-button type="primary" round size="mini" class="balance-btn" plain
+                                               @click="openMoneyDialog('recharge')">充值
+                                    </el-button>
+                                </el-col>
+                            </el-row>
                             <div class="action">
                                 <!--<el-button type="primary" round size="mini" class="balance-btn" plain
                                            @click="openMoneyDialog('recharge')">充值
@@ -36,9 +45,9 @@
                             </div>
                         </el-col>
                         <el-col :span="7" class="meta">
-                            <div>每次提现最小额度为￥100</div>
+                            <div>目前只支持BST交易</div>
+                            <div>每次提现最小额度为100</div>
                             <div>提现必须绑定BST钱包账号</div>
-                            <div>建议充值时间为每日9.00-17.00</div>
                             <div>有问题请致电:
                                 <el-link type="primary">400-966-0003</el-link>
                             </div>
@@ -49,14 +58,14 @@
             <el-table :border="true" :data="walletLogsTable" :row-class-name="tableRowClassName">
                 <el-table-column prop="createdAt" label="时间" width="175px" align="center"></el-table-column>
                 <el-table-column label="类型" width="100px" align="center">
-                    <template slot-scope="scope">
+                    <template v-slot="scope">
                         <span :class="scope.row.type | typeFilterTag">{{ scope.row.type | typeFilter }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="details" label="详情" width="300px"></el-table-column>
                 <el-table-column prop="amount" label="金额"></el-table-column>
                 <el-table-column label="状态" width="175px" align="center">
-                    <template slot-scope="scope">
+                    <template v-slot="scope">
                         <span :class="scope.row.status | statusFilterTag">{{ scope.row.status | statusFilter }}</span>
                     </template>
                 </el-table-column>
@@ -64,23 +73,46 @@
             <el-pagination layout="prev, pager, next" background :hide-on-single-page="true"
                            :total="pageSum*10" class="page" @current-change="getWalletLogs"
             ></el-pagination>
-            <el-dialog :visible.sync="moneyDialogVisible" width="500px" :title="dialogTitle"
-                       @close="moneyDialogVisible = false">
-                <el-form label-position="top" :model="dialogForm" :rules="dialogRules" ref="ruleForm">
-                    <el-form-item label="金额" prop="amount">
-                        <el-input-number v-model="dialogForm.amount" size="medium" :precision="2"
-                                         :min="100"></el-input-number>
-                    </el-form-item>
-                    <el-form-item label="支付宝账号" prop="account">
-                        <el-input v-model="dialogForm.account"></el-input>
-                    </el-form-item>
-                    <el-form-item label="支付宝实名" prop="name">
-                        <el-input v-model="dialogForm.name"></el-input>
-                    </el-form-item>
-                    <el-form-item style="text-align: right">
-                        <el-button type="primary" @click="submitMoneyDialog('ruleForm')">提交</el-button>
-                    </el-form-item>
-                </el-form>
+            <el-dialog :visible.sync="moneyDialogVisible" width="560px" class="recharge-dialog"
+                       :title="dialogTitle" @close="moneyDialogVisible = false">
+                <div class="trade-wrapper-list">
+                    <div class="trade-wrapper" @click="rechargeMoney=10"
+                         :class="{active:rechargeMoney===10}">
+                        <div class="trade-count">10<span class="trade-name">课程币</span></div>
+                        <div class="bst-price">37.92 BST</div>
+                    </div>
+                    <div class="trade-wrapper" @click="rechargeMoney=20"
+                         :class="{active:rechargeMoney===20}">
+                        <div class="trade-count">20<span class="trade-name">课程币</span></div>
+                        <div class="bst-price">75.84 BST</div>
+                    </div>
+                    <div class="trade-wrapper" @click="rechargeMoney=50"
+                         :class="{active:rechargeMoney===50}">
+                        <div class="trade-count">50<span class="trade-name">课程币</span></div>
+                        <div class="bst-price">189.60 BST</div>
+                    </div>
+                    <div class="trade-wrapper" @click="rechargeMoney=100"
+                         :class="{active:rechargeMoney===100}">
+                        <div class="trade-count">100<span class="trade-name">课程币</span></div>
+                        <div class="bst-price">379.20 BST</div>
+                    </div>
+                    <div class="trade-wrapper" @click="rechargeMoney=200"
+                         :class="{active:rechargeMoney===200}">
+                        <div class="trade-count">200<span class="trade-name">课程币</span></div>
+                        <div class="bst-price">758.40 BST</div>
+                    </div>
+                    <div class="trade-wrapper" @click="rechargeMoney=500"
+                         :class="{active:rechargeMoney===500}">
+                        <div class="trade-count">500<span class="trade-name">课程币</span></div>
+                        <div class="bst-price">1896.00 BST</div>
+                    </div>
+                    <div class="trade-wrapper" @click="rechargeMoney=1000"
+                         :class="{active:rechargeMoney===1000}">
+                        <div class="trade-count">1000<span class="trade-name">课程币</span></div>
+                        <div class="bst-price">3792.00 BST</div>
+                    </div>
+                    <div class="trade-wrapper trade-custom"></div>
+                </div>
             </el-dialog>
             <el-dialog title="请用支付宝扫码支付" width="400px" :visible.sync="codeDialogVisible" center>
                 <div class="code-img">
@@ -148,6 +180,7 @@
                 moneyDialogVisible: false,
                 dialogTitle: null,
                 dialogType: null,
+                rechargeMoney: 100,
                 dialogForm: {
                     amount: '', account: '', name: ''
                 },
@@ -346,7 +379,7 @@
             }
 
             .balance {
-                padding: 10px 55px;
+                padding: 10px 50px;
                 border-left: 1px solid #e5e5e5;
                 border-right: 1px solid #e5e5e5;
 
@@ -363,11 +396,11 @@
 
                 .money-sub {
                     font-size: 18px;
-                    margin-right: 25px;
                 }
 
                 .balance-btn {
                     width: 80px;
+                    vertical-align: middle;
                 }
 
                 .action {
@@ -388,6 +421,53 @@
                     font-size: 13px !important;
                     color: #969696;
                     margin-bottom: 5px;
+                }
+            }
+        }
+
+        .recharge-dialog {
+            text-align: center;
+
+            .trade-wrapper-list {
+                display: flex;
+                display: -webkit-flex;
+                flex-wrap: wrap;
+
+                .trade-wrapper {
+                    width: 150px;
+                    height: 60px;
+                    border: 1px solid #dcdfe6;
+                    margin: 10px;
+                    padding: 10px 0;
+                    cursor: pointer;
+                    color: #222;
+                }
+
+                .trade-custom{
+                    width: 320px;
+                }
+
+                .active {
+                    border: 1px solid #409EFF;
+                    color: #409eff;
+                    .bst-price{
+                        color: #409eff;
+                    }
+                }
+
+                .trade-count {
+                    font-size: 24px;
+                }
+
+                .trade-name {
+                    font-size: 14px;
+                    margin-left: 5px;
+                }
+
+                .bst-price {
+                    font-size: 14px;
+                    color: #757575;
+                    margin-top: 5px;
                 }
             }
         }
