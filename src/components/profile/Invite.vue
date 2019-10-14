@@ -5,7 +5,7 @@
                 <h1>我的邀请码
                     <el-popover placement="bottom" width="200" trigger="hover">
                         <span class="invite-code" slot="reference">{{inviteCode | inviteCodeFilter}}</span>
-                        <p>邀请好友参与即可最高获得好友购买课程的<strong>20% BST</strong>费用作为邀请奖励！
+                        <p>邀请好友参与即可最高获得好友购买课程的<strong> 20% </strong>费用作为邀请奖励！
                             为了保证奖励能够顺利到账，请<strong style="color: #409EFF;cursor: pointer"
                                                   @click="gotoBindWallet">绑定BST钱包</strong>后复制。</p>
                         <el-button type="primary" style="width: 100%" @click="copyInviteUrl">复制邀请链接</el-button>

@@ -359,10 +359,14 @@
                         socket.on('message', data => {
                             loading.close();
                             if (data.status === 1) {
-                                Message.success('已发起交易，请等待交易结果');
+                                Message.success(data.msg);
                                 this.bstApplyBtn = true;
                             } else Message.error('交易失败');
-                        })
+                        });
+                        socket.on('buyCourseSuccess', data => {
+                            Message.success(data.msg);
+                            this.hadApply = true;
+                        });
                     }
                 }
             },

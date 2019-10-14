@@ -9,31 +9,35 @@
                             <div class="info">
                                 <div class="name">{{nickname}}</div>
                                 <div class="bst-bind" v-if="!bstAddress" @click="bindBstAddress">点击绑定BST钱包账号</div>
-                                <el-tooltip v-else effect="light" placement="bottom" :content="`钱包地址:${bstAddress}`">
-                                    <div class="bst-bind" @click="bindBstAddress">已绑定BST钱包账号</div>
-                                </el-tooltip>
+                                <el-popover v-else placement="right" trigger="hover" width="220">
+                                    <div>钱包地址：<strong>{{bstAddress}}</strong></div>
+                                    <br/>
+                                    <div>BST 余额：<strong style="color: #e85308">{{bstBalance}}</strong> BST</div>
+                                    <br/>
+                                    <el-button type="primary" style="width: 100%" @click="bindBstAddress">
+                                        更换BST钱包账号
+                                    </el-button>
+                                    <div class="bst-bind" slot="reference">已绑定BST钱包账号</div>
+                                </el-popover>
                             </div>
                         </el-col>
                         <el-col :span="10" class="balance">
                             <div class="account-money">账户余额</div>
                             <span class="money-main">{{balanceMain}}</span>
                             <span class="money-sub">{{balanceSub}}元</span>
-                            <!--<el-button type="primary" round size="mini" class="balance-btn" plain
-                                       @click="openMoneyDialog('recharge')">充值
-                            </el-button>-->
                             <div class="action">
-                                <el-button type="primary" round size="mini" class="balance-btn" plain
+                                <!--<el-button type="primary" round size="mini" class="balance-btn" plain
                                            @click="openMoneyDialog('recharge')">充值
-                                </el-button>
-                                <!--<el-button type="success" round size="small" @click="openMoneyDialog('cash')"
-                                           class="balance-btn" plain :disabled="balanceMain < 100">提现
                                 </el-button>-->
-                                <!--<span class="warn" v-if="balanceMain < 100">*当前余额不足100元</span>-->
+                                <el-button type="success" round size="small" @click="openMoneyDialog('cash')"
+                                           class="balance-btn" plain :disabled="balanceMain < 100">提现
+                                </el-button>
+                                <span class="warn" v-if="balanceMain < 100">*当前余额不足100元</span>
                             </div>
                         </el-col>
                         <el-col :span="7" class="meta">
-                            <div>每次充值最小额度为￥100</div>
-                            <div>充值会在 1-5 个工作日内到账</div>
+                            <div>每次提现最小额度为￥100</div>
+                            <div>提现必须绑定BST钱包账号</div>
                             <div>建议充值时间为每日9.00-17.00</div>
                             <div>有问题请致电:
                                 <el-link type="primary">400-966-0003</el-link>
@@ -92,7 +96,7 @@
 
 <script>
     import {getPersonalInfo, updateBstAddress} from "@/api/profile";
-    import {getWalletInfo, getWalletLog, recharge, toCash} from "@/api/wallet";
+    import {getBstBalance, getWalletInfo, getWalletLog, recharge, toCash} from "@/api/wallet";
     import {Message, MessageBox} from 'element-ui'
     import NodeRSA from 'node-rsa'
 
@@ -135,6 +139,7 @@
                 nickname: null,
                 avatarUrl: null,
                 bstAddress: null,
+                bstBalance: 0,
                 publicKey: null,
                 balanceMain: 0,
                 balanceSub: .00,
@@ -175,6 +180,7 @@
                     this.nickname = res.data.nickname;
                     this.avatarUrl = res.data.avatarUrl;
                     this.bstAddress = res.data.bstAddress;
+                    if (this.bstAddress) await this.getBstBalance();
                 }
             },
             async getWalletInfo() {
@@ -205,6 +211,11 @@
                         Message.success(res.msg);
                         await this.getPersonalInfo();
                     }
+                });
+            },
+            async getBstBalance() {
+                getBstBalance().then(res => {
+                    this.bstBalance = res.balance;
                 });
             },
             openMoneyDialog(type) {
