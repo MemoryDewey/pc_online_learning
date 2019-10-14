@@ -211,13 +211,12 @@
                     this.$store.commit('login', {
                         level: response.level
                     });
-                    if (response.data.avatarUrl !== null) {
-                        this.avatarUrl = `${response.data.avatarUrl}`;
-                        this.$store.commit('changeAvatarUrl', this.avatarUrl);
-                    }
+                    this.avatarUrl = `${response.data.avatarUrl}`;
+                    this.$store.commit('changeAvatarUrl', this.avatarUrl);
                     this.nickname = response.data.nickname;
                     this.$store.commit('changeNickname', this.nickname);
                 }
+                else if(localStorage.getItem('token')) localStorage.removeItem('token');
             }
             let response = await getCourseSystem();
             if (response) this.courseSystem = response.data;
