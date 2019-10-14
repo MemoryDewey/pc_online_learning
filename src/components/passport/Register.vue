@@ -73,7 +73,7 @@
                 },
                 //整个表单控件
                 registerForm: {
-                    phone: "", password: "", confirm: "", verify: ""
+                    phone: "", password: "", confirm: "", verify: "", invite: null
                 },
                 //用户输入框CSS
                 inputCss: {
@@ -127,8 +127,8 @@
                     this.changeInputClass(value, 1, this.inputCheckText[value][1]);
                 else if (value === "phone" && this.registerForm.phone.match(regPhone)) {    //手机号已被注册
                     const register = this;
-                    checkPhone({phone: register.registerForm.phone}).then(res => {
-                        if (!res) register.changeInputClass(value, 1, "该手机号已被注册");
+                    checkPhone({phone: register.registerForm.phone, invite: this.registerForm.invite}).then(res => {
+                        if (res.status === 403) register.changeInputClass(value, 1, "该手机号已被注册");
                         else {
                             this.sendCodeCss.disable = false;
                             register.changeInputClass(value, 0, null);
@@ -183,6 +183,9 @@
                 if (this.inputCss.hasOwnProperty(item))
                     this.inputCss[item] = this.prepend[item];
             }
+        },
+        created() {
+            if (this.$route.query.invite) this.registerForm.invite = this.$route.query.invite;
         }
     }
 </script>

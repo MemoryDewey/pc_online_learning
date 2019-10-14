@@ -64,7 +64,7 @@
             return {
                 count: 1,
                 invites: [],
-                inviteCode: 'OTk5OTk5OTk5OTk5'
+                inviteCode: ''
             }
         },
         filters: {
@@ -101,7 +101,7 @@
         },
         created() {
             getInviteCode().then(res => {
-
+                if (res) this.inviteCode = res.code;
             });
             this.getInvite(1);
         }
