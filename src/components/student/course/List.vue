@@ -115,7 +115,7 @@
                                             <a><span class="text">{{course['courseName']}}</span></a>
                                             <a class="price"
                                                :class="{free:course.price === 0, charge:course.price !== 0}">
-                                                {{course.price === 0 ? '免费' : `￥${course.price}`}}</a>
+                                                {{course.price === 0 ? '免费' : `${course.price} 课程币`}}</a>
                                         </div>
                                         <!--授课老师/机构-->
                                         <div class="teacher"><a>
@@ -162,7 +162,7 @@
                                 <a class="item-title-link">{{recommend.courseName}}</a>
                             </h4>
                             <div class="item-info">
-                                <span class="price charge" v-if="recommend['price']>0">￥{{recommend.price}}</span>
+                                <span class="price charge" v-if="recommend['price']>0">{{recommend.price}} 课程币</span>
                                 <span class="price free" v-else>免费</span>
                                 <span class="praise">{{recommend['applyCount']}}人报名</span>
                             </div>

@@ -34,7 +34,7 @@
                                     </el-image>
                                     <div class="course-title">{{course.courseName}}</div>
                                     <div class="course-info clear">
-                                        <div style="float: left;color: #e85308;">￥{{course.price}}</div>
+                                        <div style="float: left;color: #e85308;">{{course.price}} 课程币</div>
                                         <div class="apply-num">
                                             {{course.applyCount}}人已报名
                                         </div>

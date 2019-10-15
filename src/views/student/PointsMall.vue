@@ -61,7 +61,7 @@
                                 <span class="title">{{commodity.name}}</span>
                                 <div class="price">
                                     <font-awesome-icon icon="database"></font-awesome-icon>
-                                    <span>{{commodity.points}}积分{{commodity['cash']>0?`+￥${commodity['cash']}元`:''}}</span>
+                                    <span>{{commodity.points}}积分{{commodity['cash']>0?`+${commodity['cash']} 课程币`:''}}</span>
                                 </div>
                                 <div class="inventory">
                                     <span>剩余库存{{commodity['inventory']}}份</span>

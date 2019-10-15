@@ -35,7 +35,7 @@
                             </el-image>
                             <div class="title">{{course['CourseInformation'].courseName}}</div>
                         </div>
-                        <div class="flex-cell first state">￥{{course.amount}}</div>
+                        <div class="flex-cell first state">{{course.amount}} 课程币</div>
                     </div>
                 </div>
                 <div class="sort-page">

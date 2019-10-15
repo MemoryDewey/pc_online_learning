@@ -152,11 +152,11 @@
                 <el-radio v-model="payType" :label="0" border>余额支付</el-radio>
                 <div class="info">
                     <div class="have">
-                        余额：￥{{walletInfo.balance}}
+                        余额：{{walletInfo.balance}} 课程币
                         <router-link to="/wallet" tag="span" class="recharge">充值</router-link>
                         <span class="refresh" @click="getUserBalance">刷新</span>
                     </div>
-                    <div class="need">价格：￥{{course.info.price}}</div>
+                    <div class="need">价格：{{course.info.price}} 课程币</div>
                 </div>
             </div>
             <div class="bst">

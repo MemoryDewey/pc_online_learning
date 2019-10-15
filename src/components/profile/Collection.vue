@@ -32,7 +32,7 @@
                     </router-link>
                 </div>
                 <div class="flex-cell first" style="color: #00a1d6">
-                    {{course['CourseInformation']['price']===0?'免费':`￥${course['CourseInformation']['price']}`}}
+                    {{course['CourseInformation']['price']===0?'免费':`${course['CourseInformation']['price']} 课程币`}}
                 </div>
                 <div class="flex-cell">
                     <a class="btn-operate" @click="collectCourse(course['courseID'])">取消收藏</a>
