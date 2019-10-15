@@ -53,6 +53,7 @@
                     </el-row>
                 </el-col>
             </el-row>
+            <div @click="refreshRecharge">刷新订单</div>
             <el-table :border="true" :data="walletLogsTable" :row-class-name="tableRowClassName">
                 <el-table-column prop="createdAt" label="时间" width="175px" align="center"></el-table-column>
                 <el-table-column label="类型" width="100px" align="center">
@@ -110,7 +111,15 @@
 
 <script>
     import {getPersonalInfo, updateBstAddress} from "@/api/profile";
-    import {getBstBalance, getBstValue, getWalletInfo, getWalletLog, recharge, toCash} from "@/api/wallet";
+    import {
+        getBstBalance,
+        getBstValue,
+        getWalletInfo,
+        getWalletLog,
+        recharge,
+        refreshRecharge,
+        toCash
+    } from "@/api/wallet";
     import {Message, MessageBox} from 'element-ui'
     import NodeRSA from 'node-rsa'
 
@@ -134,7 +143,7 @@
             statusFilter(status) {
                 const statusMap = {
                     "Accept": "交易成功",
-                    "Reject": "审核未通过",
+                    "Reject": "交易失败",
                     "Pending": "审核中"
                 };
                 return statusMap[status]
@@ -264,10 +273,14 @@
             async recharge() {
                 let res = await recharge({amount: this.rechargeMoney});
                 if (res) {
+                    this.moneyDialogVisible = false;
                     Message.success(res.msg);
                     this.getWalletInfo();
                     this.getWalletLogs(1);
                 }
+            },
+            async refreshRecharge(){
+                await refreshRecharge();
             },
             async toCash() {
                 let data = {
