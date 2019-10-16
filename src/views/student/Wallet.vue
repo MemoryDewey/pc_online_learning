@@ -9,10 +9,13 @@
                             <div class="info">
                                 <div class="name">{{nickname}}</div>
                                 <div class="bst-bind" v-if="!bstAddress" @click="bindBstAddress">点击绑定BST钱包账号</div>
-                                <el-popover v-else placement="right" trigger="hover" width="220">
+                                <el-popover v-else placement="right" trigger="hover" width="230">
                                     <div>钱包地址：<strong>{{bstAddress}}</strong></div>
                                     <br/>
-                                    <div>BST 余额：<strong style="color: #e85308">{{bstBalance}}</strong> BST</div>
+                                    <div>BST 余额：<strong style="color: #e85308">{{bstBalance}}</strong> BST
+                                        <span style="cursor: pointer;margin-left: 8px"><i
+                                                class="el-icon-refresh-right" @click="getBstBalance(true)"></i>刷新</span>
+                                    </div>
                                     <br/>
                                     <el-button type="primary" style="width: 100%" @click="bindBstAddress">
                                         更换BST钱包账号
@@ -23,12 +26,12 @@
                         </el-col>
                         <el-col :span="10" class="balance">
                             <el-row>
-                                <el-col :span="15">
-                                    <div class="account-money">账户余额</div>
+                                <el-col :span="18">
+                                    <div class="account-money">课程币余额</div>
                                     <span class="money-main">{{balanceMain}}</span>
                                     <span class="money-sub">{{balanceSub}}</span>
                                 </el-col>
-                                <el-col :span="9" style="line-height: 40px">
+                                <el-col :span="6" style="line-height: 40px">
                                     <el-button type="primary" round size="mini" class="balance-btn" plain
                                                @click="openMoneyDialog('recharge')">充值
                                     </el-button>
@@ -53,7 +56,6 @@
                     </el-row>
                 </el-col>
             </el-row>
-            <div @click="refreshRecharge">刷新订单</div>
             <el-table :border="true" :data="walletLogsTable" :row-class-name="tableRowClassName">
                 <el-table-column prop="createdAt" label="时间" width="175px" align="center"></el-table-column>
                 <el-table-column label="类型" width="100px" align="center">
@@ -62,7 +64,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="details" label="详情" width="300px"></el-table-column>
-                <el-table-column prop="amount" label="金额"></el-table-column>
+                <el-table-column prop="amount" label="课程币"></el-table-column>
                 <el-table-column label="状态" width="175px" align="center">
                     <template v-slot="scope">
                         <span :class="scope.row.status | statusFilterTag">{{ scope.row.status | statusFilter }}</span>
@@ -74,7 +76,7 @@
             ></el-pagination>
             <el-dialog :visible.sync="moneyDialogVisible" width="560px" class="recharge-dialog"
                        :title="dialogTitle" @close="moneyDialogVisible = false">
-                <div class="trade-wrapper-list">
+                <div v-if="dialogType === 'R'" class="trade-wrapper-list">
                     <div class="trade-wrapper" v-for="(value,index) in rechargeNumber" :key="index"
                          @click="rechargeChoose(value)"
                          :class="{active:rechargeMoney===value}">
@@ -95,15 +97,16 @@
                         </template>
                     </div>
                 </div>
-                <el-button slot="footer" type="primary" @click="recharge">提交</el-button>
-            </el-dialog>
-            <el-dialog title="请用支付宝扫码支付" width="400px" :visible.sync="codeDialogVisible" center>
-                <div class="code-img">
-                    <img :src="'/images/pay/ali.png'" alt="">
+                <div v-else class="trade-wrapper-list">
+                    <div class="trade-wrapper" v-for="(value,index) in expendNumber" :key="index"
+                         @click="rechargeChoose(value)"
+                         :class="{active:rechargeMoney===value}">
+                        <div class="trade-count">{{value}}<span class="trade-name">课程币</span></div>
+                        <div class="bst-price">{{(value/bstPrice).toFixed(2)}} BST</div>
+                    </div>
                 </div>
-                <span slot="footer" class="dialog-footer">
-                    <el-button type="primary" @click="payFinished">支 付 完 成</el-button>
-                </span>
+                <el-button v-if="dialogType === 'R'" slot="footer" type="primary" @click="recharge">提交</el-button>
+                <el-button v-else slot="footer" type="primary" @click="toBst">提交</el-button>
             </el-dialog>
         </div>
     </div>
@@ -118,7 +121,7 @@
         getWalletLog,
         recharge,
         refreshRecharge,
-        toCash
+        toBst
     } from "@/api/wallet";
     import {Message, MessageBox} from 'element-ui'
     import NodeRSA from 'node-rsa'
@@ -144,7 +147,7 @@
                 const statusMap = {
                     "Accept": "交易成功",
                     "Reject": "交易失败",
-                    "Pending": "审核中"
+                    "Pending": "处理中..."
                 };
                 return statusMap[status]
             },
@@ -173,6 +176,7 @@
                 dialogTitle: null,
                 dialogType: null,
                 rechargeNumber: [10, 20, 50, 100, 200, 500, 1000],
+                expendNumber: [100, 200, 500],
                 rechargeMoney: 100,
                 rechargeCustom: false,
                 rechargeCustomValid: true,
@@ -198,6 +202,7 @@
                 }
             },
             async getWalletInfo() {
+                await this.refreshRecharge();
                 let res = await getWalletInfo();
                 if (res) {
                     this.publicKey = res.key;
@@ -227,8 +232,8 @@
                     }
                 });
             },
-            getBstBalance() {
-                getBstBalance().then(res => {
+            getBstBalance(refresh) {
+                getBstBalance({refresh}).then(res => {
                     this.bstBalance = res.balance;
                 });
             },
@@ -279,29 +284,17 @@
                     this.getWalletLogs(1);
                 }
             },
-            async refreshRecharge(){
+            async refreshRecharge() {
                 await refreshRecharge();
             },
-            async toCash() {
-                let data = {
-                    amount: this.dialogForm.amount,
-                    aliPayInfo: {
-                        account: this.dialogForm.account,
-                        name: this.dialogForm.name
-                    }
-                };
-                let res = await toCash(data);
+            async toBst() {
+                let res = await toBst({amount: this.rechargeMoney});
                 if (res) {
                     Message.success(res.msg);
                     this.moneyDialogVisible = false;
                     this.getWalletInfo();
                     this.getWalletLogs(1);
                 }
-            },
-            payFinished() {
-                this.moneyDialogVisible = false;
-                this.codeDialogVisible = false;
-                this.recharge();
             }
         },
         beforeCreate() {
@@ -370,7 +363,7 @@
             }
 
             .balance {
-                padding: 10px 50px;
+                padding: 10px 45px;
                 border-left: 1px solid #e5e5e5;
                 border-right: 1px solid #e5e5e5;
 
@@ -510,7 +503,7 @@
                 color: #67c23a
             }
 
-            .warn {
+            .warning {
                 color: #E6A23C
             }
 

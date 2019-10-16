@@ -2,7 +2,7 @@
     <div class="flex-list">
         <!--课程列表顶部信息 S-->
         <el-tabs v-model="activeName" type="card">
-            <el-tab-pane label="R M B" name="rmb">
+            <el-tab-pane label="课程币" name="rmb">
                 <div class="flex-list-header">
                     <div class="flex-row">
                         <div class="flex-cell first">课程信息</div>
