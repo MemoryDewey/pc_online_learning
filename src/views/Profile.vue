@@ -57,14 +57,6 @@
                                 </router-link>
                             </ul>
                             <ul v-else>
-                                <li :class="{'active':active.personal}">
-                                    <router-link :to="{name:'personal'}">
-                                        <div class="setting-icon">
-                                            <font-awesome-icon icon="address-card"></font-awesome-icon>
-                                        </div>
-                                        <span>个人资料</span>
-                                    </router-link>
-                                </li>
                                 <router-link tag="li" :to="{name:'personal'}" active-class="active">
                                     <div class="setting-icon">
                                         <font-awesome-icon icon="address-card"></font-awesome-icon>
