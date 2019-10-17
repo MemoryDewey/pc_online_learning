@@ -1,6 +1,5 @@
 <template>
     <div id="container">
-        <app-header :page="page"></app-header>
         <div class="teacher-manage">
             <div class="inner-center">
                 <div class="main">
@@ -18,20 +17,13 @@
                 </div>
             </div>
         </div>
-        <app-footer></app-footer>
     </div>
 </template>
 
 <script>
-    import Header from '@/components/common/Header'
-    import Footer from '@/components/common/Footer'
 
     export default {
         name: "Course",
-        components: {
-            'app-header': Header,
-            'app-footer': Footer
-        },
         data() {
             return {
                 page: "courseMng",
@@ -72,6 +64,9 @@
                         break;
                 }
             }
+        },
+        beforeCreate() {
+            this.$emit('setHeader', 'teacher');
         },
         beforeRouteEnter(to, from, next) {
             next(vm => {

@@ -9,7 +9,7 @@
                             <div class="info">
                                 <div class="name">{{nickname}}</div>
                                 <div class="bst-bind" v-if="!bstAddress" @click="bindBstAddress">点击绑定BST钱包账号</div>
-                                <el-popover v-else placement="right" trigger="hover" width="230">
+                                <el-popover v-else placement="right" trigger="hover" width="250">
                                     <div>钱包地址：<strong>{{bstAddress}}</strong></div>
                                     <br/>
                                     <div>BST 余额：<strong style="color: #e85308">{{bstBalance}}</strong> BST
