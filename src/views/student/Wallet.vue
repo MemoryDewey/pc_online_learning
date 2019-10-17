@@ -13,8 +13,8 @@
                                     <div>钱包地址：<strong>{{bstAddress}}</strong></div>
                                     <br/>
                                     <div>BST 余额：<strong style="color: #e85308">{{bstBalance}}</strong> BST
-                                        <span style="cursor: pointer;margin-left: 8px"><i
-                                                class="el-icon-refresh-right" @click="getBstBalance(true)"></i>刷新</span>
+                                        <span style="cursor: pointer;margin-left: 8px" @click="getBstBalance(true)"><i
+                                                class="el-icon-refresh-right"></i>刷新</span>
                                     </div>
                                     <br/>
                                     <el-button type="primary" style="width: 100%" @click="bindBstAddress">
