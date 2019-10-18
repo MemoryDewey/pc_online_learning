@@ -86,9 +86,7 @@
                                     </div>
                                     <div class="details-content">
                                         <div class="details-text">
-                                            <p>
-                                                <span>{{course.details['courseSummary']}}</span>
-                                            </p>
+                                            <p v-html="replaceTrim(course.details['courseSummary'])"></p>
                                         </div>
                                     </div>
                                     <div class="details-title">
@@ -97,9 +95,7 @@
                                     </div>
                                     <div class="details-content">
                                         <div class="details-text">
-                                            <p>
-                                                <span>{{course.details['courseTarget']}}</span>
-                                            </p>
+                                            <p v-html="replaceTrim(course.details['courseTarget'])"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -289,6 +285,9 @@
                     this.video.form = course.info['courseForm'];
                     document.title = course.info.courseName;
                 }
+            },
+            replaceTrim(text){
+                return text.toString().replace(/\n/g,'<br/>');
             },
             //获取其他信息
             async getClass() {

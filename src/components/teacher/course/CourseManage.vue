@@ -384,7 +384,7 @@
                 this.ruleForm.price = val.price;
                 this.ruleForm.live = val.live;
                 this.ruleForm.option = "update";
-                this.imageUrl = `http://localhost:3000${val.cover}`;
+                this.imageUrl = val.cover;
                 this.dialogVisible = true;
                 this.dialogFormInfo.title = "更新课程";
                 this.dialogFormInfo.type = "立即更新";
