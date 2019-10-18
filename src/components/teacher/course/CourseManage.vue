@@ -19,8 +19,8 @@
                     <template slot-scope="props">
                         <el-form label-position="left" inline>
                             <el-form-item label="课程名称">
-                                <span>{{ props.row.cname }} <el-tag size="small">{{props.row.live?"直播课":"录播课"}}</el-tag>
-                                </span>
+                                <span style="margin-right: 20px">{{ props.row.cname }}</span>
+                                <el-tag size="small">{{props.row.live?"直播课":"录播课"}}</el-tag>
                             </el-form-item>
                             <el-form-item label="课程描述">
                                 <span>{{ props.row.desc }}</span>
@@ -56,16 +56,14 @@
                 </el-table-column>
                 <el-table-column label="课程名称" prop="cname">
                 </el-table-column>
-                <el-table-column label="课程描述" prop="desc">
-                </el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button size="mini" @click="updateCourse(scope.row)" v-if="!scope.row.delete">编辑</el-button>
-                        <el-button size="mini" type="danger" @click="deleteCourse(scope.row.cid)"
-                                   v-if="!scope.row.delete">删除
-                        </el-button>
-                        <el-button size="mini" type="success" @click="recoverCourse(scope.row.cid)"
-                                   v-if="scope.row.delete">还原
+                        <template v-if="!scope.row.delete">
+                            <el-button size="mini" @click="updateCourse(scope.row)">编辑</el-button>
+                            <el-button size="mini" type="danger" @click="deleteCourse(scope.row.cid)">删除</el-button>
+                            <el-button size="mini" type="primary">设置课程详情图片</el-button>
+                        </template>
+                        <el-button size="mini" type="success" @click="recoverCourse(scope.row.cid)" v-else>还原
                         </el-button>
                     </template>
                 </el-table-column>
@@ -144,7 +142,7 @@
                     <el-form-item label="课程安排" prop="arrange">
                         <el-input v-model="ruleForm.arrange"></el-input>
                     </el-form-item>
-                    <el-form-item label="课程描述" prop="desc">
+                    <el-form-item label="课程简介" prop="desc">
                         <el-input type="textarea" v-model="ruleForm.desc"></el-input>
                     </el-form-item>
                     <el-form-item label="课程总结" prop="summary">
@@ -169,8 +167,8 @@
                         </el-upload>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" :disabled="formSubmit"
-                                   @click="submitForm('ruleForm')">{{dialogFormInfo.type}}
+                        <el-button type="primary" :disabled="formSubmit" @click="submitForm('ruleForm')">
+                            {{dialogFormInfo.type}}
                         </el-button>
                         <el-button @click="resetForm('ruleForm')">重置</el-button>
                     </el-form-item>
