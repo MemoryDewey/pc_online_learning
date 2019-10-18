@@ -286,8 +286,8 @@
                     document.title = course.info.courseName;
                 }
             },
-            replaceTrim(text){
-                return text.toString().replace(/\n/g,'<br/>');
+            replaceTrim(text) {
+                if (text) return text.toString().replace(/\n/g, '<br/>');
             },
             //获取其他信息
             async getClass() {
