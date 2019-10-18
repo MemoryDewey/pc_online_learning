@@ -38,17 +38,21 @@
                                 </el-col>
                             </el-row>
                             <div class="action">
-                                <el-button type="success" round size="small" @click="openMoneyDialog('cash')"
+                                <!--<el-button type="success" round size="small" @click="openMoneyDialog('cash')"
                                            class="balance-btn" plain :disabled="balanceMain < 100">提现
                                 </el-button>
-                                <span class="warn" v-if="balanceMain < 100">*当前余额不足100课程币</span>
+                                <span class="warn" v-if="balanceMain < 100">*当前余额不足100课程币</span>-->
+                                <el-button type="success" round size="small" class="balance-btn"
+                                           plain :disabled="true">提现
+                                </el-button>
+                                <span class="warn">*该功能暂未开放</span>
                             </div>
                         </el-col>
                         <el-col :span="7" class="meta">
+                            <div>1 课程币 = ￥1元</div>
                             <div>目前只支持BST交易</div>
                             <div>每次提现最小额度为100课程币</div>
-                            <div>1 课程币 = ￥1元</div>
-                            <div>提现必须绑定BST钱包账号</div>
+                            <div>充值和提现必须绑定BST钱包账号</div>
                             <div>有问题请致电:
                                 <el-link type="primary">400-966-0003</el-link>
                             </div>
