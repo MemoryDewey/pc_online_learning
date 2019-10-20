@@ -61,7 +61,8 @@
                         <template v-if="!scope.row.delete">
                             <el-button size="mini" @click="updateCourse(scope.row)">编辑</el-button>
                             <el-button size="mini" type="danger" @click="deleteCourse(scope.row.cid)">删除</el-button>
-                            <el-button size="mini" type="primary">设置课程详情图片</el-button>
+                            <el-button size="mini" type="primary" @click="setDetailCover(scope.row)">设置课程详情图片
+                            </el-button>
                         </template>
                         <el-button size="mini" type="success" @click="recoverCourse(scope.row.cid)" v-else>还原
                         </el-button>
@@ -83,7 +84,7 @@
         <el-dialog :title="dialogFormInfo.title" width="650px" :visible.asnc="dialogVisible"
                    @close="dialogVisible = false">
             <!--对话框内容 S-->
-            <div class="dialog-content" id="course">
+            <div class="dialog-content course-dialog">
                 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm"
                          label-position="left">
                     <el-form-item label="课程名称" prop="name">
@@ -175,6 +176,29 @@
                 </el-form>
             </div>
             <!--对话框内容 E-->
+        </el-dialog>
+        <el-dialog title="设置课程详情图片" width="550px" :visible.asnc="coverDialogVisible"
+                   @close="coverDialogVisible=false">
+            <div class="dialog-content detail-dialog">
+                <el-upload class="detail-cover" enctype="multipart/form-data" name="detail-cover" :auto-upload="false"
+                           action="/api/teacher/course/info/deal" :show-file-list="false"
+                           :before-upload="beforeCoverUpload" :on-change="chooseCover"
+                           :headers="headers" :data="ruleForm" :on-success="handleSuccess" ref="upload-detail-cover">
+                    <div class="cover-image" slot="trigger">
+                        <el-image :src="imageUrl" v-if="imageUrl">
+                            <div slot="error" class="image-slot">
+                                <i class="el-icon-picture-outline"></i>
+                            </div>
+                        </el-image>
+                        <div v-else class="cover-uploader-icon">
+                            <font-awesome-icon icon="plus"></font-awesome-icon>
+                        </div>
+                    </div>
+                </el-upload>
+            </div>
+            <div class="dialog-footer">
+                <el-button type="primary">提交</el-button>
+            </div>
         </el-dialog>
         <!--对话框 E-->
     </div>
@@ -278,7 +302,9 @@
                 imageUrl: false,
                 imageSubmit: false,
                 formSubmit: false,
-                headers: {Authorization: localStorage.getItem('token')}
+                headers: {Authorization: localStorage.getItem('token')},
+                coverDialogVisible: false,
+                detailCoverUrl: null
             }
         },
         methods: {
@@ -306,7 +332,7 @@
                             desc: course['courseDescription'],
                             ftime: course['CourseDetail']['finishTime'],
                             stime: course['CourseDetail']['startTime'],
-                            cimg: course['courseImage'],
+                            detailCover: course['CourseDetail']['coverUrl'],
                             price: course.price,
                             live: course.courseForm === 'L',
                             cover: course.courseImage,
@@ -475,6 +501,11 @@
                 }).catch(() => {
                     Message.info("已取消还原操作");
                 })
+            },
+            /* 设置课程详情图片 */
+            setDetailCover(url) {
+                console.log(url);
+                this.coverDialogVisible = true;
             }
         },
         created() {
@@ -485,7 +516,7 @@
 
 <style lang="less">
     .manage-view {
-        #course {
+        .course-dialog {
             .cover {
                 width: 90px;
                 height: 50px;
@@ -533,6 +564,38 @@
 
             .el-form-item__content .line {
                 text-align: center;
+            }
+        }
+
+        .detail-dialog {
+            .detail-cover {
+                position: relative;
+                overflow: hidden;
+
+                .cover-image {
+                    width: 508px;
+                    height: 510px;
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                    position: relative;
+                    border: 1px solid #ddd;
+
+                    img {
+                        width: 100%;
+                    }
+                }
+            }
+            .cover-uploader-icon {
+                font-size: 100px;
+                color: #8c939d;
+                height: 100%;
+                width: 100%;
+                line-height: 510px;
+            }
+
+            .cover-uploader-icon i {
+                vertical-align: middle;
+                margin-bottom: 5px;
             }
         }
     }
