@@ -214,7 +214,7 @@
 </template>
 
 <script>
-    import {Message, MessageBox} from 'element-ui'
+    import {Message, MessageBox, Loading} from 'element-ui'
     import {
         getCourseInfo,
         deleteCourse,
@@ -309,7 +309,9 @@
                 headers: {Authorization: localStorage.getItem('token')},
                 coverDialogVisible: false,
                 detailCoverUrl: null,
-                detailID: null
+                detailID: null,
+                loadingInstance: null,
+                uploadLoading: false
             }
         },
         methods: {
@@ -479,6 +481,12 @@
             },
             /* 提交课程详情图片 */
             submitDetailCover() {
+                this.loadingInstance = Loading.service({
+                    lock: true,
+                    text: '上传中',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
                 this.$refs['upload-detail-cover'].submit();
             },
             /* 添加/更改提交成功后执行 */
@@ -492,6 +500,7 @@
                 } else Message.error(res.msg);
             },
             handleDetailSuccess(res) {
+                this.loadingInstance.close();
                 if (res.status === 1) {
                     this.coverDialogVisible = false;
                     this.getCourse(1, '');
