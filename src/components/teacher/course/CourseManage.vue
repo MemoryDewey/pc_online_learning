@@ -63,8 +63,6 @@
                         </el-form>
                     </template>
                 </el-table-column>
-                <el-table-column label="课程 ID" prop="cid">
-                </el-table-column>
                 <el-table-column label="课程名称" prop="cname">
                 </el-table-column>
                 <el-table-column label="操作">
@@ -74,6 +72,7 @@
                             <el-button size="mini" type="danger" @click="deleteCourse(scope.row.cid)">删除</el-button>
                             <el-button size="mini" type="primary" @click="setDetailCover(scope.row)">设置课程详情图片
                             </el-button>
+                            <el-button size="mini" type="warning" @click="setDiscount(scope.row)">设置优惠</el-button>
                         </template>
                         <el-button size="mini" type="success" @click="recoverCourse(scope.row.cid)" v-else>还原
                         </el-button>
@@ -209,6 +208,28 @@
                 <el-button type="primary" @click="submitDetailCover">提交</el-button>
             </div>
         </el-dialog>
+        <el-dialog title="设置课程优惠" width="400px" :visible.async="discountDialog"
+                   @close="discountDialog=false">
+            <div class="dialog-content discount-dialog">
+                <div class="dialog-item">
+                    <span class="title">课程原价：</span>{{coursePrice}}
+                </div>
+                <div class="dialog-item">
+                    <span class="title">折扣(XX折)：</span>
+                    <el-input-number v-model="discount" :step="1" :max="100" :min="1"></el-input-number>
+                </div>
+                <div class="dialog-item">
+                    <span class="title">折后价格：</span>{{computeDiscountPrice}}
+                </div>
+                <div class="dialog-item">
+                    <span class="title">截止日期：</span>
+                    <el-date-picker v-model="discountTime" type="date" placeholder="选择截止日期"></el-date-picker>
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <el-button type="primary" @click="submitDiscount">提交</el-button>
+            </div>
+        </el-dialog>
         <!--对话框 E-->
     </div>
 </template>
@@ -219,7 +240,7 @@
         getCourseInfo,
         deleteCourse,
         recoverCourse,
-        updateCourseInfo,
+        updateCourseInfo, setCourseDiscount,
     } from "@/api/course-manage";
     import {getCourseType, getCourseSystem} from "@/api/course";
 
@@ -311,7 +332,13 @@
                 detailCoverUrl: null,
                 detailID: null,
                 loadingInstance: null,
-                uploadLoading: false
+                uploadLoading: false,
+                discountDialog: false,
+                discount: 100,
+                discountID: null,
+                coursePrice: null,
+                discountPrice: 0,
+                discountTime: null
             }
         },
         methods: {
@@ -544,6 +571,32 @@
                 this.detailID = course.cid;
                 this.detailCoverUrl = course.detailCover;
                 this.coverDialogVisible = true;
+            },
+            /* 设置课程折扣 */
+            setDiscount(course) {
+                this.discountDialog = true;
+                this.coursePrice = course.price;
+                this.discountID = course.cid;
+            },
+            /* 提交课程折扣 */
+            submitDiscount() {
+                let data = {
+                    courseID: this.discountID,
+                    discount: this.discount,
+                    discountTime: this.discountTime
+                };
+                setCourseDiscount(data).then(res => {
+                    if (res) {
+                        Message.success(res.msg);
+                        this.discountDialog = false;
+                        this.getCourse(1, '');
+                    }
+                });
+            }
+        },
+        computed: {
+            computeDiscountPrice() {
+                return (this.discount * this.coursePrice / 100).toFixed(2);
             }
         },
         created() {
@@ -635,6 +688,17 @@
             .cover-uploader-icon i {
                 vertical-align: middle;
                 margin-bottom: 5px;
+            }
+        }
+
+        .discount-dialog {
+            .dialog-item {
+                padding: 10px 20px;
+
+                .title {
+                    display: inline-block;
+                    width: 90px;
+                }
             }
         }
     }

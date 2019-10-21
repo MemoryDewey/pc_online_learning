@@ -10,6 +10,7 @@ export const getCourseInfo = params => get('/teacher/course/info', params);
 export const updateCourseInfo = data => post('/teacher/course/info/update', data);
 export const deleteCourse = data => post('/teacher/course/info/delete', data);
 export const recoverCourse = data => post('/teacher/course/info/recover', data);
+export const setCourseDiscount = data => post('/teacher/course/info/discount', data);
 
 
 export const getChapter = params => get('/teacher/course/chapter-course', params);
@@ -43,7 +44,7 @@ export const recoverFile = data => post('/teacher/course/file/recover', data);
 
 export const getPaper = params => get('/teacher/course/paper', params);
 export const addPaper = data => post('/teacher/course/paper/add', data);
-export const updatePaper = data =>post('/teacher/course/paper/update',data);
+export const updatePaper = data => post('/teacher/course/paper/update', data);
 export const getCoursePaper = () => get('/teacher/course/course-paper');
 export const getCourseVideo = params => get('/teacher/course/video-course-paper', params);
 
