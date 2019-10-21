@@ -69,7 +69,7 @@
                         <div class="tabs">
                             <div class="tabs-title-bar">
                                 <h2 class="tabs-title" :class="{active:tabsTitle.courseDetail}"
-                                    @click="tabsChange('courseDetail')">课程详情</h2>
+                                    @click="tabsChange('courseDetail')">课程概述</h2>
                                 <h2 class="tabs-title" :class="{active:tabsTitle.chapterList}"
                                     @click="tabsChange('chapterList')">课程目录</h2>
                                 <h2 class="tabs-title" :class="{active:tabsTitle.fileList}"
@@ -82,20 +82,24 @@
                                 <div class="tabs-details" :class="{hide:!tabsTitle.courseDetail}">
                                     <div class="details-title">
                                         <font-awesome-icon icon="th-large"></font-awesome-icon>
-                                        <span>课程概述</span>
+                                        <span>课程简介</span>
                                     </div>
                                     <div class="details-content">
                                         <div class="details-text">
-                                            <p v-html="replaceTrim(course.details['courseSummary'])"></p>
+                                            <p v-html="replaceTrim(course.info['courseDescription'])"></p>
                                         </div>
                                     </div>
                                     <div class="details-title">
                                         <font-awesome-icon icon="book"></font-awesome-icon>
-                                        <span>课程目标</span>
+                                        <span>课程详情</span>
                                     </div>
                                     <div class="details-content">
                                         <div class="details-text">
-                                            <p v-html="replaceTrim(course.details['courseTarget'])"></p>
+                                            <p v-html="replaceTrim(course.details['detail'])"></p>
+                                        </div>
+                                        <div class="details-image">
+                                            <img v-if="course.details['coverUrl']" :src="course.details['coverUrl']"
+                                                 alt>
                                         </div>
                                     </div>
                                 </div>

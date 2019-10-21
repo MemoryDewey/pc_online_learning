@@ -25,30 +25,41 @@
                             <el-form-item label="课程描述">
                                 <span>{{ props.row.desc }}</span>
                             </el-form-item>
-                            <el-form-item label="所属体系">
-                                <span>{{ props.row.sname }}</span>
-                            </el-form-item>
-                            <el-form-item label="所属类别">
-                                <span>{{ props.row.tname }}</span>
-                            </el-form-item>
+                            <el-row>
+                                <el-col :span="12">
+                                    <el-form-item label="所属体系">
+                                        <span>{{ props.row.sname }}</span>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-form-item label="所属类别">
+                                        <span>{{ props.row.tname }}</span>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
                             <el-form-item label="课程安排">
                                 <span>{{ props.row.arra }}</span>
                             </el-form-item>
-                            <el-form-item label="课程总结">
-                                <span>{{ props.row.summ }}</span>
+                            <el-form-item label="课程详情">
+                                <span>{{ props.row.detail }}</span>
                             </el-form-item>
-                            <el-form-item label="课程目标">
-                                <span>{{ props.row.targ }}</span>
-                            </el-form-item>
-                            <el-form-item label="课程价格">
-                                <span>{{ props.row.price }}</span>
-                            </el-form-item>
-                            <el-form-item label="开课时间">
-                                <span>{{ props.row.stime }}</span>
-                            </el-form-item>
-                            <el-form-item label="结课时间">
-                                <span>{{ props.row.ftime }}</span>
-                            </el-form-item>
+                            <el-row>
+                                <el-col :span="8">
+                                    <el-form-item label="课程价格">
+                                        <span>{{ props.row.price }}</span>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="8">
+                                    <el-form-item label="开课时间">
+                                        <span>{{ props.row.stime }}</span>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="8">
+                                    <el-form-item label="结课时间">
+                                        <span>{{ props.row.ftime }}</span>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
                         </el-form>
                     </template>
                 </el-table-column>
@@ -146,11 +157,8 @@
                     <el-form-item label="课程简介" prop="desc">
                         <el-input type="textarea" v-model="ruleForm.desc"></el-input>
                     </el-form-item>
-                    <el-form-item label="课程总结" prop="summary">
-                        <el-input type="textarea" v-model="ruleForm.summary"></el-input>
-                    </el-form-item>
-                    <el-form-item label="课程目标" prop="target">
-                        <el-input type="textarea" v-model="ruleForm.target"></el-input>
+                    <el-form-item label="课程详情" prop="detail">
+                        <el-input type="textarea" v-model="ruleForm.detail"></el-input>
                     </el-form-item>
                     <el-form-item label="课程封面" prop="cover">
                         <el-upload class="cover" enctype="multipart/form-data" name="cover" :auto-upload="false"
@@ -181,11 +189,12 @@
                    @close="coverDialogVisible=false">
             <div class="dialog-content detail-dialog">
                 <el-upload class="detail-cover" enctype="multipart/form-data" name="detail-cover" :auto-upload="false"
-                           action="/api/teacher/course/info/deal" :show-file-list="false"
-                           :before-upload="beforeCoverUpload" :on-change="chooseCover"
-                           :headers="headers" :data="ruleForm" :on-success="handleSuccess" ref="upload-detail-cover">
+                           action="/api/teacher/course/info/detail-cover/update" :show-file-list="false"
+                           :before-upload="beforeDetailCoverUpload" :on-change="chooseDetailCover"
+                           :headers="headers" :data="{courseID:detailID}" :on-success="handleDetailSuccess"
+                           ref="upload-detail-cover">
                     <div class="cover-image" slot="trigger">
-                        <el-image :src="imageUrl" v-if="imageUrl">
+                        <el-image :src="detailCoverUrl" v-if="detailCoverUrl">
                             <div slot="error" class="image-slot">
                                 <i class="el-icon-picture-outline"></i>
                             </div>
@@ -197,7 +206,7 @@
                 </el-upload>
             </div>
             <div class="dialog-footer">
-                <el-button type="primary">提交</el-button>
+                <el-button type="primary" @click="submitDetailCover">提交</el-button>
             </div>
         </el-dialog>
         <!--对话框 E-->
@@ -253,8 +262,7 @@
                     price: '',
                     arrange: '',
                     desc: '',
-                    summary: '',
-                    target: '',
+                    detail: '',
                     option: ''
                 },
                 system: [],
@@ -283,13 +291,9 @@
                         {required: true, message: '请输入课程安排', trigger: 'blur'},
                         {min: 5, max: 10, message: '长度在 5 到 10 个字符', trigger: 'blue'}
                     ],
-                    summary: [
-                        {required: true, message: '请填写课程总结', trigger: 'blur'},
-                        {min: 50, max: 500, message: '长度在 50 到 500 个字符', trigger: 'blur'}
-                    ],
-                    target: [
-                        {required: true, message: '请填写课程目标', trigger: 'blur'},
-                        {min: 50, max: 500, message: '长度在 50 到 500 个字符', trigger: 'blur'}
+                    detail: [
+                        {required: true, message: '请填写课程详情', trigger: 'blur'},
+                        {min: 10, max: 200, message: '长度在 10 到 200 个字符', trigger: 'blur'}
                     ],
                     desc: [
                         {required: true, message: '请填写课程描述', trigger: 'blur'},
@@ -304,7 +308,8 @@
                 formSubmit: false,
                 headers: {Authorization: localStorage.getItem('token')},
                 coverDialogVisible: false,
-                detailCoverUrl: null
+                detailCoverUrl: null,
+                detailID: null
             }
         },
         methods: {
@@ -327,8 +332,7 @@
                             tid: course.typeID,
                             tname: course['CourseType']['typeName'],
                             arra: course['CourseDetail']['courseArrange'],
-                            summ: course['CourseDetail']['courseSummary'],
-                            targ: course['CourseDetail']['courseTarget'],
+                            detail: course['CourseDetail']['detail'],
                             desc: course['courseDescription'],
                             ftime: course['CourseDetail']['finishTime'],
                             stime: course['CourseDetail']['startTime'],
@@ -372,8 +376,7 @@
                     price: '',
                     arrange: '',
                     desc: '',
-                    summary: '',
-                    target: '',
+                    detail: '',
                     option: '',
                 };
                 this.imageUrl = false;
@@ -401,9 +404,8 @@
                 this.ruleForm.start = val.stime;
                 this.ruleForm.finish = val.ftime;
                 this.ruleForm.arrange = val.arra;
-                this.ruleForm.target = val.targ;
                 this.ruleForm.desc = val.desc;
-                this.ruleForm.summary = val.summ;
+                this.ruleForm.detail = val.detail;
                 this.ruleForm.charge = val.price > 0;
                 this.ruleForm.price = val.price;
                 this.ruleForm.live = val.live;
@@ -452,6 +454,12 @@
                     this.imageSubmit = true;
                 }
             },
+            /* 选择课程详情图片 */
+            chooseDetailCover(file) {
+                if (this.beforeDetailCoverUpload(file.raw)) {
+                    this.detailCoverUrl = URL.createObjectURL(file.raw);
+                }
+            },
             /* 提交封面图片之前检查 */
             beforeCoverUpload(file) {
                 const isJPG = file.type === 'image/jpeg';
@@ -459,6 +467,19 @@
                 if (!isJPG) Message.error('上传图片只能是 JPG 格式!');
                 if (!isLt2M) Message.error('上传图片大小不能超过 4MB!');
                 return isJPG && isLt2M;
+            },
+            /* 提交课程详情图片之前检查 */
+            beforeDetailCoverUpload(file) {
+                const isJPG = file.type === 'image/jpeg';
+                const isPNG = file.type === 'image/png';
+                const isLt8M = file.size / 1024 / 1024 < 8;
+                if (!isJPG && !isPNG) Message.error('上传图片只支持 PNG 与 JPG 格式');
+                if (!isLt8M) Message.error('上传图片大小不能超过8MB');
+                return (isJPG || isPNG) && isLt8M;
+            },
+            /* 提交课程详情图片 */
+            submitDetailCover() {
+                this.$refs['upload-detail-cover'].submit();
             },
             /* 添加/更改提交成功后执行 */
             handleSuccess(res) {
@@ -468,6 +489,13 @@
                     this.dialogVisible = false;
                     this.resetForm('ruleForm');
                     this.getCourse(1, '');
+                } else Message.error(res.msg);
+            },
+            handleDetailSuccess(res) {
+                if (res.status === 1) {
+                    this.coverDialogVisible = false;
+                    this.getCourse(1, '');
+                    Message.success(res.msg);
                 } else Message.error(res.msg);
             },
             /* 删除课程 */
@@ -503,8 +531,9 @@
                 })
             },
             /* 设置课程详情图片 */
-            setDetailCover(url) {
-                console.log(url);
+            setDetailCover(course) {
+                this.detailID = course.cid;
+                this.detailCoverUrl = course.detailCover;
                 this.coverDialogVisible = true;
             }
         },
@@ -585,6 +614,7 @@
                     }
                 }
             }
+
             .cover-uploader-icon {
                 font-size: 100px;
                 color: #8c939d;
