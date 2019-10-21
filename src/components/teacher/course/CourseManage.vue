@@ -369,7 +369,9 @@
                             price: course.price,
                             live: course.courseForm === 'L',
                             cover: course.courseImage,
-                            delete: course.delete === 0
+                            delete: course.delete === 0,
+                            discount: course.discount,
+                            discountTime: course.discountTime
                         })
                     }
                 }
@@ -577,6 +579,8 @@
                 this.discountDialog = true;
                 this.coursePrice = course.price;
                 this.discountID = course.cid;
+                this.discount = course.discount ? course.discount : 100;
+                this.discountTime = course.discountTime
             },
             /* 提交课程折扣 */
             submitDiscount() {

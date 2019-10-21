@@ -43,6 +43,15 @@
                                             </span>
                                         </div>
                                     </div>
+                                    <div class="discount-info">
+                                        <div class="f-row">
+                                            <h4>限时抢购<span>距离结束3天 21:12:34</span></h4>
+                                        </div>
+                                        <div class="s-row">
+                                            <span class="discount-price">311课程币</span>
+                                            <span class="old-price">311课程币</span>
+                                        </div>
+                                    </div>
                                     <div v-show="applyButtonLoading" class="enroll-apply-btn">
                                         <router-link v-if="hadApply" tag="div"
                                                      :to="`/course/${this.$route.params.courseID}`">

@@ -289,9 +289,9 @@
 }
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .title {
   margin-top: 0;
-  line-height: 20px;
-  font-size: 16px;
-  height: 20px;
+  line-height: 22px;
+  font-size: 18px;
+  height: 22px;
   overflow: hidden;
 }
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .title .text {
@@ -310,6 +310,15 @@
   margin-left: 15px;
   display: inline-block;
   pointer-events: none;
+}
+.study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .title .tag {
+  background-color: #fff;
+  color: #f56c6c;
+  border: 1px solid #fbc4c4;
+}
+.study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .title .discount {
+  color: #999;
+  text-decoration: line-through;
 }
 .study-main .study-all .study-content .content-left .study-body .study-list .study-item .right .info .teacher {
   margin-top: 10px;
@@ -642,8 +651,8 @@
   visibility: hidden;
 }
 .study-main .study-information .study-banner .study-text-right .enroll-study-info {
-  padding: 15px;
-  margin-bottom: 30px;
+  padding: 12px 15px;
+  margin-bottom: 10px;
   background-color: #f5f5f5;
 }
 .study-main .study-information .study-banner .study-text-right .teacher-name {
@@ -665,7 +674,7 @@
 }
 .study-main .study-information .study-banner .study-text-right .enroll {
   margin-top: 10px;
-  height: 150px;
+  height: 176px;
   position: relative;
 }
 .study-main .study-information .study-banner .study-text-right .enroll .study-apply {
@@ -680,6 +689,43 @@
 .study-main .study-information .study-banner .study-text-right .enroll .collection svg,
 .study-main .study-information .study-banner .study-text-right .enroll .share svg {
   margin-right: 5px;
+}
+.study-main .study-information .study-banner .study-text-right .enroll .discount-info {
+  width: 100%;
+  border: 1px solid #ff4343;
+}
+.study-main .study-information .study-banner .study-text-right .enroll .discount-info .f-row {
+  height: 35px;
+  line-height: 35px;
+  background-color: #ff4343;
+  padding: 0 15px;
+}
+.study-main .study-information .study-banner .study-text-right .enroll .discount-info h4 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  margin: 0;
+  vertical-align: middle;
+  position: relative;
+}
+.study-main .study-information .study-banner .study-text-right .enroll .discount-info h4 span {
+  position: absolute;
+  right: 15px;
+  top: 0;
+}
+.study-main .study-information .study-banner .study-text-right .enroll .discount-info .s-row {
+  height: 31px;
+  padding: 7px 15px;
+}
+.study-main .study-information .study-banner .study-text-right .enroll .discount-info .s-row .discount-price {
+  font-size: 20px;
+  color: #e85308;
+  margin-right: 15px;
+}
+.study-main .study-information .study-banner .study-text-right .enroll .discount-info .s-row .old-price {
+  font-size: 16px;
+  color: #666;
+  text-decoration: line-through;
 }
 .study-main .study-information .study-banner .study-text-right .enroll .enroll-apply-btn {
   position: absolute;
@@ -770,6 +816,12 @@
   line-height: 22px;
   word-wrap: break-word;
   white-space: pre-wrap;
+}
+.study-main .study-information .info-main .main .tabs .tabs-content .tabs-details .details-image {
+  width: 100%;
+}
+.study-main .study-information .info-main .main .tabs .tabs-content .tabs-details .details-image img {
+  width: 100%;
 }
 .study-main .study-information .info-main .main .tabs .tabs-content .tabs-list {
   padding-top: 20px !important;

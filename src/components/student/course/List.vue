@@ -113,9 +113,17 @@
                                         <!--标题-->
                                         <div class="title">
                                             <a><span class="text">{{course['courseName']}}</span></a>
-                                            <a class="price"
-                                               :class="{free:course.price === 0, charge:course.price !== 0}">
-                                                {{course.price === 0 ? '免费' : `${course.price} 课程币`}}</a>
+                                            <a class="price free" v-if="course.price===0">免费</a>
+                                            <template v-else>
+                                                <a class="price charge">{{
+                                                    `${getDiscountPrice(course.price,course.discount,course.discountTime)}
+                                                    课程币`
+                                                    }}</a>
+                                                <template v-if="getDiscountTime(course.discountTime)">
+                                                    <a class="price tag">限时</a>
+                                                    <a class="price discount">{{course.price}} 课程币</a>
+                                                </template>
+                                            </template>
                                         </div>
                                         <!--授课老师/机构-->
                                         <div class="teacher"><a>
@@ -177,6 +185,7 @@
 <script>
     import ListHeader from './ListHeader'
     import {getListPage, getList, getRecommend} from '@/api/course'
+    import moment from "moment";
 
     export default {
         name: "List",
@@ -240,10 +249,14 @@
                 this.$router.push(`${this.pageUrl}page=${val}`);
                 window.scrollTo(0, 0);
             },
-            async searchCourseCount() {
-                if (this.$route.params.search !== undefined) {
-                    this.searchCount = this.courses.length
-                }
+            getDiscountTime(time) {
+                if (time === null) return false;
+                return moment(time).isAfter(moment());
+            },
+            getDiscountPrice(price, discount, time) {
+                if (!discount || !time) return price;
+                if (!moment(time).isAfter(moment())) return price;
+                return (price * discount / 100).toFixed(2);
             }
         },
         components: {
