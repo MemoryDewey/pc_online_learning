@@ -43,15 +43,9 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="discount-info">
-                                        <div class="f-row">
-                                            <h4>限时抢购<span>距离结束3天 21:12:34</span></h4>
-                                        </div>
-                                        <div class="s-row">
-                                            <span class="discount-price">311课程币</span>
-                                            <span class="old-price">311课程币</span>
-                                        </div>
-                                    </div>
+                                    <count-down :price="course.info.price" :discount="course.info.discount"
+                                                :time="course.info.discountTime"
+                                                @changePrice="changeCoursePrice"></count-down>
                                     <div v-show="applyButtonLoading" class="enroll-apply-btn">
                                         <router-link v-if="hadApply" tag="div"
                                                      :to="`/course/${this.$route.params.courseID}`">
@@ -165,7 +159,7 @@
                         <router-link to="/wallet" tag="span" class="recharge">充值</router-link>
                         <span class="refresh" @click="getUserBalance">刷新</span>
                     </div>
-                    <div class="need">价格：{{course.info.price}} 课程币</div>
+                    <div class="need">价格：{{price}} 课程币</div>
                 </div>
             </div>
             <div class="bst">
@@ -195,6 +189,7 @@
     import InfoComment from './InfoComment'
     import InfoVideo from './InfoVideo'
     import InfoFile from './InfoFile'
+    import CountDown from './CountDown'
     import {Message} from 'element-ui'
     import {
         applyChargeByBst, applyCourseByCash, applyFree,
@@ -206,7 +201,7 @@
 
     export default {
         name: "Information",
-        components: {InfoVideo, CourseBread, InfoComment, InfoFile},
+        components: {InfoVideo, CourseBread, InfoComment, InfoFile, CountDown},
         data() {
             return {
                 //传给子组件
@@ -226,12 +221,13 @@
                 },
                 buyDialogVisible: false,
                 payType: 0,
+                price: 0,
                 bstPrice: 0,
                 bstBalance: 0,
                 getBstSuccess: false,
                 walletInfo: {balance: 0.00},
                 bstApplyBtn: false,
-                collection: false
+                collection: false,
             }
         },
         methods: {
@@ -272,6 +268,10 @@
                 this.file.hide = val !== 'fileList';
                 this.comment.hide = val !== 'comment';
             },
+            //改变课程价格
+            changeCoursePrice(price) {
+                this.price = price;
+            },
             //跳转到课程页
             async gotoExam() {
                 let response = await examCheck({courseID: this.$route.params.courseID});
@@ -287,6 +287,7 @@
                     this.$set(this.course, 'info', response.course.info);
                     this.$set(this.course, 'details', response.course.details);
                     let course = this.course;
+                    this.price = this.course.info.price;
                     this.courseRate = course.info['favorableRate'] * 10;
                     this.applyCount = course.info.applyCount;
                     this.collection = response.collection;
@@ -332,7 +333,7 @@
             },
             //获取BST换算信息
             async getBstPrice() {
-                let res = await getBstPrice({price: this.course.info.price});
+                let res = await getBstPrice({price: this.price});
                 if (res) {
                     this.getBstSuccess = true;
                     this.bstPrice = res.price;
@@ -384,7 +385,7 @@
             },
             //通过余额购买课程
             async byBalance() {
-                if (this.walletInfo.balance < this.course.info.price)
+                if (parseFloat(this.walletInfo.balance) < parseFloat(this.price))
                     Message.error('余额不足，请充值');
                 else {
                     let res = await applyCourseByCash({courseID: this.$route.params.courseID});
