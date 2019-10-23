@@ -1,10 +1,12 @@
 <template>
-    <div class="not-found">
-        <div class="inner-center">
-            <div class="section-msg">
-                <div class="msg-inner">
-                    <font-awesome-icon icon="info-circle" class="msg-info"></font-awesome-icon>
-                    <div class="msg-text">页面不见了，去看看其他内容吧 ^_^</div>
+    <div id="container">
+        <div class="not-found">
+            <div class="inner-center">
+                <div class="section-msg">
+                    <div class="msg-inner">
+                        <font-awesome-icon icon="info-circle" class="msg-info"></font-awesome-icon>
+                        <div class="msg-text">页面不见了，去看看其他内容吧 ^_^</div>
+                    </div>
                 </div>
             </div>
         </div>

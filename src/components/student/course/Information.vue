@@ -43,7 +43,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <count-down :price="course.info.price" :discount="course.info.discount"
+                                    <count-down v-show="applyButtonLoading" :price="course.info.price" :discount="course.info.discount"
                                                 :time="course.info.discountTime"
                                                 @changePrice="changeCoursePrice"></count-down>
                                     <div v-show="applyButtonLoading" class="enroll-apply-btn">
