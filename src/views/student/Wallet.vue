@@ -223,7 +223,7 @@
                 }
             },
             async bindBstAddress() {
-                this.$prompt('请输入您的BST钱包私钥，我们会为你妥善保存', '绑定/更换BST钱包地址', {
+                this.$prompt('请输入您的BST钱包私钥', '绑定/更换BST钱包地址', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消'
                 }).then(async ({value}) => {
