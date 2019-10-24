@@ -375,7 +375,7 @@
                             if (data.status === 1) {
                                 Message.success(data.msg);
                                 this.bstApplyBtn = true;
-                            } else Message.error('交易失败');
+                            } else Message.error('交易失败，请检查钱包ETH余额');
                         });
                         socket.on('buyCourseSuccess', data => {
                             Message.success(data.msg);
