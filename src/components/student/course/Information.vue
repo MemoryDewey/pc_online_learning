@@ -43,7 +43,8 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <count-down v-show="applyButtonLoading" :price="course.info.price" :discount="course.info.discount"
+                                    <count-down v-show="applyButtonLoading" :price="course.info.price"
+                                                :discount="course.info.discount"
                                                 :time="course.info.discountTime"
                                                 @changePrice="changeCoursePrice"></count-down>
                                     <div v-show="applyButtonLoading" class="enroll-apply-btn">
@@ -367,7 +368,7 @@
                             background: 'rgba(0, 0, 0, 0.7)'
                         });
                         await applyChargeByBst({courseID: this.$route.params.courseID});
-                        const socket = wsClient.connect('ws://localhost:3000');
+                        const socket = wsClient.connect(`${location.host}`);
                         socket.emit('buyCourseByBst');
                         socket.on('message', data => {
                             loading.close();

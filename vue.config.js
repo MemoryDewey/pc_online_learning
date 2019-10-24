@@ -13,7 +13,12 @@ module.exports = {
                 changeOrigin: true,
                 pathRewrite: {[`^${process.env.VUE_APP_BASE_API}`]: '/api'}
             },
-            '/images':{
+            '/images': {
+                target: 'http://localhost:3000',
+                ws: true,
+                changeOrigin: true
+            },
+            '/socket.io': {
                 target: 'http://localhost:3000',
                 ws: true,
                 changeOrigin: true
