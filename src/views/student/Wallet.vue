@@ -69,7 +69,10 @@
                 </el-table-column>
                 <el-table-column prop="details" label="详情" width="300px"></el-table-column>
                 <el-table-column prop="amount" label="课程币"></el-table-column>
-                <el-table-column label="状态" width="175px" align="center">
+                <el-table-column width="175px" align="center">
+                    <template slot="header">状态<span style="cursor: pointer;margin-left: 8px"
+                                                    @click="refreshLog"><i
+                            class="el-icon-refresh-right"></i></span></template>
                     <template v-slot="scope">
                         <span :class="scope.row.status | statusFilterTag">{{ scope.row.status | statusFilter }}</span>
                     </template>
@@ -129,6 +132,7 @@
     } from "@/api/wallet";
     import {Message, MessageBox} from 'element-ui'
     import NodeRSA from 'node-rsa'
+    import wsClient from 'socket.io-client'
 
     export default {
         name: "Wallet",
@@ -280,13 +284,32 @@
                     this.rechargeMoney = money;
             },
             async recharge() {
-                let res = await recharge({amount: this.rechargeMoney});
-                if (res) {
-                    this.moneyDialogVisible = false;
-                    Message.success(res.msg);
-                    this.getWalletInfo();
-                    this.getWalletLogs(1);
-                }
+                const loading = this.$loading({
+                    lock: true,
+                    text: '支付中，请稍等',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
+                await recharge({amount: this.rechargeMoney});
+                const socket = wsClient.connect(`${location.host}`);
+                socket.emit('recharge');
+                socket.on('rechargeMessage', data => {
+                    loading.close();
+                    if (data.status === 1) {
+                        Message.success(data.msg);
+                        this.moneyDialogVisible = false;
+                        this.getWalletInfo();
+                        this.getWalletLogs(1);
+                    } else {
+                        Message.error('交易失败');
+                        console.log(data.msg);
+                    }
+                });
+            },
+            async refreshLog(){
+                await this.refreshRecharge();
+                await this.getWalletInfo();
+                await this.getWalletLogs(1);
             },
             async refreshRecharge() {
                 await refreshRecharge();
