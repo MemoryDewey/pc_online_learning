@@ -13,6 +13,9 @@
             <span class="old-price">{{price}} 课程币</span>
         </div>
     </div>
+    <div v-else class="course-price-info">
+        <span>{{price>0?`${price} 课程币`:'免费'}}</span>
+    </div>
 </template>
 
 <script>

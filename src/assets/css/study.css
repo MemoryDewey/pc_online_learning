@@ -735,6 +735,16 @@
   color: #666;
   text-decoration: line-through;
 }
+.study-main .study-information .study-banner .study-text-right .enroll .course-price-info {
+  height: 40px;
+  font-size: 22px;
+  background-color: #f4f4f4;
+  line-height: 40px;
+  padding: 0 15px;
+}
+.study-main .study-information .study-banner .study-text-right .enroll .course-price-info span {
+  color: #e85308;
+}
 .study-main .study-information .study-banner .study-text-right .enroll .enroll-apply-btn {
   position: absolute;
   bottom: 0;
