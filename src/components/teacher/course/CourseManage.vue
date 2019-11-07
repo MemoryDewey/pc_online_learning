@@ -291,7 +291,7 @@
                 rules: {
                     name: [
                         {required: true, message: '请输入课程名称', trigger: 'blur'},
-                        {min: 4, max: 12, message: '长度在 4 到 12 个字符', trigger: 'blur'}
+                        {min: 4, max: 50, message: '长度在 4 到 50 个字符', trigger: 'blur'}
                     ],
                     system: [
                         {required: true, message: '请选择课程体系', trigger: 'change'}
