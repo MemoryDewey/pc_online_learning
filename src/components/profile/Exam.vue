@@ -6,7 +6,6 @@
                 <div class="flex-cell first">课程</div>
                 <div class="flex-cell">状态</div>
                 <div class="flex-cell">分数</div>
-                <div class="flex-cell">时间</div>
             </div>
         </div>
         <!--考试列表顶部信息 E-->
@@ -27,7 +26,7 @@
         <!--课程存在 S-->
         <div class="flex-list-item" v-else v-for="course in courses" :key="course['courseID']">
             <div class="flex-row head">
-                <div class="time">{{course['joinTime']}}</div>
+                <div class="time">考试时间：{{course['time']['startTime']}} - {{course['time']['endTime']}}</div>
             </div>
             <div class="flex-row content">
                 <div class="flex-cell first cover">
@@ -40,9 +39,8 @@
                         <div class="title">{{course['courseName']}}</div>
                     </router-link>
                 </div>
-                <div class="flex-cell state">{{course['state']}}</div>
+                <div class="flex-cell state">{{course['state'] | stateFilter}}</div>
                 <div class="flex-cell score">{{course['score']}}</div>
-                <div class="flex-cell time">{{course['time']['startTime']}}-{{course['time']['endTime']}}</div>
             </div>
         </div>
         <!--课程存在 E-->
@@ -68,13 +66,27 @@
                 courses: [],
             }
         },
+        filters:{
+          stateFilter(state){
+              switch (state) {
+                  case -1:
+                      return '未参加';
+                  case 0:
+                      return '未开始';
+                  case 1:
+                      return '进行中';
+                  case 2:
+                      return '已完成';
+              }
+          }
+        },
         methods: {
             //获取课程信息
             async getExam(page) {
                 let response = await getExam({page});
                 if (response) {
                     this.count = response.pageSum;
-                    this.courses = response.course;
+                    this.courses = response.courses;
                 }
             }
         },
