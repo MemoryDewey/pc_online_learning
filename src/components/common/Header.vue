@@ -92,9 +92,6 @@
                             </ul>
                         </div>
                     </router-link>
-                    <li>
-                        <div class="first" @click="waitOpen">行业资讯</div>
-                    </li>
                     <router-link to="/profile" tag="li" active-class="active">
                         <div class="first">个人中心</div>
                         <div class="second">
@@ -186,9 +183,6 @@
             search() {
                 let url = `/course/list/${this.searchContent}`;
                 this.$router.push(url);
-            },
-            waitOpen() {
-                this.$message.info('敬请期待');
             }
         },
         watch: {

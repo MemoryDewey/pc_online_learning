@@ -35,7 +35,7 @@
                                     <div class="setting-icon">
                                         <font-awesome-icon icon="eye"></font-awesome-icon>
                                     </div>
-                                    <span>最近再看</span>
+                                    <span>最近在看</span>
                                 </router-link>
                                 <router-link tag="li" :to="{name:'collection'}" active-class="active">
                                     <div class="setting-icon">
