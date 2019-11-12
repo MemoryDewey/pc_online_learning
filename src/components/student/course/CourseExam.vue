@@ -98,7 +98,7 @@
                                 question: response.exam[i],
                             })
                         }
-                        for (let i = 0; i < this.courseExam.length; i++) this.radio.push(0);
+                        this.radio.fill(0, 0, this.courseExam.length);
                     } else this.hasExam = false;
                 }
             },
