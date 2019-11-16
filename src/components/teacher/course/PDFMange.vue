@@ -158,7 +158,7 @@
             },
             /* 上传至服务器成功 */
             uploadSuccess(res) {
-                if (res.status === 1) {
+                if (res.code === 1000) {
                     Message.success(res.msg);
                     this.dialogFormVisible = false;
                     this.getVideo(1);

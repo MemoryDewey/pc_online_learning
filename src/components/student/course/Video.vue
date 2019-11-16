@@ -232,11 +232,11 @@
             //获取直播课程信息
             async getLive() {
                 if (this.live.exist) {
-                    let response = await getLive({courseID: this.$route.params.courseID});
-                    if (response.status === 1) {
-                        if (response.live) {
-                            this.live.title = response.title;
-                            if (response.state) {
+                    let res = await getLive({courseID: this.$route.params.courseID});
+                    if (res.code === 1000) {
+                        if (res.live) {
+                            this.live.title = res.title;
+                            if (res.state) {
                                 this.live.state = true;
                                 this.playerOptions = {
                                     autoplay: true, //如果true,浏览器准备好时开始回放。
@@ -248,7 +248,7 @@
                                     fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
                                     sources: [{
                                         type: "application/x-mpegURL",
-                                        src: response.streamName //你的m3u8地址（必填）
+                                        src: res.streamName //你的m3u8地址（必填）
                                     }],
                                     //poster: "poster.jpg", //你的封面地址
                                     width: document.documentElement.clientWidth,

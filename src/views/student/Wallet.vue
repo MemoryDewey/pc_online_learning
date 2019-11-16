@@ -248,7 +248,7 @@
             },
             getBstPrice() {
                 getBstValue().then(res => {
-                    if (res.status === 1) this.bstPrice = res['bstValue'];
+                    if (res.code === 1000) this.bstPrice = res['bstValue'];
                 });
             },
             openMoneyDialog(type) {

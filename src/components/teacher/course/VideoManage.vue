@@ -328,7 +328,7 @@
                     let res = await deleteVideo({
                         courseID: val.cseID, videoID: val.id
                     });
-                    if (res.status === 1) {
+                    if (res.code === 1000) {
                         Message.success(res.msg);
                         this.getVideo(1);
                     } else Message.warning(res.msg);

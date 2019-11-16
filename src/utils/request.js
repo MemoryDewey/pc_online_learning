@@ -13,14 +13,13 @@ service.interceptors.request.use(config => {
 });
 service.interceptors.response.use(
     response => {
-        const res = response.data;
-        if (res.status === 0) {
-            Message.error({
-                message: res.msg || '错误',
-                duration: 5 * 1000
-            });
-            return false;
-        } else return res;
+        return response.data;
+    },
+    error => {
+        if (error.response.data.code) Message.error({
+            message: error.response.data.msg || '错误',
+            duration: 5 * 1000
+        });
     }
 );
 

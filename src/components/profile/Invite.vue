@@ -101,7 +101,7 @@
         },
         created() {
             getInviteCode().then(res => {
-                if (res) this.inviteCode = res.code;
+                if (res) this.inviteCode = res.inviteCode;
             });
             this.getInvite(1);
         }

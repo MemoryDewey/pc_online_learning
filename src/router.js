@@ -65,7 +65,7 @@ export default new VueRouter({
                     meta: {title: '课程视频', requireAuth: true},
                     beforeEnter(to, from, next) {
                         checkApply({courseID: to.params.courseID}).then(res => {
-                            if (res.status === 1) next();
+                            if (res.code === 1000) next();
                             else next('/404');
                         }).catch(()=>{
                             next(false);

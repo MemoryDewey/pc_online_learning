@@ -34,7 +34,7 @@ router.beforeEach((to, from, next) => {
                 next();
             } else {
                 checkLogin().then((res) => {
-                    if (res.status === 1) {
+                    if (res.code === 1000) {
                         if (to.meta.title) document.title = to.meta.title;
                         next();
                     }

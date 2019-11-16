@@ -260,7 +260,7 @@
         methods: {
             /* 更改头像成功后执行 */
             handleAvatarSuccess(res, file) {
-                if (res.status === 1) {
+                if (res.code === 1000) {
                     this.imageUrl = URL.createObjectURL(file.raw);
                     this.$store.commit('changeAvatarUrl', `${res.avatarUrl}`);
                     Message.success('更换头像成功');

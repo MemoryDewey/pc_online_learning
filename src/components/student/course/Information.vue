@@ -308,7 +308,7 @@
             async getClass() {
                 let response = await checkApply({courseID: this.$route.params.courseID});
                 this.applyButtonLoading = true;
-                this.hadApply = response.status === 1;
+                this.hadApply = response.code === 1000;
                 this.file.apply = this.hadApply;
                 response = await getExamTime({courseID: this.$route.params.courseID});
                 this.examTime = response.time;
@@ -415,8 +415,8 @@
             if (this.$store.state.loginState || localStorage.getItem('token')) {
                 let res = await checkBstConfirmation({courseID: this.$route.params.courseID});
                 if (res) {
-                    this.bstApplyBtn = res.status === 3;
-                    if (res.status === 1) this.hadApply = true;
+                    this.bstApplyBtn = res.code === 1003;
+                    if (res.code === 1000) this.hadApply = true;
                 }
             }
             await this.getClass();

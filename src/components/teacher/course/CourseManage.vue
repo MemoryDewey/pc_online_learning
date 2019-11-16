@@ -521,7 +521,7 @@
             /* 添加/更改提交成功后执行 */
             handleSuccess(res) {
                 this.formSubmit = false;
-                if (res.status === 1) {
+                if (res.code === 1000) {
                     Message.success(res.msg);
                     this.dialogVisible = false;
                     this.resetForm('ruleForm');
@@ -530,7 +530,7 @@
             },
             handleDetailSuccess(res) {
                 this.loadingInstance.close();
-                if (res.status === 1) {
+                if (res.code === 1000) {
                     this.coverDialogVisible = false;
                     this.getCourse(1, '');
                     Message.success(res.msg);

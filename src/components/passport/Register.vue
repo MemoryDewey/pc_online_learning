@@ -128,7 +128,7 @@
                 else if (value === "phone" && this.registerForm.phone.match(regPhone)) {    //手机号已被注册
                     const register = this;
                     checkPhone({phone: register.registerForm.phone, invite: this.registerForm.invite}).then(res => {
-                        if (res.status === 403) register.changeInputClass(value, 1, "该手机号已被注册");
+                        if (res.code === 403) register.changeInputClass(value, 1, "该手机号已被注册");
                         else {
                             this.sendCodeCss.disable = false;
                             register.changeInputClass(value, 0, null);

@@ -200,7 +200,7 @@
                 this.nickname = this.$store.state.nickname;
             } else {
                 let response = await checkLogin();
-                this.loginState = response.status === 1;
+                this.loginState = response.code === 1000;
                 if (this.loginState) {
                     this.$store.commit('login', {
                         level: response.level

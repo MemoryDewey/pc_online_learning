@@ -321,7 +321,7 @@
             },
             /* 添加/更改提交成功后执行 */
             handleSuccess(res) {
-                if (res.status === 1) {
+                if (res.code === 1000) {
                     Message.success(res.msg);
                     this.dialogFormVisible = false;
                     this.getFile(1, '', null);
