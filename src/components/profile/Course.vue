@@ -17,7 +17,7 @@
             <div class="status-box">
                 <div class="box-icon">
                     <span>
-                        <font-awesome-icon icon="info-circle"></font-awesome-icon>
+                        <font-awesome-icon icon="info-circle"/>
                     </span>
                 </div>
                 <div class="box-text">
@@ -85,12 +85,12 @@
                     </div>
                     <label>
                     <textarea placeholder="课程怎么样？快来说说学习感受吧" v-model="dialogFormInfo.text"
-                              @keyup="checkInput"></textarea>
+                              @keyup="checkInput"/>
                     </label>
                     <div class="text-area-remain">
                         还可以输入<span style="color: #e80808;">{{dialogFormInfo.remain}}</span> 字
                     </div>
-                    <div class="tip-error" v-if="!dialogFormInfo.qualified"><i class="fas fa-info-circle"></i>
+                    <div class="tip-error" v-if="!dialogFormInfo.qualified"><i class="fas fa-info-circle"/>
                         {{dialogFormInfo.errorMsg}}
                     </div>
                 </div>
@@ -136,7 +136,7 @@
                 let response = await getCourse({page});
                 if (response) {
                     this.count = response.pageSum;
-                    this.courses = response.course;
+                    this.courses = response.courses;
                 }
             },
             //检测评论框输入
