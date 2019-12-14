@@ -10,9 +10,7 @@
         <div class="flex-list-no-data" v-if="courses.length===0">
             <div class="status-box">
                 <div class="box-icon">
-                    <span>
-                        <font-awesome-icon icon="info-circle"></font-awesome-icon>
-                    </span>
+                    <span><font-awesome-icon icon="info-circle"/></span>
                 </div>
                 <div class="box-text">
                     <div>暂无收藏课程</div>
@@ -23,16 +21,16 @@
             <div class="flex-row content">
                 <div class="flex-cell first cover">
                     <router-link :to="`/course/${course['courseID']}`">
-                        <el-image :src="course['CourseInformation']['courseImage']">
+                        <el-image :src="course['courseImage']">
                             <template slot="error">
                                 <img src="../../assets/image/load-error.jpg" alt>
                             </template>
                         </el-image>
-                        <div class="title">{{course['CourseInformation']['courseName']}}</div>
+                        <div class="title">{{course['courseName']}}</div>
                     </router-link>
                 </div>
                 <div class="flex-cell first" style="color: #00a1d6">
-                    {{course['CourseInformation']['price']===0?'免费':`${course['CourseInformation']['price']} 课程币`}}
+                    {{course['price']===0?'免费':`${course['price']} 课程币`}}
                 </div>
                 <div class="flex-cell">
                     <a class="btn-operate" @click="collectCourse(course['courseID'])">取消收藏</a>
