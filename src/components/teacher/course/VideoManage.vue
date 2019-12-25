@@ -4,7 +4,7 @@
             <div class="add-button" @click="addVideo">添加视频</div>
             <div class="search-area">
                 <el-input v-model="searchContent" placeholder="请输入视频名" class="input-with-select">
-                    <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+                    <el-button slot="append" icon="el-icon-search" @click="search"/>
                     <i class="el-icon-close el-input__icon" slot="suffix" style="cursor: pointer"
                        @click="clearSearch" v-show="searchContent">
                     </i>
@@ -17,7 +17,7 @@
                 </el-table-column>
                 <el-table-column prop="name" label="视频名" width="230">
                 </el-table-column>
-                <el-table-column prop="course" label="所属课程" width="200"></el-table-column>
+                <el-table-column prop="course" label="所属课程" width="200"/>
                 <el-table-column prop="chapter" label="所属章节" width="200">
                 </el-table-column>
                 <el-table-column label="操作">
@@ -48,7 +48,7 @@
                             <template slot="append" v-if="dialogFormInfo.type==='add'">
                                 <label>
                                     <input type="file" id="upload" accept="video/*" style="display:none"
-                                           ref="file" @change="getFileInfo"></input>
+                                           ref="file" @change="getFileInfo"/>
                                     <el-button type="primary" @click="chooseFile">选取视频</el-button>
                                 </label>
                             </template>
@@ -57,18 +57,18 @@
                     <el-form-item label="所属课程" prop="course">
                         <el-select v-model="ruleForm.course" placeholder="请选择课程" value="" @change="getChapter">
                             <el-option v-for="cos in course" :key="cos.courseID"
-                                       :label="cos.courseName" :value="cos.courseID"></el-option>
+                                       :label="cos.courseName" :value="cos.courseID"/>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="所属章节" prop="chapter">
                         <el-select v-model="ruleForm.chapter" placeholder="请选择章节" value="">
                             <el-option v-for="cpt in chapter" :key="cpt.chapterID"
-                                       :label="cpt.chapterName" :value="cpt.chapterID"></el-option>
+                                       :label="cpt.chapterName" :value="cpt.chapterID"/>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="上传进度" v-if="dialogFormInfo.type==='add'">
                         <el-progress :percentage="percent" :text-inside="true" :stroke-width="18"
-                                     style="margin-top: 10px"></el-progress>
+                                     style="margin-top: 10px"/>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="uploadVideo" :disabled="upload"

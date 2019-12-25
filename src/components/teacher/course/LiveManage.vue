@@ -4,16 +4,16 @@
             <div class="add-button" @click="addLive">开启直播</div>
             <div class="search-area">
                 <el-link type="primary" @click="downloadHelp"
-                         :underline="false">如何进行直播<i class="el-icon-view el-icon--right"></i></el-link>
+                         :underline="false">如何进行直播<i class="el-icon-view el-icon--right"/></el-link>
             </div>
         </div>
         <div class="flex-list">
             <el-table :data="tableData" border style="width: 100%">
-                <el-table-column prop="course" label="课程名" width="110"></el-table-column>
-                <el-table-column prop="title" label="直播名" width="139"></el-table-column>
-                <el-table-column prop="pushUrl" label="OBS推流地址" width="230"></el-table-column>
-                <el-table-column prop="pushName" label="OBS推流名称" width="290"></el-table-column>
-                <el-table-column prop="time" label="过期时间"></el-table-column>
+                <el-table-column prop="course" label="课程名" width="110"/>
+                <el-table-column prop="title" label="直播名" width="139"/>
+                <el-table-column prop="pushUrl" label="OBS推流地址" width="230"/>
+                <el-table-column prop="pushName" label="OBS推流名称" width="290"/>
+                <el-table-column prop="time" label="过期时间"/>
             </el-table>
             <!--分页 S-->
             <div class="sort-page" v-if="tableData.length!==0">
@@ -31,12 +31,12 @@
             <div class="dialog-content">
                 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                     <el-form-item label="视频名称" prop="title">
-                        <el-input v-model="ruleForm.title"></el-input>
+                        <el-input v-model="ruleForm.title"/>
                     </el-form-item>
                     <el-form-item label="所属课程" prop="course">
                         <el-select v-model="ruleForm.course" placeholder="请选择课程" value="">
                             <el-option v-for="cos in course" :key="cos.courseID"
-                                       :label="cos.courseName" :value="cos.courseID"></el-option>
+                                       :label="cos.courseName" :value="cos.courseID"/>
                         </el-select>
                     </el-form-item>
                     <el-form-item>

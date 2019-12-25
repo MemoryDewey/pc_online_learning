@@ -8,7 +8,7 @@
             <div class="tabs-item-list">
                 <a class="tabs-study-item" v-for="file in chapter.file"
                    :key="file.id" @click="downloadFile(file.str,file.name,file.type)">
-                    <font-awesome-icon far :icon="file.type | fileFilter"></font-awesome-icon>
+                    <font-awesome-icon far :icon="file.type | fileFilter"/>
                     <p class="study-item-title">
                         <span :title="file.name" class="text">{{file.name}}</span>
                         <span class="duration">({{file.type}}, {{setFileSize(file.size)}})</span>
