@@ -1,18 +1,24 @@
 <template>
     <div class="main">
+        <el-tooltip class="item" effect="light"
+                    :content="!qrCodeLogin?'APP扫码登录':'账号密码登录'" placement="left">
+            <div class="qr-code-login" @click="changeLoginType">
+                <font-awesome-icon :icon="!qrCodeLogin?'qrcode':'desktop'" color="#999"/>
+            </div>
+        </el-tooltip>
         <h4 class="title">
             <router-link class="active" to="/passport/login">登录</router-link>
             <b>·</b>
             <router-link to="/passport/register">注册</router-link>
         </h4>
-        <form>
+        <form v-if="!qrCodeLogin">
             <div v-bind:class="inputCss.account">
                 <label>
                     <input v-model="loginForm.account"
                            v-on:keyup="checkInputNull(inputName[0])"
                            type="text" placeholder="手机号或邮箱">
                 </label>
-                <font-awesome-icon icon="user"></font-awesome-icon>
+                <font-awesome-icon icon="user"/>
             </div>
             <div class="error-show" v-if="inputEmpty.account">请输入账号</div>
             <div v-bind:class="inputCss.password">
@@ -39,6 +45,15 @@
             </div>
             <el-button class="login-button" @click="loginButtonClick" :disabled="loginClick">登录</el-button>
         </form>
+        <div class="qr-code" v-else>
+            <img :src="qrCodeDataUrl" alt @click="getQrCodeUrl">
+            <div v-if="qrCodeStatus!=='waiting'" class="opacity-box" @click="getQrCodeUrl">
+                <i :class="{'el-icon-refresh':qrCodeStatus==='refresh',
+                'el-icon-circle-check':qrCodeStatus==='scan'}"/>
+            </div>
+            <h3>{{qrCodeStatus==='scan'?'扫描成功':'扫描二维码登录'}}</h3>
+            <span>{{qrCodeStatus==='scan'?'请在手机上确认是否授权':'请使用学习平台APP扫描'}}</span>
+        </div>
         <el-dialog title="请输入验证码" width="350px" :visible.sync="captchaVisible" @close="captchaVisible=false">
             <img :src="imageVerifyUrl" @click="changeImage" style="cursor: pointer" alt>
             <el-input v-model="loginForm.verify" placeholder="请输入验证码" maxlength="4" style="width: 180px"></el-input>
@@ -47,13 +62,16 @@
 </template>
 
 <script>
+    import QRCode from 'qrcode'
     import {Message} from 'element-ui'
-    import {login} from '@/api/passport'
+    import {login, getLoginQrCode, checkQrCodeLogin} from '@/api/passport'
 
     export default {
         name: "Login",
         data() {
             return {
+                //使用二维码登录
+                qrCodeLogin: false,
                 //进入Login时的fromPath
                 fromPath: '/',
                 //输入框名
@@ -80,7 +98,16 @@
                 //图片验证码url
                 imageVerifyUrl: "/api/passport/image-captcha",
                 loginClick: false,
-                captchaVisible: false
+                captchaVisible: false,
+                //二维码链接
+                qrCodeUrl: '',
+                //二维码数据
+                qrCodeDataUrl: '',
+                uuid: '',
+                //计时器
+                interval: null,
+                //验证码状态
+                qrCodeStatus: 'waiting'
             }
         },
         methods: {
@@ -116,6 +143,55 @@
             changeImage() {
                 this.imageVerifyUrl = `/api/passport/image-captcha?user=${
                     this.loginForm.account}&val=${Math.random().toFixed(5)}`;
+            },
+            //改变登录方式
+            async changeLoginType() {
+                this.qrCodeLogin = !this.qrCodeLogin;
+                if (this.qrCodeLogin && this.qrCodeUrl === '') {
+                    await this.getQrCodeUrl();
+                } else if (this.qrCodeLogin && this.qrCodeUrl !== '') {
+                    await this.checkQrCodeApply();
+                } else clearInterval(this.interval);
+            },
+            //获取二维码链接
+            async getQrCodeUrl() {
+                let res = await getLoginQrCode();
+                if (res.code === 1000) {
+                    this.qrCodeStatus = 'waiting';
+                    this.uuid = res.uuid;
+                    this.qrCodeUrl = `${res.url}?uuid=${res.uuid}`;
+                    QRCode.toDataURL(this.qrCodeUrl).then(url => {
+                        this.qrCodeDataUrl = url;
+                        console.log(url);
+                        this.checkQrCodeApply();
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                }
+            },
+            //1S访问一次服务器查询是否登录成功
+            async checkQrCodeApply() {
+                clearInterval(this.interval);
+                this.interval = setInterval(async () => {
+                    let res = await checkQrCodeLogin({
+                        uuid: this.uuid,
+                    });
+                    //验证码过期，需要刷新验证码
+                    if (res.code === 1001) {
+                        clearInterval(this.interval);
+                        this.qrCodeStatus = 'refresh'
+                    } else if (res.code === 1003) { //验证码已扫描，等待确认登录
+                        this.qrCodeStatus = 'scan'
+                    } else if (res.code === 1000) { //登录成功
+                        clearInterval(this.interval);
+                        Message.success(res.msg);
+                        localStorage.setItem('token', res.token);
+                        setTimeout(() => {
+                            this.$router.push(this.fromPath);
+                        }, 500);
+                    }
+                    console.log(res.code);
+                }, 1000);
             }
         },
         mounted() {

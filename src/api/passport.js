@@ -11,3 +11,5 @@ export const deleteEmail = () => get('/passport/delete-email');
 export const reset = data => post('/passport/reset', data);
 export const logout = () => get('/passport/logout');
 export const checkLogin = () => get('/passport/check-login');
+export const getLoginQrCode = () => get('/passport/login-qr-code');
+export const checkQrCodeLogin = params => get('/passport/check-qr-code-login', params);
