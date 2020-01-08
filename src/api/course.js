@@ -33,3 +33,5 @@ export const getExam = data => post('/examine/exam', data);
 export const getExercise = data => post('/examine/exercise', data);
 export const addExam = data => post('/examine/add', data);
 
+export const getCertificate = params => get('/course/list/certificate', params);
+

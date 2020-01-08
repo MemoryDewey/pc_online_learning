@@ -3,6 +3,8 @@ import {get, post} from '../utils/request';
 export const getStudent = params => get('/teacher/course/student', params);
 export const addStudent = data => post('/teacher/course/student/add', data);
 export const deleteStudent = data => post('/teacher/course/student/delete', data);
+export const addCertificate = data => post('/teacher/course/student/certificate', data);
+
 
 
 export const getCourse = () => get('/teacher/course');

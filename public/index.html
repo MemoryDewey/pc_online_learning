@@ -11,7 +11,10 @@
             break
         }
         if (!o) {
-            var w = window.location.href.replace("www", "m");
+            var w;
+            if (window.location.href.includes("www"))
+                w = window.location.href.replace("www", "m");
+            else w = window.location.href.replace("//", "//m.");
             window.location.href = w
         }
     }()</script>

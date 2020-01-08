@@ -50,7 +50,7 @@
                     <div class="flex-cell score">{{student.score}}</div>
                     <div class="flex-cell operating">
                         <a class="btn-operate mark"
-                           @click="">颁发证书</a>
+                           @click="certificateDialog(student.userID,student.courseID)">颁发证书</a>
                         <a class="btn-operate delete"
                            @click="deleteStudent(student.courseID,student.userID)">删除成员</a>
                     </div>
@@ -86,6 +86,22 @@
             </el-form>
         </el-dialog>
         <!--对话框 E-->
+        <!--对话框 S-->
+        <el-dialog title="添加证书" width="384px" :visible.asnc="certificateDialogShow"
+                   @close="certificateDialogShow = false">
+            <el-form :inline="true" :model="certificateDialogForm">
+                <el-form-item label="学员成绩">
+                    <el-input v-model="certificateDialogForm.score" placeholder="成绩（0-100）"/>
+                </el-form-item>
+                <el-form-item label="证书编号">
+                    <el-input v-model="certificateDialogForm.certificateID" placeholder="请输入证书编号"/>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="addCertificate">添加</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+        <!--对话框 E-->
     </div>
 </template>
 
@@ -96,7 +112,7 @@
         getStudent,
         getCourse,
         addStudent,
-        deleteStudent
+        deleteStudent, addCertificate
     } from '@/api/course-manage'
 
     export default {
@@ -117,6 +133,13 @@
                 formInline: {
                     user: '',
                     course: ''
+                },
+                certificateDialogShow: false,
+                certificateDialogForm: {
+                    score: '',
+                    certificateID: '',
+                    courseID: '',
+                    userID: '',
                 },
                 course: []
             }
@@ -195,6 +218,19 @@
                     });
                 }).catch(() => {
                     Message.info('已取消操作')
+                })
+            },
+            //打开添加证书dialog
+            certificateDialog(userID, courseID) {
+                this.certificateDialogShow = true;
+                this.certificateDialogForm.courseID = courseID;
+                this.certificateDialogForm.userID = userID;
+            },
+            //添加证书
+            addCertificate() {
+                addCertificate(this.certificateDialogForm).then(res => {
+                    Message.success(res.msg);
+                    this.certificateDialogShow = false;
                 })
             }
         },

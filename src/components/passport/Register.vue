@@ -12,7 +12,7 @@
                            v-on:keyup="checkInput(inputName[0])"
                            type="text" placeholder="手机号">
                 </label>
-                <font-awesome-icon icon="mobile-alt"></font-awesome-icon>
+                <font-awesome-icon icon="mobile-alt"/>
             </div>
             <div class="error-show" v-if="inputEmpty.phone">{{ inputCheck.phone }}</div>
 
@@ -23,7 +23,7 @@
                            v-on:keyup="checkInput(inputName[1])"
                            type="password" placeholder="设置密码(8-16位)">
                 </label>
-                <font-awesome-icon icon="lock"></font-awesome-icon>
+                <font-awesome-icon icon="lock"/>
             </div>
             <div class="error-show" v-if="inputEmpty.password">{{ inputCheck.password }}</div>
 
@@ -34,7 +34,7 @@
                             v-on:keyup="checkInput(inputName[2])"
                             type="password" placeholder="再输一遍密码">
                 </label>
-                <font-awesome-icon icon="lock"></font-awesome-icon>
+                <font-awesome-icon icon="lock"/>
             </div>
             <div class="error-show" v-if="inputEmpty.confirm">{{ inputCheck.confirm }}</div>
 
@@ -45,7 +45,7 @@
                            v-on:keyup.exact.enter="registerButtonClick"
                            type="text" placeholder="验证码">
                 </label>
-                <font-awesome-icon icon="shield-alt"></font-awesome-icon>
+                <font-awesome-icon icon="shield-alt"/>
                 <a v-bind:class="sendCodeCss" v-on:click="sendVerifyCode">{{ verifyCodeText }}</a>
             </div>
 
