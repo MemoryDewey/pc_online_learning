@@ -8,9 +8,9 @@ const Error = () => import('@/views/404');
 const About = () => import('@/views/student/About');
 
 const Passport = () => import('@/views/Passport');
-const Login = () => import('@/components/passport/Login');
-const Register = () => import( '@/components/passport/Register');
-const Reset = () => import( '@/components/passport/Reset');
+const Login = () => import('@/views/passport/Login');
+const Register = () => import( '@/views/passport/Register');
+const Reset = () => import( '@/views/passport/Reset');
 
 const Course = () => import( '@/views/student/Course');
 const CourseList = () => import( '@/components/student/course/List');

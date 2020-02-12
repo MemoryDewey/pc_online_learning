@@ -33,6 +33,7 @@
     @import "assets/css/profile-teacher-manage";
     @import "assets/css/passport";
     @import "assets/css/comment";
+    @import "assets/css/header";
 
     html {
         height: 100%;
