@@ -10,15 +10,15 @@ fontawesome + less
 ### 项目运行
 #### 注意：由于涉及大量的 ES6/7 等新属性，node 需要 6.0 以上版本
 ```
-git clone https://github.com/MemoryDewey/pc_online_learning
-cd pc_online_learning
+git clone https://github.com/MemoryDewey/online-study-web
+cd online-study-web
 npm install
 npm run server
 ```
 
 ### 其他版本
 
-1、 移动Web端[项目地址](https://github.com/MemoryDewey/mobile_online_learning)
+1、 移动Web端[项目地址](https://github.com/MemoryDewey/online-study-mobile-web)
 
 2、 Flutter端[项目地址](https://github.com/MemoryDewey/flutter_online_learning)
 
