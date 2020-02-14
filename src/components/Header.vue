@@ -6,7 +6,7 @@
                 <!--Logo S-->
                 <div class="logo">
                     <router-link to="/">
-                        <img src="../../assets/image/logo-text.png" alt>
+                        <img src="../assets/image/logo-text.png" alt>
                     </router-link>
                 </div>
                 <!--Logo E-->

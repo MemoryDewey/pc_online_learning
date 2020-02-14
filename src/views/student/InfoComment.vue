@@ -285,7 +285,7 @@
     }
 </script>
 <style lang="less">
-    @import "../../../assets/css/comment";
+    @import "../../assets/css/comment";
 
     .tabs-content {
         .tabs-comment {

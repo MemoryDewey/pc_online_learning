@@ -28,7 +28,7 @@
                                 <router-link :to="{path:`/course/${course.courseID}/information`}">
                                     <el-image :src="course.courseImage" lazy>
                                         <template slot="error">
-                                            <img src="../../assets/image/load-error.jpg" alt>
+                                            <img src="../assets/image/load-error.jpg" alt>
                                         </template>
                                         <div slot="placeholder" class="image-slot"></div>
                                     </el-image>
@@ -49,7 +49,7 @@
                                 <router-link :to="{path:`/course/${course.courseID}/information`}">
                                     <el-image :src="course.courseImage" lazy>
                                         <template slot="error">
-                                            <img src="../../assets/image/load-error.jpg" alt>
+                                            <img src="../assets/image/load-error.jpg" alt>
                                         </template>
                                         <div slot="placeholder" class="image-slot"></div>
                                     </el-image>

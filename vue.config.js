@@ -33,7 +33,6 @@ module.exports = {
             'vue': 'Vue',
             'element-ui': 'ELEMENT',
             'axios': 'axios',
-            'vue-router': 'VueRouter',
             'vuex': 'Vuex'
         },
         plugins: [

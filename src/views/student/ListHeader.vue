@@ -45,7 +45,7 @@
 </template>
 
 <script>
-    import CourseBread from './CourseBread'
+    import CourseBread from '../../components/CourseBread'
     import {getCourseSystem, getCourseType} from "@/api/course";
 
     export default {

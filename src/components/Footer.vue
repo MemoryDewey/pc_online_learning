@@ -1,6 +1,6 @@
 <template>
     <div class="footer-warp">
-        <img class="logo" src="../../assets/image/logo-bcs.png" alt="logo">
+        <img class="logo" src="../assets/image/logo-bcs.png" alt="logo">
         <p>Copyright © 2019 BaasStudy. All Rights Reserved.</p>
         <p>尝试实业(上海)有限公司 | 东华大学BAAS区块链实验室</p>
         <p>上海市松江区三新北路1800弄21号楼6003--6009 | 服务咨询：400-966-0003</p>

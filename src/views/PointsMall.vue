@@ -54,7 +54,7 @@
                                  :body-style="{ padding: '0px'}">
                             <el-image :src="commodity.cover" class="image" lazy>
                                 <template slot="error">
-                                    <img src="../../assets/image/commodity-error.jpg" alt>
+                                    <img src="../assets/image/commodity-error.jpg" alt>
                                 </template>
                             </el-image>
                             <div class="detail">
@@ -438,7 +438,7 @@
         .banner {
             width: 100%;
             height: 250px;
-            background: url("../../assets/image/mall-banner.jpg") no-repeat #0f62db center;
+            background: url("../assets/image/mall-banner.jpg") no-repeat #0f62db center;
 
 
             .user-card {
@@ -564,7 +564,7 @@
                                 z-index: 2;
                                 width: 100%;
                                 height: 100%;
-                                background: url(../../assets/image/sell-out.png);
+                                background: url(../assets/image/sell-out.png);
                                 content: "";
                             }
                         }

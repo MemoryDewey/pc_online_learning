@@ -11,7 +11,7 @@
                         <div class="study-img-left">
                             <el-image v-if="course.info['courseImage']" :src="course.info['courseImage']">
                                 <template slot="error">
-                                    <img src="../../../assets/image/load-error.jpg" alt>
+                                    <img src="../../assets/image/load-error.jpg" alt>
                                 </template>
                             </el-image>
                         </div>
@@ -186,11 +186,11 @@
 </template>
 
 <script>
-    import CourseBread from './CourseBread'
+    import CourseBread from '../../components/CourseBread'
     import InfoComment from './InfoComment'
     import InfoVideo from './InfoVideo'
     import InfoFile from './InfoFile'
-    import CountDown from './CountDown'
+    import CountDown from '../../components/CountDown'
     import {Message} from 'element-ui'
     import {
         applyChargeByBst, applyCourseByCash, applyFree,

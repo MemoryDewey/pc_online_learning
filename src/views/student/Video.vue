@@ -125,9 +125,9 @@
 </template>
 
 <script>
-    import CourseBread from './CourseBread'
+    import CourseBread from '../../components/CourseBread'
     import CourseExercise from './CourseExercise'
-    import CourseWare from "@/components/student/course/CourseWare";
+    import CourseWare from "@/components/CourseWare";
     import 'video.js/dist/video-js.css'
     import {videoPlayer} from 'vue-video-player'
     import 'videojs-contrib-hls'

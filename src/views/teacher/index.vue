@@ -39,7 +39,7 @@
             setActiveName(routerName) {
                 switch (routerName) {
                     case'CSM':
-                        this.activeName = 'student';
+                        this.activeName = 'course';
                         break;
                     case 'CM':
                         this.activeName = 'list';
@@ -66,7 +66,7 @@
             }
         },
         beforeCreate() {
-            this.$emit('setHeader', 'teacher');
+            this.$emit('setHeader', 'manage');
         },
         beforeRouteEnter(to, from, next) {
             next(vm => {

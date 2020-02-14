@@ -102,7 +102,7 @@
                                     <div class="c-img">
                                         <el-image :src="course.courseImage" lazy>
                                             <template slot="error">
-                                                <img src="../../../assets/image/load-error.jpg" alt>
+                                                <img src="../../assets/image/load-error.jpg" alt>
                                             </template>
                                         </el-image>
                                     </div>
@@ -162,7 +162,7 @@
                             <a class="item-img-link">
                                 <el-image :src="recommend.courseImage" lazy>
                                     <template slot="error">
-                                        <img src="../../../assets/image/load-error.jpg" alt>
+                                        <img src="../../assets/image/load-error.jpg" alt>
                                     </template>
                                 </el-image>
                             </a>
