@@ -1,11 +1,11 @@
 <template>
     <div class="main">
-        <el-tooltip class="item" effect="light"
-                    :content="!qrCodeLogin?'APP扫码登录':'账号密码登录'" placement="left">
-            <div class="qr-code-login" @click="changeLoginType">
-                <font-awesome-icon :icon="!qrCodeLogin?'qrcode':'desktop'" color="#999"/>
-            </div>
-        </el-tooltip>
+        <!--切换登录方式 S-->
+        <div class="login-type" @click="changeLoginType"
+             :class="qrCodeLogin?'account-login':'qr-code-login'">
+            <div class="tri-shadow"></div>
+        </div>
+        <!--切换登录方式 E-->
         <h4 class="title">
             <router-link class="active" to="/passport/login">登录</router-link>
             <b>·</b>

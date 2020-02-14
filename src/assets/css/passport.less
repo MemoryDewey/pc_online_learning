@@ -46,9 +46,10 @@
   }
 
   .main {
+    @padding-size: 50px;
     width: 400px;
     margin: 100px auto 0;
-    padding: 50px 50px 50px;
+    padding: @padding-size @padding-size @padding-size;
     background-color: #fff;
     border-radius: 6px;
     box-shadow: 0 0 8px rgba(0, 0, 0, .1);
@@ -57,19 +58,29 @@
     text-align: center;
     position: relative;
 
-    .qr-code-login {
+    .login-type {
       position: absolute;
       top: 0;
-      right: 2px;
+      right: 0;
+      width: @padding-size;
+      height: @padding-size;
+      outline: none;
 
-      svg {
-        width: 36px;
-        height: 36px;
+      .tri-shadow {
+        border: @padding-size / 2 solid rgba(0, 0, 0, 0);
+        border-bottom: @padding-size / 2 solid #fff;
+        border-left: @padding-size / 2 solid #fff;
       }
+    }
 
-      :hover {
-        color: #409EFF;
-      }
+    .qr-code-login {
+      background: #f0f0f0 url("../image/qr-code.png");
+      background-size: auto 100%;
+    }
+
+    .account-login {
+      background: #f0f0f0 url("../image/pc.png");
+      background-size: auto 100%;
     }
 
     .qr-code {

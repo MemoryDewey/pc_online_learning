@@ -54,17 +54,26 @@
   text-align: center;
   position: relative;
 }
-.passport .main .qr-code-login {
+.passport .main .login-type {
   position: absolute;
   top: 0;
-  right: 2px;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  outline: none;
 }
-.passport .main .qr-code-login svg {
-  width: 36px;
-  height: 36px;
+.passport .main .login-type .tri-shadow {
+  border: 25px solid rgba(0, 0, 0, 0);
+  border-bottom: 25px solid #fff;
+  border-left: 25px solid #fff;
 }
-.passport .main .qr-code-login :hover {
-  color: #409EFF;
+.passport .main .qr-code-login {
+  background: #f0f0f0 url("../image/qr-code.png");
+  background-size: auto 100%;
+}
+.passport .main .account-login {
+  background: #f0f0f0 url("../image/pc.png");
+  background-size: auto 100%;
 }
 .passport .main .qr-code {
   position: relative;
