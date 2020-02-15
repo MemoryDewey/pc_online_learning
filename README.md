@@ -2,7 +2,7 @@
 
 ### 技术栈
 ```
-vue2 + vuex + vue-router
+vue2 + vue-cli3 + vuex + vue-router
 ElementUI + webpack + ES6/7 + axios
 fontawesome + less
 ```
