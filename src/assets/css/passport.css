@@ -1,87 +1,42 @@
-.passport {
-  height: 100%;
-  min-height: 750px;
-  text-align: center;
-  font-size: 14px;
-  background-color: #f1f1f1;
-}
-.passport *,
-.passport:after,
-.passport:before {
-  box-sizing: border-box;
-}
-.passport button,
-.passport input,
-.passport select,
-.passport textarea {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-}
-.passport:before {
-  content: "";
-  display: inline-block;
-  height: 85%;
-  vertical-align: middle;
-}
-.passport .disable,
-.passport .disable-gray {
-  opacity: 0.5;
-  pointer-events: none;
-}
-.passport .disable-gray {
-  background-color: #969696;
-}
-.passport .logo {
-  position: absolute;
-  top: 20px;
-  margin: auto;
-  width: 100%;
-}
-.passport .logo img {
-  width: 80px;
-  height: auto;
-}
-.passport .main {
+.passport-main {
   width: 400px;
-  margin: 100px auto 0;
-  padding: 50px 50px 50px;
+  box-sizing: border-box;
+  padding: 0 50px 50px;
   background-color: #fff;
-  border-radius: 6px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   vertical-align: middle;
   display: inline-block;
   text-align: center;
   position: relative;
 }
-.passport .main .login-type {
+.passport-main .login-type {
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 0;
   width: 50px;
   height: 50px;
   outline: none;
+  cursor: pointer;
 }
-.passport .main .login-type .tri-shadow {
+.passport-main .login-type .tri-shadow {
   border: 25px solid rgba(0, 0, 0, 0);
-  border-bottom: 25px solid #fff;
+  border-top: 25px solid #fff;
   border-left: 25px solid #fff;
 }
-.passport .main .qr-code-login {
+.passport-main .qr-code-login {
   background: #f0f0f0 url("../image/qr-code.png");
   background-size: auto 100%;
 }
-.passport .main .account-login {
+.passport-main .account-login {
   background: #f0f0f0 url("../image/pc.png");
   background-size: auto 100%;
 }
-.passport .main .qr-code {
+.passport-main .qr-code {
   position: relative;
 }
-.passport .main .qr-code img {
+.passport-main .qr-code img {
   z-index: 1;
 }
-.passport .main .qr-code .opacity-box {
+.passport-main .qr-code .opacity-box {
   position: absolute;
   top: 0;
   left: 68px;
@@ -97,8 +52,8 @@
   -webkit-justify-content: center;
   font-size: 36px;
 }
-.passport .main .title,
-.passport .main .reset-title {
+.passport-main .title,
+.passport-main .reset-title {
   margin: 0 auto 50px;
   padding: 10px;
   font-weight: 400;
@@ -106,113 +61,57 @@
   font-size: 18px;
   line-height: 1.1;
 }
-.passport .main .title a,
-.passport .main .reset-title a {
+.passport-main .title a,
+.passport-main .reset-title a {
   padding: 10px;
   color: #969696;
   text-decoration: none;
   cursor: pointer;
 }
-.passport .main .title a:hover,
-.passport .main .reset-title a:hover {
+.passport-main .title a:hover,
+.passport-main .reset-title a:hover {
   border-bottom: 2px solid #409eff;
   text-decoration: none;
 }
-.passport .main .title .active,
-.passport .main .reset-title .active {
+.passport-main .title .active,
+.passport-main .reset-title .active {
   font-weight: 700;
   color: #409eff;
   border-bottom: 2px solid #409eff;
 }
-.passport .main .title b,
-.passport .main .reset-title b {
+.passport-main .title b,
+.passport-main .reset-title b {
   padding: 10px;
 }
-.passport .main .reset-title {
+.passport-main .reset-title {
   color: #333;
   font-weight: 700;
 }
-.passport .main form {
-  margin-bottom: 30px;
-}
-.passport .main form .input-prepend,
-.passport .main form .input-warn {
-  position: relative;
-  width: 100%;
-}
-.passport .main form .input-prepend input,
-.passport .main form .input-warn input {
-  width: 100%;
-  height: 50px;
-  margin-bottom: 0;
-  padding: 4px 12px 4px 35px;
-  border-radius: 0 0 4px 4px;
-  background-color: hsla(0, 0%, 71%, 0.1);
-  vertical-align: middle;
-  border: 1px solid #c8c8c8;
-}
-.passport .main form .input-prepend svg,
-.passport .main form .input-warn svg {
-  position: absolute;
-  top: 17px;
-  left: 10px;
-  font-size: 18px;
-  color: #969696;
-}
-.passport .main form .input-prepend span,
-.passport .main form .input-warn span {
-  color: #333;
-}
-.passport .main form .input-prepend .ic-show,
-.passport .main form .input-warn .ic-show {
-  top: 18px;
-  left: auto;
-  right: 8px;
-  font-size: 12px;
-}
-.passport .main form .input-warn input {
-  border-radius: 0;
-  border-color: #f00;
-}
-.passport .main form .error-show {
-  color: #f00;
-  text-align: left;
-}
-.passport .main form .restyle {
-  margin-bottom: 0;
-}
-.passport .main form .restyle input {
-  border-bottom: none;
-  border-radius: 4px 4px 0 0;
-}
-.passport .main form .no-radius input {
-  border-radius: 0;
-}
-.passport .main .remember-btn {
+.passport-main .remember-btn {
   float: left;
   margin: 15px 0;
 }
-.passport .main .remember-btn span {
+.passport-main .remember-btn span {
   margin-left: 5px;
   font-size: 15px;
   color: #969696;
   vertical-align: middle;
 }
-.passport .main .forget-btn {
+.passport-main .forget-btn {
   float: right;
   position: relative;
   margin: 15px 0;
   font-size: 14px;
 }
-.passport .main .forget-btn a {
+.passport-main .forget-btn a {
   color: #999;
   text-decoration: none;
 }
-.passport .main .forget-btn a:hover {
+.passport-main .forget-btn a:hover {
   color: #333;
 }
-.passport .main .login-button,
-.passport .main .register-button {
+.passport-main .login-button,
+.passport-main .register-button {
   margin-top: 20px;
   width: 100%;
   padding: 9px 18px;
@@ -226,30 +125,8 @@
   display: block;
   clear: both;
 }
-.passport .main .login-button:hover,
-.passport .main .register-button:hover {
+.passport-main .login-button:hover,
+.passport-main .register-button:hover {
   background: #409eff;
-}
-.passport .main .btn-in-resend,
-.passport .main .btn-resend {
-  position: absolute;
-  top: 7px;
-  right: 7px;
-  width: 100px;
-  height: 36px;
-  font-size: 13px;
-  color: #fff;
-  border-radius: 20px;
-  line-height: 36px;
-  background-color: #409eff;
-  cursor: pointer;
-}
-.passport .main .btn-resend {
-  background-color: #3194d0;
-}
-.passport .main .return {
-  margin-left: -8px;
-  color: #969696;
-  text-decoration: none;
 }
 /*# sourceMappingURL=passport.css.map */

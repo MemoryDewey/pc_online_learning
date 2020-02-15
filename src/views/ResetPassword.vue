@@ -1,70 +1,8 @@
 <template>
-    <div class="main">
-        <h4 class="title">
-            <a :class="accountChooseClass.phone" @click="changeAccount(accountChooseClass.phoneName)">手机</a>
-            <b>·</b>
-            <a :class="accountChooseClass.email" @click="changeAccount(accountChooseClass.emailName)">邮箱</a>
-        </h4>
-        <form>
-            <div v-bind:class="inputCss.account">
-                <label v-if="accountChooseClass.phone.active">
-                    <input v-model="resetForm.account"
-                           v-on:keyup="checkInput(inputName[0])"
-                           type="text" placeholder="手机号">
-                    <font-awesome-icon icon="mobile-alt"></font-awesome-icon>
-                </label>
-
-                <!--更换验证方式-->
-                <label v-if="accountChooseClass.email.active">
-                    <input v-model="resetForm.account"
-                           v-on:keyup="checkInput(inputName[0])"
-                           type="text" placeholder="邮箱">
-                    <font-awesome-icon icon="envelope"></font-awesome-icon>
-                </label>
-            </div>
-            <div class="error-show" v-if="inputEmpty.account">{{ inputCheck.account }}</div>
-
-            <div v-bind:class="inputCss.password">
-                <label>
-                    <input autocomplete="new-password"
-                           v-model="resetForm.password"
-                           v-on:keyup="checkInput(inputName[1])"
-                           type="password" placeholder="设置新密码(8-16位)">
-                </label>
-                <font-awesome-icon icon="lock"></font-awesome-icon>
-            </div>
-            <div class="error-show" v-if="inputEmpty.password">{{ inputCheck.password }}</div>
-
-            <div v-bind:class="inputCss.confirm">
-                <label>
-                    <input
-                            v-model="resetForm.confirm"
-                            v-on:keyup="checkInput(inputName[2])"
-                            type="password" placeholder="再输一遍新密码">
-                </label>
-                <font-awesome-icon icon="lock"></font-awesome-icon>
-            </div>
-            <div class="error-show" v-if="inputEmpty.confirm">{{ inputCheck.confirm }}</div>
-
-            <div v-bind:class="inputCss.verify">
-                <label>
-                    <input v-model="resetForm.verify"
-                           v-on:keyup="checkInput(inputName[3])"
-                           v-on:keyup.exact.enter="resetButtonClick"
-                           type="text" placeholder="验证码">
-                </label>
-                <font-awesome-icon icon="shield-alt"></font-awesome-icon>
-                <a v-bind:class="sendCodeCss" v-on:click="sendVerifyCode">{{ verifyCodeText }}</a>
-            </div>
-
-            <div class="error-show" v-if="inputEmpty.verify">{{ inputCheck.verify }}</div>
-            <button class="login-button" type="button" v-on:click="resetButtonClick">
-                重置密码
-            </button>
-        </form>
-        <router-link class="return" to="/passport/login">
-            <font-awesome-icon icon="exchange-alt"></font-awesome-icon> &nbsp;返回登录注册
-        </router-link>
+    <div id="reset-password">
+        <main class="container">该页面开发中
+            <div style="height: 100px;width: 100px;background-color: #fff"></div>
+        </main>
     </div>
 </template>
 
@@ -235,8 +173,29 @@
                 if (this.inputCss.hasOwnProperty(item))
                     this.inputCss[item] = this.prepend[item];
             }
-        }
+        },
+        beforeCreate() {
+            this.$emit('setHeader', 'resetPassword');
+        },
     }
 </script>
 
+<style lang="less">
+    #reset-password {
+        overflow-x: initial;
 
+        .container {
+            position: relative;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 960px;
+            display: block;
+
+            &:after {
+                display: table;
+                content: "";
+                clear: both;
+            }
+        }
+    }
+</style>

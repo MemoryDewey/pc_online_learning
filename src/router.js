@@ -1,13 +1,6 @@
 import Vue from 'vue'
 import store from '@/store'
 import VueRouter from 'vue-router'
-
-
-const Passport = () => import('@/views/Passport');
-const Login = () => import('@/views/passport/Login');
-const Register = () => import( '@/views/passport/Register');
-const Reset = () => import( '@/views/passport/Reset');
-
 import {checkLogin} from '@/api/passport'
 import {checkApply} from "@/api/course";
 
@@ -136,13 +129,12 @@ export default new VueRouter({
             }
         },
 
-        //登录注册
+        //重置密码
         {
-            path: '/passport', name: 'Passport', component: Passport, children: [
-                {path: 'login', name: 'Login', component: Login, meta: {title: '登录'}},
-                {path: 'register', name: 'Register', component: Register, meta: {title: '注册'}},
-                {path: 'reset', name: 'Reset', component: Reset, meta: {title: '重置密码'}}
-            ]
+            path: '/reset-password',
+            name: 'ResetPassword',
+            component: () => import( '@/views/ResetPassword'),
+            meta: {title: '重置密码'}
         },
 
         //主页

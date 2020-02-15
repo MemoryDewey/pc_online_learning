@@ -8,7 +8,7 @@
                         <p>邀请好友参与即可最高获得好友购买课程的<strong> 20% </strong>费用作为邀请奖励！
                             为了保证奖励能够顺利到账，请<strong style="color: #409EFF;cursor: pointer"
                                                   @click="gotoBindWallet">绑定BST钱包</strong>后复制。</p>
-                        <el-button type="primary" style="width: 100%" @click="copyInviteUrl">复制邀请链接</el-button>
+                        <el-button type="primary" style="width: 100%" @click="copyInviteUrl">复制邀请码</el-button>
                     </el-popover>
                 </h1>
             </el-divider>
@@ -91,7 +91,7 @@
                 this.$router.push({name: 'Wallet'});
             },
             copyInviteUrl() {
-                let url = `${location.origin}/passport/register?invite=${this.inviteCode}`;
+                let url = `链接：${location.origin} 邀请码：${this.inviteCode}`;
                 this.$copyText(url).then(() => {
                     this.$message.success('复制成功');
                 }).catch(() => {

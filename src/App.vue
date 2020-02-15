@@ -1,8 +1,8 @@
 <template>
     <div id="app">
-        <app-header :page="name" v-if="name!=='passport'"></app-header>
+        <app-header :page="name" v-if="name!=='resetPassword'"></app-header>
         <router-view @setHeader="setHeader"/>
-        <app-footer v-if="name!=='passport'"></app-footer>
+        <app-footer v-if="name!=='resetPassword'"></app-footer>
     </div>
 </template>
 <script>

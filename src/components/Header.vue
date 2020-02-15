@@ -21,8 +21,8 @@
                 <!--搜索框 E-->
                 <!--登录注册按钮及头像 S-->
                 <div v-if="!loginState" class="un-login">
-                    <router-link tag="button" class="log-btn" :to="{name:'Register'}">注册</router-link>
-                    <router-link tag="button" class="log-btn" :to="{name:'Login'}">登录</router-link>
+                    <button class="log-btn" @click="openDialog('register')">注册</button>
+                    <button class="log-btn" @click="openDialog('login')">登录</button>
                 </div>
                 <div v-else class="login">
                     <div class="info">
@@ -132,15 +132,26 @@
         </div>
         <!--教师端 E-->
         <!--第二排布局 E-->
+        <!--登录注册Dialog S-->
+        <el-dialog :visible.sync="dialogShow" width="400px"
+                   @close="dialogShow=false" destroy-on-close>
+            <login-form v-if="dialogType==='login'"
+                        @checkLogin="checkLoginState" @changeType="changeType"/>
+            <register-form v-else @checkLogin="checkLoginState" @changeType="changeType"/>
+        </el-dialog>
+        <!--登录注册Dialog E-->
     </div>
 </template>
 
 <script>
     import {logout, checkLogin} from '@/api/passport'
     import {getCourseSystem} from '@/api/course'
+    import LoginForm from "@/components/LoginForm";
+    import RegisterForm from "@/components/RegisterForm";
 
     export default {
         name: "Header",
+        components: {LoginForm, RegisterForm},
         props: {
             page: {type: String, required: true}
         },
@@ -151,6 +162,8 @@
                 loginState: false,
                 courseSystem: null,
                 searchContent: '',
+                dialogShow: false,
+                dialogType: 'login'
             }
         },
         methods: {
@@ -163,7 +176,34 @@
             search() {
                 let url = `/course/list/${this.searchContent}`;
                 this.$router.push(url);
-            }
+            },
+            async checkLoginState() {
+                this.dialogShow = false;
+                if (this.$store.state.loginState) {
+                    this.loginState = true;
+                    this.avatarUrl = this.$store.state.avatarUrl;
+                    this.nickname = this.$store.state.nickname;
+                } else {
+                    let response = await checkLogin();
+                    this.loginState = response.code === 1000;
+                    if (this.loginState) {
+                        this.$store.commit('login', {
+                            level: response.level
+                        });
+                        this.avatarUrl = `${response.data.avatarUrl}`;
+                        this.$store.commit('changeAvatarUrl', this.avatarUrl);
+                        this.nickname = response.data.nickname;
+                        this.$store.commit('changeNickname', this.nickname);
+                    } else if (localStorage.getItem('token')) localStorage.removeItem('token');
+                }
+            },
+            changeType() {
+                this.dialogType = this.dialogType === 'login' ? 'register' : 'login';
+            },
+            openDialog(type){
+                this.dialogType = type;
+                this.dialogShow = true;
+            },
         },
         watch: {
             '$store.state.avatarUrl'(val) {
@@ -174,23 +214,7 @@
             }
         },
         async created() {
-            if (this.$store.state.loginState) {
-                this.loginState = true;
-                this.avatarUrl = this.$store.state.avatarUrl;
-                this.nickname = this.$store.state.nickname;
-            } else {
-                let response = await checkLogin();
-                this.loginState = response.code === 1000;
-                if (this.loginState) {
-                    this.$store.commit('login', {
-                        level: response.level
-                    });
-                    this.avatarUrl = `${response.data.avatarUrl}`;
-                    this.$store.commit('changeAvatarUrl', this.avatarUrl);
-                    this.nickname = response.data.nickname;
-                    this.$store.commit('changeNickname', this.nickname);
-                } else if (localStorage.getItem('token')) localStorage.removeItem('token');
-            }
+            this.checkLoginState();
             let response = await getCourseSystem();
             if (response) this.courseSystem = response.data;
         }

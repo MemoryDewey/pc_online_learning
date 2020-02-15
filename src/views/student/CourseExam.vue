@@ -130,7 +130,7 @@
         beforeRouteEnter(to, from, next) {
             next((vm => {
                 checkApply({courseID: vm.$route.params.courseID}).then(response => {
-                    if (!response) vm.$router.push('/passport/login');
+                    if (!response) vm.$router.push('/');
                 })
             }));
         }

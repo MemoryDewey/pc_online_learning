@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import ELEMENT from 'element-ui'
+import {Message} from 'element-ui'
 import VueClipboard from 'vue-clipboard2'
 // import 'element-ui/lib/theme-chalk/index.css'
 import FontAwesomeIcon from "./icons/font-awesome";
@@ -38,9 +39,13 @@ router.beforeEach((to, from, next) => {
                         if (to.meta.title) document.title = to.meta.title;
                         next();
                     }
-                    else next('/passport/login');
+                    else {
+                        Message.info('请登录后再进行该操作');
+                        next('/');
+                    }
+
                 }).catch(() => {
-                    next('/passport/login');
+                    next('/');
                 });
             }
         } else {
