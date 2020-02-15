@@ -11,7 +11,7 @@
             </el-form-item>
             <el-form-item prop="password">
                 <el-input type="password" placeholder="请输入密码（不少于8位）"
-                          v-model="registerForm.password"/>
+                          v-model="registerForm.password" autocomplete="new-password"/>
             </el-form-item>
             <el-form-item>
                 <el-input placeholder="邀请码（可不填）" v-model="registerForm.invite"></el-input>

@@ -19,7 +19,8 @@
                 <el-input type="password" v-model="loginForm.password" placeholder="请输入密码"></el-input>
             </el-form-item>
             <el-form-item v-if="captchaVisible" prop="verify">
-                <el-input v-model="loginForm.verify" placeholder="请输入验证码">
+                <el-input v-model="loginForm.verify" placeholder="请输入验证码"
+                          @keypress.enter.native="loginButtonClick('loginForm')">
                     <template slot="append">
                         <img :src="imageVerifyUrl" @click="changeImage" style="cursor: pointer;height: 36px" alt>
                     </template>
@@ -126,7 +127,7 @@
                     this.loginForm.account}&val=${Math.random().toFixed(5)}`;
             },
             // 切换到注册
-            changeToRegister(){
+            changeToRegister() {
                 this.$emit('changeType')
             },
             // 改变登录方式

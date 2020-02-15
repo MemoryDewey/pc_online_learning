@@ -1,7 +1,45 @@
 <template>
     <div id="reset-password">
-        <main class="container">该页面开发中
-            <div style="height: 100px;width: 100px;background-color: #fff"></div>
+        <main class="container">
+            <form class="reset-password-form">
+                <div class="form-header">
+                    <h1 class="title">重置密码</h1>
+                    <nav class="nav">
+                        <span class="nav-item" :class="{active:resetType==='mail'}"
+                              @click="changeType('mail')">邮箱重置</span>
+                        <span class="nav-item" :class="{active:resetType==='phone'}"
+                              @click="changeType('phone')">手机重置</span>
+                    </nav>
+                </div>
+                <div class="form-body">
+                    <div class="panel">
+                        <div class="input-group">
+                            <el-input ref="phone" v-model="resetForm.account" class="full-width"
+                                      v-if="resetType==='phone'" placeholder="请输入手机号"
+                                      oninput="if(value.length>11)value=value.slice(0,11)"/>
+                            <el-input ref="mail" v-model="resetForm.account" v-else
+                                      class="full-width" placeholder="请输入邮箱号" autofocus/>
+                        </div>
+                        <div class="input-group">
+                            <el-input v-model="resetForm.verify" class="verify-input"
+                                      placeholder="请输入验证码"/>
+                            <el-button class="btn send-btn" @click="sendVerifyCode"
+                                       :disabled="sendCodeDisable">{{verifyCodeText}}
+                            </el-button>
+                        </div>
+                        <div class="input-group">
+                            <el-input type="password" v-model="resetForm.password"
+                                      autocomplete="new-password"
+                                      class="full-width"
+                                      placeholder="请输入新密码"/>
+                        </div>
+                        <el-button @click="resetButtonClick" class="btn submit-btn">确定</el-button>
+                    </div>
+                </div>
+                <div class="form-footer">
+                    <router-link to="/" class="index-link">返回首页</router-link>
+                </div>
+            </form>
         </main>
     </div>
 </template>
@@ -11,88 +49,37 @@
     import {sendMessage, sendEmail, reset} from '@/api/passport'
 
     export default {
-        name: "Reset",
+        name: "ResetPassword",
         data() {
             return {
-                //  更换手机邮箱验证方式
-                accountChooseClass: {
-                    phone: {active: true},
-                    phoneName: 'phone',
-                    email: {active: false},
-                    emailName: 'email'
-                },
-                //  输入框名
-                inputName: ["account", "password", "confirm", "verify"],
-                //  输入框是否为空
-                inputEmpty: {
-                    account: false, password: false, confirm: false, verify: false
-                },
+                // 重置方式
+                resetType: 'mail',
                 //  整个表单控件
                 resetForm: {
-                    account: "", password: "", confirm: "", verify: ""
-                },
-                //  输入正确时显示的CSS
-                prepend: {
-                    account: {'input-prepend': true, restyle: true, 'no-radius': false},
-                    password: {'input-prepend': true, restyle: true, 'no-radius': true},
-                    confirm: {'input-prepend': true, restyle: true, 'no-radius': true},
-                    verify: {'input-prepend': true, restyle: false, 'no-radius': false}
-                },
-                //  输入错误时显示的CSS
-                warn: {"input-warn": true},
-                //  用户输入框CSS
-                inputCss: {
-                    account: "", password: "", confirm: "", verify: ""
+                    account: "", password: "", verify: ""
                 },
                 //  用户输入检查文本
                 inputCheckText: {
                     account: ["输入不能为空", "请输入正确的手机号", "请输入正确的邮箱号"],
                     password: ["请输入密码", "密码长度不能小于8位"],
-                    confirm: ["请输入密码", "两次输入的密码不一致"],
                     verify: ["请输入验证码"]
                 },
-                inputCheck: {
-                    account: '', password: '', confirm: '', verify: ''
-                },
                 //验证码区域显示文本
-                verifyCodeText: "发送验证码",
-                //发送验证码按钮CSS
-                sendCodeCss: {"btn-resend": true, disable: true}
+                verifyCodeText: "获取验证码",
+                //发送验证码按钮
+                sendCodeDisable: false,
             }
         },
         methods: {
-            //清空输入内容
-            setInputEmpty() {
-                for (let item in this.resetForm) {
-                    if (this.resetForm.hasOwnProperty(item)) {
-                        this.resetForm[item] = "";
-                        this.changeInput(item, 0, null);
-                        this.sendCodeCss.disable = true;
-                    }
-                }
-            },
-            //改变用户类型 邮箱 - 手机
-            changeAccount(name) {
-                if (name === 'phone') {
-                    this.accountChooseClass.phone.active = true;
-                    this.accountChooseClass.email.active = false;
-                    this.setInputEmpty();
-                } else {
-                    this.accountChooseClass.email.active = true;
-                    this.accountChooseClass.phone.active = false;
-                    this.setInputEmpty();
-                }
-            },
-            //改变输入框样式
-            changeInput(value, option, text) {
-                if (option === 1) {
-                    this.inputCss[value] = this.warn;
-                    this.inputCheck[value] = text;
-                    this.inputEmpty[value] = true;
-                } else {
-                    this.inputEmpty[value] = false;
-                    this.inputCss[value] = this.prepend[value];
-                }
+            // 更换重置方式
+            changeType(type) {
+                this.resetType = type;
+                this.resetForm.account = '';
+                this.resetForm.verify = '';
+                this.resetForm.password = '';
+                this.$nextTick(() => {
+                    this.$refs[type].focus();
+                });
             },
             //检查用户手机号，密码是否输入合格
             checkInput(value) {
@@ -101,77 +88,67 @@
                 const regPassword = /^[\w!#$%&'*+/=?^_`{|}~,.;":]{8,16}$/;
                 const regMail = /^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/;
                 if (this.resetForm[value] === '')  //任何输入框为空
-                    this.changeInput(value, 1, this.inputCheckText[value][0]);
+                    Message.error(this.inputCheckText[value][0]);
                 else if (value === "account") {
-                    /* ------------分割线：验证手机--------------- */
-                    if (this.accountChooseClass.phone.active && !this.resetForm.account.match(regAccount))
-                        this.changeInput(value, 1, this.inputCheckText[value][1]);
-                    /* ------------分割线：验证邮箱--------------- */
-                    else if (this.accountChooseClass.email.active && !this.resetForm.account.match(regMail))
-                        this.changeInput(value, 1, this.inputCheckText[value][2]);
-                    /* ------------分割线--------------- */
+                    /* ------------验证手机--------------- */
+                    if (this.resetType === 'phone' && !this.resetForm.account.match(regAccount))
+                        Message.error(this.inputCheckText[value][1]);
+                    /* ------------验证邮箱--------------- */
+                    else if (this.resetType === 'mail' && !this.resetForm.account.match(regMail))
+                        Message.error(this.inputCheckText[value][2]);
                     else {
-                        this.sendCodeCss.disable = false;
-                        this.changeInput(value, 0, null);
+                        this.sendCodeDisable = false;
+                        return true;
                     }
                 }
                 /* -------------------分割线：密码输入不合法--------------- */
                 else if (value === "password" && !this.resetForm.password.match(regPassword))   //
-                    this.changeInput(value, 1, this.inputCheckText[value][1]);
-                /* ------------分割线：两次输入的密码不一致 --------------- */
-                else if (value === "confirm" && this.resetForm.password !== this.resetForm.confirm)  //
-                    this.changeInput(value, 1, this.inputCheckText[value][1]);
-                /* ------------分割线--------------- */
-                else
-                    this.changeInput(value, 0, null);
+                    Message.error(this.inputCheckText[value][1]);
+                /* ---------------------------------------------- */
+                else return true;
             },
             //发送验证码
             async sendVerifyCode() {
-                this.sendCodeCss.disable = true;
-                let times = 90;   //按钮点击间隔
-                let self = this;
-                let timer = await setInterval(function () {
-                    self.verifyCodeText = "重新发送(" + times + "s)";
-                    times--;
-                    if (times < 0) window.clearInterval(timer);
-                }, 1000);
-                setTimeout(function () {
-                    self.verifyCodeText = "发送验证码";
-                    self.sendCodeCss.disable = false;
-                }, 91000);
-                this.accountChooseClass.phone.active ?
-                    sendMessage({account: this.resetForm.account, option: "reset"}).then((res => {
-                        if (res) Message.success(res.msg);
-                    })) :
-                    sendEmail({account: this.resetForm.account, option: "reset"}).then(res => {
-                        if (res) Message.success(res.msg);
-                    });
+                if (this.checkInput('account') === true) {
+                    this.sendCodeDisable = true;
+                    let times = 90;   //按钮点击间隔
+                    let self = this;
+                    let timer = await setInterval(function () {
+                        self.verifyCodeText = "重新发送(" + times + "s)";
+                        times--;
+                        if (times < 0) window.clearInterval(timer);
+                    }, 1000);
+                    setTimeout(function () {
+                        self.verifyCodeText = "发送验证码";
+                        self.sendCodeDisable = false;
+                    }, 91000);
+                    this.resetType === 'phone' ?
+                        sendMessage({account: this.resetForm.account, option: "reset"}).then((res => {
+                            if (res) Message.success(res['msg']);
+                        })) :
+                        sendEmail({account: this.resetForm.account, option: "reset"}).then(res => {
+                            if (res) Message.success(res['msg']);
+                        });
+                }
             },
             //重置密码
             async resetButtonClick() {
                 if (this.resetForm.account === '') this.checkInput('account');
                 else if (this.resetForm.password === '') this.checkInput('password');
-                else if (this.resetForm.confirm === '') this.checkInput('confirm');
                 else if (this.resetForm.verify === '') this.checkInput('verify');
                 else {
                     reset({
                         data: this.resetForm,
-                        type: (this.accountChooseClass.phone.active) ? "phone" : "email"
+                        type: this.resetType
                     }).then(res => {
                         if (res) {
-                            Message.success(res.msg);
+                            Message.success(res['msg']);
                             setTimeout(() => {
-                                this.$router.push('/passport/login');
-                            }, 1000);
+                                this.$router.push('/');
+                            }, 500);
                         }
                     });
                 }
-            }
-        },
-        mounted() {
-            for (let item in this.inputCss) {
-                if (this.inputCss.hasOwnProperty(item))
-                    this.inputCss[item] = this.prepend[item];
             }
         },
         beforeCreate() {
@@ -182,7 +159,12 @@
 
 <style lang="less">
     #reset-password {
+        @reset-color: #0F82F8;
         overflow-x: initial;
+        height: 100%;
+        background-color: #f1f1f1;
+        font-size: 12px;
+        line-height: normal;
 
         .container {
             position: relative;
@@ -195,6 +177,124 @@
                 display: table;
                 content: "";
                 clear: both;
+            }
+        }
+
+        form {
+            margin: 72px auto;
+            width: 480px;
+            max-width: 100%;
+        }
+
+        a {
+            text-decoration: none;
+            cursor: pointer;
+            color: #909090;
+        }
+
+        .btn {
+            padding: 10px 19px;
+            color: #fff;
+            background-color: @reset-color;
+            border-radius: 2px;
+            border: none;
+            transition: background-color .3s, color .3s;
+            margin: initial;
+        }
+
+        .reset-password-form {
+            padding: 48px 36px;
+            font-size: 14px;
+            background-color: #fff;
+            border-radius: 2px;
+            box-sizing: border-box;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+        }
+
+        .form-header {
+            .title {
+                margin: 0;
+                font-size: 24px;
+                text-align: center;
+            }
+
+            .nav {
+                display: flex;
+                margin-top: 36px;
+                background-color: #f8f9fa;
+                border-bottom: 1px solid #f1f1f1;
+                user-select: none;
+            }
+
+            .nav-item {
+                flex: 1 1 auto;
+                padding: 10px 12px;
+                text-align: center;
+                position: relative;
+                cursor: pointer;
+            }
+
+            .active {
+                color: @reset-color;
+                border-bottom: 2px solid;
+            }
+        }
+
+        .form-body {
+            margin-top: 36px;
+            text-align: center;
+
+            .panel {
+                position: relative;
+            }
+
+            .input-group {
+                display: flex;
+
+                input {
+                    margin: 0;
+                    padding: 6px 0;
+                    font-size: 14px;
+                    border: none;
+                    border-bottom: 1px solid #eee;
+                    outline: none;
+                    overflow: visible;
+                }
+
+                &:not(:first-child) {
+                    margin-top: 24px;
+                }
+
+                .full-width {
+                    input {
+                        width: 100%;
+                    }
+                }
+
+                .verify-input {
+                    input {
+                        flex: 1 1 auto;
+                    }
+                }
+
+                .send-btn {
+                    flex: 0 0 auto;
+                    margin-left: 12px;
+                }
+            }
+
+            .submit-btn {
+                width: 100%;
+                padding: 12px 19px;
+                margin-top: 36px;
+            }
+        }
+
+        .form-footer {
+            .index-link {
+                display: inline-block;
+                margin: 18px auto 0;
+                color: @reset-color;
             }
         }
     }
