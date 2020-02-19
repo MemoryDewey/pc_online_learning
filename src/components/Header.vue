@@ -1,5 +1,5 @@
 <template>
-    <div class="header-wrap">
+    <header class="header-wrap">
         <!--第一排布局 S-->
         <div class="top-wrap">
             <div class="main-header clearfix">
@@ -140,7 +140,7 @@
             <register-form v-else @checkLogin="checkLoginState" @changeType="changeType"/>
         </el-dialog>
         <!--登录注册Dialog E-->
-    </div>
+    </header>
 </template>
 
 <script>
@@ -167,16 +167,19 @@
             }
         },
         methods: {
+            // 退出
             exit() {
                 logout().then(() => {
                     this.$store.commit('exit');
                     window.location.reload();
                 });
             },
+            // 查找课程
             search() {
                 let url = `/course/list/${this.searchContent}`;
                 this.$router.push(url);
             },
+            // 检查登录状态
             async checkLoginState() {
                 this.dialogShow = false;
                 if (this.$store.state.loginState) {
@@ -197,9 +200,11 @@
                     } else if (localStorage.getItem('token')) localStorage.removeItem('token');
                 }
             },
+            // 更改dialog类型
             changeType() {
                 this.dialogType = this.dialogType === 'login' ? 'register' : 'login';
             },
+            // 打开dialog
             openDialog(type){
                 this.dialogType = type;
                 this.dialogShow = true;
