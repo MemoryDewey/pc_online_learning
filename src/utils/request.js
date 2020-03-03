@@ -31,4 +31,12 @@ export function post(url, data) {
     return service({url, method: 'post', data})
 }
 
+export function put(url, data) {
+    return service({url, method: 'put', data})
+}
+
+export function del(url,params) {
+    return service({url,method:'delete', params})
+}
+
 export default service

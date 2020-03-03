@@ -145,7 +145,7 @@
                 </div>
                 <div class="input-area">
                     <label class="second">
-                        <input v-model="dialogForm.verifyCode" type="text" placeholder="验证码"></input>
+                        <input v-model="dialogForm.verify" type="text" placeholder="验证码"></input>
                         <font-awesome-icon icon="shield-alt"></font-awesome-icon>
                         <a :class="{'btn-send':true,disable:(!dialogFormInfo.sendButton || dialogFormInfo.oldMobile.sending)}"
                            @click="sendVerifyCode('stepOne')"
@@ -184,7 +184,7 @@
                 </div>
                 <div class="input-area">
                     <label class="second">
-                        <input v-model="dialogForm.verifyCode" type="text" placeholder="验证码"></input>
+                        <input v-model="dialogForm.verify" type="text" placeholder="验证码"></input>
                         <font-awesome-icon icon="shield-alt"></font-awesome-icon>
                         <a :class="{'btn-send':true,disable:(!emailDialogInfo.sendButton || emailDialogInfo.sending)}"
                            @click="sendVerifyCode('bindEmail')"
@@ -239,7 +239,7 @@
                 },
                 dialogForm: {
                     account: '',
-                    verifyCode: ''
+                    verify: ''
                 },
                 headers: {Authorization: localStorage.getItem('token')}
             }
@@ -294,7 +294,7 @@
             openDialog() {
                 this.dialogFormVisible = true;
                 this.dialogForm.account = '';
-                this.dialogForm.verifyCode = '';
+                this.dialogForm.verify = '';
                 this.dialogFormInfo.oldMobile.success = false;
                 this.dialogFormInfo.oldMobile.error = false;
                 this.dialogFormInfo.newMobile.success = false;
@@ -362,12 +362,12 @@
             /* 绑定邮箱 */
             async bindEmailSubmit() {
                 if (this.dialogForm.account === '') Message.error('请输入邮箱');
-                else if (this.dialogForm.verifyCode === '') Message.error('请输入验证码');
+                else if (this.dialogForm.verify === '') Message.error('请输入验证码');
                 else {
                     let response = await addEmail(this.dialogForm);
                     if (response) {
                         this.dialogForm.account = '';
-                        this.dialogForm.verifyCode = '';
+                        this.dialogForm.verify = '';
                         this.informationForm.email = response.email;
                         Message.success(response.msg);
                         this.dialogFormVisible = false;
@@ -383,7 +383,7 @@
                     this.stepsActive += 1;
                     Message.success('已更改绑定手机号');
                 } else if (this.dialogForm.account === '') Message.error('请输入手机号');
-                else if (this.dialogForm.verifyCode === '') Message.error('请输入验证码');
+                else if (this.dialogForm.verify === '') Message.error('请输入验证码');
                 else {
                     let response = await changePhone({
                         data: this.dialogForm,
@@ -392,7 +392,7 @@
                     if (response) {
                         if (this.stepsActive === 0) {
                             this.dialogForm.account = '';
-                            this.dialogForm.verifyCode = '';
+                            this.dialogForm.verify = '';
                             this.dialogFormInfo.oldMobile.show = false;
                             this.dialogFormInfo.newMobile.show = true;
                         } else if (this.stepsActive === 1) {
