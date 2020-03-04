@@ -7,7 +7,7 @@
             </div>
             <div class="tabs-item-list">
                 <a class="tabs-study-item" v-for="file in chapter.file"
-                   :key="file.id" @click="downloadFile(file.str,file.name,file.type)">
+                   :key="file.id" @click="downloadFile(file.url,file.name,file.type)">
                     <font-awesome-icon far :icon="file.type | fileFilter"/>
                     <p class="study-item-title">
                         <span :title="file.name" class="text">{{file.name}}</span>
@@ -20,9 +20,9 @@
 </template>
 
 <script>
-    import {getFile} from "@/api/course";
+    import {downloadFile, getFile} from "@/api/course";
     import {Message} from "element-ui";
-    import {saveAs} from "file-saver";
+    import FileSaver from "file-saver";
 
     export default {
         name: "InfoFile",
@@ -37,7 +37,7 @@
         data() {
             return {
                 downloadUrl: process.env.VUE_APP_BASE_API +
-                    `/course/information/file-download?courseID=${this.$route.params.courseID}&file=`,
+                    `/course/info/file-download?id=${this.$route.params.id}&file=`,
                 courseFile: [],
             }
         },
@@ -62,7 +62,7 @@
         methods: {
             //获取视频与文件信息
             async getFile() {
-                let response = await getFile({courseID: this.$route.params.courseID});
+                let response = await getFile({id: this.$route.params.id});
                 if (response) this.courseFile = response.data;
             },
             //处理文件大小显示
@@ -71,10 +71,17 @@
                     `${(size / 1024).toFixed(2)}KB`
             },
             //下载课程资料
-            downloadFile(fileStr, fileName, fileType) {
-                if (this.file.apply && this.$store.state.loginState)
-                    saveAs(`${this.downloadUrl}${fileStr}.${fileType}&fileName=${fileName}.${fileType}`);
-                else Message.info('需要报名后才能下载课程资料哦');
+            async downloadFile(url, name, type) {
+                if (this.file.apply && this.$store.state.loginState) {
+                    const res = await downloadFile({
+                        id: this.$route.params.id,
+                        file: `${url}.${type}`,
+                        name: `${name}.${type}`
+                    });
+                    if(res){
+                        FileSaver.saveAs(res,`${name}.${type}`)
+                    }
+                } else Message.info('需要报名后才能下载课程资料哦');
             },
         }
     }

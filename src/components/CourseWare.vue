@@ -66,16 +66,16 @@
         watch: {
             ware(val) {
                 this.pdfUrl = pdf.createLoadingTask({
-                    url: `${this.baseWareUrl}&wareID=${val}`,
+                    url: `${this.baseWareUrl}&wareId=${val}`,
                     httpHeaders: this.headers
                 });
             }
         },
         created() {
-            let courseID = this.$route.params.courseID;
-            this.baseWareUrl = `${process.env.VUE_APP_BASE_API}/course/information/course-ware?courseID=${courseID}`;
+            let id = this.$route.params.id;
+            this.baseWareUrl = `${process.env.VUE_APP_BASE_API}/course/video/ware?courseId=${id}`;
             this.pdfUrl = {
-                url: `${this.baseWareUrl}&wareID=${this.ware}`,
+                url: `${this.baseWareUrl}&wareId=${this.ware}`,
                 httpHeaders: this.headers
             };
         }

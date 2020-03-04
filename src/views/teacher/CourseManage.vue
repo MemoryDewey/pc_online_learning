@@ -161,7 +161,7 @@
                     </el-form-item>
                     <el-form-item label="课程封面" prop="cover">
                         <el-upload class="cover" enctype="multipart/form-data" name="cover" :auto-upload="false"
-                                   action="/api/teacher/course/info/deal" :show-file-list="false"
+                                   action="/api/teacher/course" :show-file-list="false"
                                    :before-upload="beforeCoverUpload" :on-change="chooseCover"
                                    :headers="headers" :data="ruleForm" :on-success="handleSuccess" ref="upload">
                             <el-image :src="imageUrl" v-if="imageUrl">
@@ -188,9 +188,9 @@
                    @close="coverDialogVisible=false">
             <div class="dialog-content detail-dialog">
                 <el-upload class="detail-cover" enctype="multipart/form-data" name="detail-cover" :auto-upload="false"
-                           action="/api/teacher/course/info/detail-cover/update" :show-file-list="false"
+                           action="/api/teacher/course/detail-cover" :show-file-list="false"
                            :before-upload="beforeDetailCoverUpload" :on-change="chooseDetailCover"
-                           :headers="headers" :data="{courseID:detailID}" :on-success="handleDetailSuccess"
+                           :headers="headers" :data="{id:detailId}" :on-success="handleDetailSuccess"
                            ref="upload-detail-cover">
                     <div class="cover-image" slot="trigger">
                         <el-image :src="detailCoverUrl" v-if="detailCoverUrl">
@@ -235,25 +235,27 @@
 </template>
 
 <script>
-    import {Message, MessageBox, Loading} from 'element-ui'
+    import {Loading, Message, MessageBox} from 'element-ui'
     import {
-        getCourseInfo,
         deleteCourse,
+        getCourseInfo,
         recoverCourse,
-        updateCourseInfo, setCourseDiscount,
+        setCourseDiscount,
+        updateCourseInfo,
     } from "@/api/course-manage";
-    import {getCourseType, getCourseSystem} from "@/api/course";
+    import {getCourseSystem, getCourseType} from "@/api/course";
+    import moment from "moment"
 
     export default {
         name: "CourseManage",
         data() {
-            /* 是否选择图片 */
+            // 是否选择图片
             const validateImg = (rule, value, callback) => {
                 if (this.imageUrl === false) {
                     callback('请选择课程封面图片');
                 } else callback();
             };
-            /* 输入的课程价格是否合法 */
+            // 输入的课程价格是否合法
             const validatePrice = (rule, value, callback) => {
                 if (value === '') callback('请输入课程价格');
                 else if (!Number.isInteger(parseInt(value))) callback('请输入整数数字');
@@ -327,22 +329,22 @@
                 imageUrl: false,
                 imageSubmit: false,
                 formSubmit: false,
-                headers: {Authorization: localStorage.getItem('token')},
+                headers: {authorization: localStorage.getItem('token')},
                 coverDialogVisible: false,
                 detailCoverUrl: null,
-                detailID: null,
+                detailId: null,
                 loadingInstance: null,
                 uploadLoading: false,
                 discountDialog: false,
                 discount: 100,
-                discountID: null,
+                discountId: null,
                 coursePrice: null,
                 discountPrice: 0,
                 discountTime: null
             }
         },
         methods: {
-            /* 获取课程 */
+            // 获取课程
             async getCourse(page, search) {
                 this.currentPage = page;
                 this.tableData = [];
@@ -354,46 +356,44 @@
                     this.pageSum = res.pageSum;
                     for (let course of courses) {
                         this.tableData.push({
-                            cid: course.courseID,
-                            cname: course.courseName,
-                            sid: course.systemID,
-                            sname: course['CourseSystem']['systemName'],
-                            tid: course.typeID,
-                            tname: course['CourseType']['typeName'],
-                            arra: course['CourseDetail']['courseArrange'],
-                            detail: course['CourseDetail']['detail'],
-                            desc: course['courseDescription'],
-                            ftime: course['CourseDetail']['finishTime'],
-                            stime: course['CourseDetail']['startTime'],
-                            detailCover: course['CourseDetail']['coverUrl'],
+                            cid: course.id,
+                            cname: course.name,
+                            sid: course.system.id,
+                            sname: course.system.name,
+                            tid: course.type.id,
+                            tname: course.type.name,
+                            arra: course.detail.arrange,
+                            detail: course.detail.detail,
+                            desc: course.description,
+                            ftime: moment(course.detail.finish).format('YYYY-MM-DD'),
+                            stime: moment(course.detail.start).format('YYYY-MM-DD'),
+                            detailCover: course.detail.coverUrl,
                             price: course.price,
-                            live: course.courseForm === 'L',
-                            cover: course.courseImage,
-                            delete: course.delete === 0,
+                            live: course.form === 'L',
+                            cover: course.image,
+                            delete: !!course.deletedAt,
                             discount: course.discount,
                             discountTime: course.discountTime
                         })
                     }
                 }
             },
-            /* 页码改变 */
+            // 页码改变
             pageChanged(val) {
                 this.isSearch ?
                     this.getCourse(val, this.searchContent) :
                     this.getCourse(val, '');
             },
-            /* 获取课程体系 */
+            // 获取课程体系
             async getSystem() {
-                let res = await getCourseSystem();
-                this.system = res.data;
+                this.system = await getCourseSystem();
             },
-            /* 获取课程类别 */
-            async getType(systemID) {
-                let res = await getCourseType({system: systemID});
-                this.type = res.data;
+            // 获取课程类别
+            async getType(system) {
+                this.type = await getCourseType({system});
                 this.ruleForm.type = this.type.length > 0 ? this.type[0].id : '';
             },
-            /* 初始化ruleForm */
+            // 初始化ruleForm
             initRuleForm() {
                 this.ruleForm = {
                     id: '',
@@ -413,7 +413,7 @@
                 this.imageUrl = false;
                 this.imageSubmit = false;
             },
-            /* 添加课程 */
+            // 添加课程
             addCourse() {
                 this.initRuleForm();
                 this.resetForm('ruleForm');
@@ -423,11 +423,11 @@
                 this.ruleForm.option = "add";
                 this.getSystem();
             },
-            /* 更新课程 */
-            updateCourse(val) {
+            // 更新课程
+            async updateCourse(val) {
                 this.initRuleForm();
-                this.getSystem();
-                this.getType(val.sid);
+                await this.getSystem();
+                await this.getType(val.sid);
                 this.ruleForm.id = val.cid;
                 this.ruleForm.name = val.cname;
                 this.ruleForm.system = val.sid;
@@ -446,7 +446,7 @@
                 this.dialogFormInfo.title = "更新课程";
                 this.dialogFormInfo.type = "立即更新";
             },
-            /* 搜索课程 */
+            // 搜索课程
             search() {
                 if (this.searchContent === null || this.searchContent === '') Message.info('输入内容不能为空');
                 else {
@@ -454,12 +454,12 @@
                     this.getCourse(1, this.searchContent);
                 }
             },
-            /* 清空搜索框 */
+            // 清空搜索框
             clearSearch() {
                 this.searchContent = '';
                 this.getCourse(1, '');
             },
-            /* 提交表单 */
+            // 提交表单
             submitForm(formName) {
                 this.$refs[formName].validate(async (valid) => {
                     if (valid) {
@@ -472,34 +472,34 @@
                     } else return false;
                 });
             },
-            /* 重置表单内容 */
+            // 重置表单内容
             resetForm(formName) {
                 if (this.$refs[formName] !== undefined)
                     this.$refs[formName].resetFields();
                 this.imageUrl = false;
             },
-            /* 选择封面图片 */
+            // 选择封面图片
             chooseCover(file) {
                 if (this.beforeCoverUpload(file.raw)) {
                     this.imageUrl = URL.createObjectURL(file.raw);
                     this.imageSubmit = true;
                 }
             },
-            /* 选择课程详情图片 */
+            // 选择课程详情图片
             chooseDetailCover(file) {
                 if (this.beforeDetailCoverUpload(file.raw)) {
                     this.detailCoverUrl = URL.createObjectURL(file.raw);
                 }
             },
-            /* 提交封面图片之前检查 */
+            // 提交封面图片之前检查
             beforeCoverUpload(file) {
-                const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 / 1024 < 4;
-                if (!isJPG) Message.error('上传图片只能是 JPG 格式!');
-                if (!isLt2M) Message.error('上传图片大小不能超过 4MB!');
-                return isJPG && isLt2M;
+                const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+                const isLt4M = file.size / 1024 / 1024 < 4;
+                if (!isJPG) Message.error('上传图片只能是 JPG 或 PNG 格式!');
+                if (!isLt4M) Message.error('上传图片大小不能超过 4MB!');
+                return isJPG && isLt4M;
             },
-            /* 提交课程详情图片之前检查 */
+            // 提交课程详情图片之前检查
             beforeDetailCoverUpload(file) {
                 const isJPG = file.type === 'image/jpeg';
                 const isPNG = file.type === 'image/png';
@@ -508,7 +508,7 @@
                 if (!isLt8M) Message.error('上传图片大小不能超过8MB');
                 return (isJPG || isPNG) && isLt8M;
             },
-            /* 提交课程详情图片 */
+            // 提交课程详情图片
             submitDetailCover() {
                 this.loadingInstance = Loading.service({
                     lock: true,
@@ -518,7 +518,7 @@
                 });
                 this.$refs['upload-detail-cover'].submit();
             },
-            /* 添加/更改提交成功后执行 */
+            // 添加/更改提交成功后执行
             handleSuccess(res) {
                 this.formSubmit = false;
                 if (res.code === 1000) {
@@ -536,14 +536,14 @@
                     Message.success(res.msg);
                 } else Message.error(res.msg);
             },
-            /* 删除课程 */
-            deleteCourse(courseID) {
+            // 删除课程
+            deleteCourse(id) {
                 MessageBox.confirm('确定要删除该节课程吗？（删除后可手动还原）', "提示", {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(async () => {
-                    let res = await deleteCourse({courseID});
+                    let res = await deleteCourse({id});
                     if (res) {
                         Message.success(res.msg);
                         this.getCourse(1, '');
@@ -552,14 +552,14 @@
                     Message.info("已取消删除操作");
                 })
             },
-            /* 还原删除的课程 */
-            recoverCourse(courseID) {
+            // 还原删除的课程
+            recoverCourse(id) {
                 MessageBox.confirm('确定要还原该节课程吗？', "提示", {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(async () => {
-                    let res = await recoverCourse({courseID});
+                    let res = await recoverCourse({id});
                     if (res) {
                         Message.success(res.msg);
                         this.getCourse(1, '');
@@ -568,24 +568,24 @@
                     Message.info("已取消还原操作");
                 })
             },
-            /* 设置课程详情图片 */
+            // 设置课程详情图片
             setDetailCover(course) {
-                this.detailID = course.cid;
+                this.detailId = course.cid;
                 this.detailCoverUrl = course.detailCover;
                 this.coverDialogVisible = true;
             },
-            /* 设置课程折扣 */
+            // 设置课程折扣
             setDiscount(course) {
                 this.discountDialog = true;
                 this.coursePrice = course.price;
-                this.discountID = course.cid;
+                this.discountId = course.cid;
                 this.discount = course.discount ? course.discount : 100;
                 this.discountTime = course.discountTime
             },
-            /* 提交课程折扣 */
+            // 提交课程折扣
             submitDiscount() {
                 let data = {
-                    courseID: this.discountID,
+                    id: this.discountId,
                     discount: this.discount,
                     discountTime: this.discountTime
                 };

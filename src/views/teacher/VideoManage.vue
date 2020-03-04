@@ -56,14 +56,14 @@
                     </el-form-item>
                     <el-form-item label="所属课程" prop="course">
                         <el-select v-model="ruleForm.course" placeholder="请选择课程" value="" @change="getChapter">
-                            <el-option v-for="cos in course" :key="cos.courseID"
-                                       :label="cos.courseName" :value="cos.courseID"/>
+                            <el-option v-for="cos in course" :key="cos.id"
+                                       :label="cos.name" :value="cos.id"/>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="所属章节" prop="chapter">
                         <el-select v-model="ruleForm.chapter" placeholder="请选择章节" value="">
-                            <el-option v-for="cpt in chapter" :key="cpt.chapterID"
-                                       :label="cpt.chapterName" :value="cpt.chapterID"/>
+                            <el-option v-for="cpt in chapter" :key="cpt.id"
+                                       :label="cpt.name" :value="cpt.id"/>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="上传进度" v-if="dialogFormInfo.type==='add'">
@@ -156,11 +156,11 @@
                     let data = res.video;
                     for (let video of data) {
                         this.tableData.push({
-                            id: video.videoID, name: video.videoName,
-                            chapter: video['CourseChapter.chapterName'],
-                            cptID: video['CourseChapter.chapterID'],
-                            course: video['CourseChapter.CourseInformation.courseName'],
-                            cseID: video['CourseChapter.CourseInformation.courseID'],
+                            id: video.id, name: video.name,
+                            chapter: video.chapterName,
+                            cptID: video.chapterId,
+                            course: video.courseName,
+                            cseID: video.courseId,
                             ware: video.wareUrl
                         })
                     }
@@ -168,8 +168,8 @@
                 }
             },
             /* 获取课程章节 */
-            async getChapter(courseID) {
-                let res = await getChapter({courseID});
+            async getChapter(id) {
+                let res = await getChapter({id});
                 if (res) this.chapter = res.chapter;
             },
             /* 页码改变 */
@@ -197,8 +197,7 @@
             },
             /* 获取课程 */
             async getCourse() {
-                let response = await getCourse();
-                this.course = response.course;
+                this.course = await getCourse();
             },
             /* 文件检查 */
             beforeUpload(file) {
@@ -252,8 +251,8 @@
                                 if (res.check === 1) {
                                     clearInterval(timer);
                                     let res = await addVideo({
-                                        courseID: this.ruleForm.course, chapterID: this.ruleForm.chapter,
-                                        videoName: this.ruleForm.name, fileId
+                                        id: this.ruleForm.chapter,
+                                        name: this.ruleForm.name, fileId
                                     });
                                     if (res) {
                                         Loading.service({}).close();
@@ -302,8 +301,8 @@
                 this.$refs['ruleForm'].validate(async valid => {
                     if (valid) {
                         let res = await updateVideo({
-                            courseID: this.ruleForm.course, chapterID: this.ruleForm.chapter,
-                            videoName: this.ruleForm.name, videoID: this.dialogFormInfo.id
+                            chapterId: this.ruleForm.chapter,
+                            name: this.ruleForm.name, videoId: this.dialogFormInfo.id
                         });
                         if (res) {
                             this.dialogFormVisible = false;
@@ -325,9 +324,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(async () => {
-                    let res = await deleteVideo({
-                        courseID: val.cseID, videoID: val.id
-                    });
+                    let res = await deleteVideo({id: val.id});
                     if (res.code === 1000) {
                         Message.success(res.msg);
                         this.getVideo(1);

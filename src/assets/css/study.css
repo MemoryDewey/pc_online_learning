@@ -484,6 +484,7 @@
   padding: 0 12px;
   border: 1px solid #409eff;
   color: #fff;
+  outline: none;
 }
 .study-main .study-information .inner-center {
   width: 1200px;

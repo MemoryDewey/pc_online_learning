@@ -61,7 +61,7 @@
                 </el-col>
             </el-row>
             <el-table :border="true" :data="walletLogsTable" :row-class-name="tableRowClassName">
-                <el-table-column prop="createdAt" label="时间" width="175px" align="center"></el-table-column>
+                <el-table-column prop="time" label="时间" width="175px" align="center"></el-table-column>
                 <el-table-column label="类型" width="100px" align="center">
                     <template v-slot="scope">
                         <span :class="scope.row.type | typeFilterTag">{{ scope.row.type | typeFilter }}</span>
@@ -212,7 +212,7 @@
                 await this.refreshRecharge();
                 let res = await getWalletInfo();
                 if (res) {
-                    let balance = res.wallet.balance.split(".");
+                    let balance = res.wallet.balance.toString().split(".");
                     this.balanceMain = balance[0];
                     this.balanceSub = `.${balance[1]}`;
                 }
@@ -248,7 +248,7 @@
             },
             getBstPrice() {
                 getBstValue().then(res => {
-                    if (res.code === 1000) this.bstPrice = res['bstValue'];
+                    if (res.code === 1000) this.bstPrice = res.price;
                 });
             },
             openMoneyDialog(type) {

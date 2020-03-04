@@ -75,7 +75,7 @@
                     verify: [{required: true, message: '请输入验证码', trigger: 'blur'}]
                 },
                 //图片验证码url
-                imageVerifyUrl: "/api/passport/image-captcha",
+                imageVerifyUrl: "/api/verify-code/image",
                 loginClick: false,
                 captchaVisible: false,
                 //二维码链接
@@ -123,7 +123,7 @@
             },
             //更换验证码图片
             changeImage() {
-                this.imageVerifyUrl = `/api/passport/image-captcha?user=${
+                this.imageVerifyUrl = `${this.imageVerifyUrl}?user=${
                     this.loginForm.account}&val=${Math.random().toFixed(5)}`;
             },
             // 切换到注册

@@ -4,7 +4,7 @@
         <div class="comment-head">
             <!--好评度 S-->
             <div class="rating-scores">
-                <span>{{courseRate<10?courseRate.toFixed(1):courseRate}}</span>
+                <span>{{courseRate<100?(courseRate/10).toFixed(1):10}}</span>
             </div>
             <!--好评度 S-->
             <!--评星 S-->
@@ -63,11 +63,11 @@
         <div class="comment-list">
             <div class="comment-list-item clearfix" v-for="comment in comments" :key="comment.id">
                 <div class="comment-list-item-avatar">
-                    <img :src="`${comment['UserInformation'].avatarUrl}`" alt="">
+                    <img :src="comment.avatar" alt="">
                 </div>
                 <div class="comment-list-item-body">
                     <div class="user-info">
-                        <a>{{comment['UserInformation'].nickname}}</a>
+                        <a>{{comment.user}}</a>
                         <div class="user-info-rating">
                             <div class="stars">
                                 <font-awesome-icon icon="star" v-if="comment.star>=1"></font-awesome-icon>
@@ -186,19 +186,19 @@
             },
             //评论课程
             async setComment() {
-                let response = await checkApply({courseID: this.$route.params.courseID,});
+                let response = await checkApply({id: this.$route.params.id,});
                 if (response) this.dialogVisible = true;
             },
             //获取评论
             async getComment(page, filter) {
-                let response = await getComment({courseID: this.$route.params.courseID, page, filter});
+                let response = await getComment({id: this.$route.params.id, page, filter});
                 if (response) {
-                    this.comments = response.comments;
+                    this.comments = response;
                 }
             },
             //获取评论总数
             async getCommentCount(filter) {
-                let response = await getCommentCount({courseID: this.$route.params.courseID});
+                let response = await getCommentCount({id: this.$route.params.id});
                 let count = response.count;
                 this.commentCount = response.count;
                 this.$emit('getCommentCount', count.all);
@@ -245,14 +245,14 @@
                 this.checkInput();
                 if (this.dialogFormInfo.qualified) {
                     let response = await addComment({
-                        courseID: this.$route.params.courseID,
+                        id: this.$route.params.id,
                         star: this.dialogFormInfo.rateValue,
                         comment: this.dialogFormInfo.text
                     });
                     if (response) {
                         this.dialogVisible = false;
                         Message.success(response.msg);
-                        this.courseRate = response.rate * 10;
+                        this.courseRate = response.rate * 100;
                         this.getCommentCount();
                         this.getComment(1, 0);
                         this.setRateStars();

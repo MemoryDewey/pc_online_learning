@@ -28,12 +28,12 @@ export default new VueRouter({
                     meta: {title: '在线学习'}
                 },
                 {
-                    path: ':courseID',
+                    path: ':id',
                     name: 'CourseVideo',
                     component: () => import( '@/views/student/Video'),
                     meta: {title: '课程视频', requireAuth: true},
                     beforeEnter(to, from, next) {
-                        checkApply({courseID: to.params.courseID}).then(res => {
+                        checkApply({id: to.params.id}).then(res => {
                             if (res.code === 1000) next();
                             else next('/404');
                         }).catch(() => {
@@ -42,13 +42,13 @@ export default new VueRouter({
                     }
                 },
                 {
-                    path: ':courseID/exam',
+                    path: ':id/exam',
                     name: 'CourseExam',
                     component: () => import( '@/views/student/CourseExam'),
                     meta: {title: '期末测验', requireAuth: true}
                 },
                 {
-                    path: ':courseID/information',
+                    path: ':id/information',
                     name: 'CourseInformation',
                     component: () => import( '@/views/student/Information'),
                     meta: {title: '课程信息'}

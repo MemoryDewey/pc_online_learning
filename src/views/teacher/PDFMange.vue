@@ -45,7 +45,7 @@
                    @close="dialogFormVisible = false">
             <div class="dialog-content">
                 <el-upload class="upload-demo" drag :data="uploadData" :before-upload="beforeUpload"
-                           action="/api/teacher/course/ware" :on-success="uploadSuccess"
+                           action="/api/teacher/video/ware" :on-success="uploadSuccess"
                            name="pdf" :show-file-list="false" :headers="headers">
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -92,11 +92,11 @@
                     let data = res.video;
                     for (let video of data) {
                         this.tableData.push({
-                            id: video.videoID, name: video.videoName,
-                            chapter: video['CourseChapter.chapterName'],
-                            cptID: video['CourseChapter.chapterID'],
-                            course: video['CourseChapter.CourseInformation.courseName'],
-                            cseID: video['CourseChapter.CourseInformation.courseID'],
+                            id: video.id, name: video.name,
+                            chapter: video.chapterName,
+                            cptID: video.chapterId,
+                            course: video.courseName,
+                            cseID: video.courseId,
                             ware: video.wareUrl
                         })
                     }
@@ -122,13 +122,13 @@
             addWare(val) {
                 this.dialogFormVisible = true;
                 this.dialogFormInfo.title = "添加课件";
-                this.uploadData = {videoID: val.id, courseID: val.cseID};
+                this.uploadData = {id: val.id};
             },
             /* 更换课件 */
             changeWare(val) {
                 this.dialogFormVisible = true;
                 this.dialogFormInfo.title = "更换课件";
-                this.uploadData = {videoID: val.id, courseID: val.cseID};
+                this.uploadData = {id: val.id};
             },
             /* 删除课件 */
             deleteWare(val) {
@@ -137,9 +137,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(async () => {
-                    let res = await deleteWare({
-                        videoID: val.id, courseID: val.cseID
-                    });
+                    let res = await deleteWare({id: val.id});
                     if (res) {
                         Message.success(res.msg);
                         this.getVideo(1);

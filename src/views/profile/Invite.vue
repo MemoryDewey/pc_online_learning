@@ -39,9 +39,9 @@
         <!--课程存在 S-->
         <div class="flex-list-item" v-else v-for="invite in invites" :key="invite.id">
             <div class="flex-row content">
-                <div class="flex-cell first">{{invite['Invited'].nickname}}</div>
-                <div class="flex-cell first">{{invite['Invited']['UserPassport'].phone}}</div>
-                <div class="flex-cell first">{{invite['createdAt']}}</div>
+                <div class="flex-cell first">{{invite.nickname}}</div>
+                <div class="flex-cell first">{{invite.phone}}</div>
+                <div class="flex-cell first">{{invite.time}}</div>
             </div>
         </div>
         <!--课程存在 E-->

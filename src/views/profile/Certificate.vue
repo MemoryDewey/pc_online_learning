@@ -20,18 +20,18 @@
             </div>
         </div>
         <div class="flex-list-item" v-else v-for="(certificate,index) in certificates"
-             :key="certificate['id']">
+             :key="certificate.id">
             <div class="flex-row content">
                 <div class="flex-cell first cover">
-                    <el-image :src="certificate['CourseInformation']['courseImage']">
+                    <el-image :src="certificate.courseImage">
                         <template slot="error">
                             <img src="../../assets/image/load-error.jpg" alt>
                         </template>
                     </el-image>
-                    <div class="title">{{certificate['CourseInformation']['courseName']}}</div>
+                    <div class="title">{{certificate.courseName}}</div>
                 </div>
                 <div class="flex-cell first" style="color: #00a1d6">
-                    {{certificate['id']}}
+                    {{certificate.id}}
                 </div>
                 <div class="flex-cell">
                     <a class="btn-operate" @click="openDialog(index)">查看证书</a>
@@ -80,10 +80,10 @@
                     let context = canvas.getContext('2d');
                     let img = new Image();
                     img.src = require('../../assets/image/certificate-bg.png');
-                    let nickname = this.certificates[index]['UserInformation']['nickname'];
-                    let time = this.certificates[index]['createdAt'].split('-');
+                    let nickname = this.certificates[index].nickname;
+                    let time = this.certificates[index].time.split('-');
                     let msg = `${time[0]} 年 ${time[1]}月 ${time[2]} 日，在` +
-                        `${this.certificates[index]['CourseInformation']['courseName']}课程中` +
+                        `${this.certificates[index]['courseName']}课程中` +
                         '完成全部课时，通过考核。';
                     img.onload = () => {
                         context.drawImage(img, 0, 0, 800, 565);

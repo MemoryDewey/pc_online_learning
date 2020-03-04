@@ -102,7 +102,7 @@
                 if (val !== undefined) {
                     this.systemChange(val);
                     getCourseType({system: val}).then((response) => {
-                        if (response) this.types = response.data;
+                        if (response) this.types = response;
                     })
                 } else {
                     this.bread.systemName = false;
@@ -123,12 +123,12 @@
         async created() {
             let response = await getCourseSystem();
             if (response) {
-                this.systems = response.data;
+                this.systems = response;
                 if (this.$route.query.system !== undefined) {
                     this.systemChange(this.$route.query.system);
                     getCourseType({system: this.$route.query.system}).then((response) => {
                         if (response) {
-                            this.types = response.data;
+                            this.types = response;
                             if (this.$route.query.type !== undefined)
                                 this.typeChange(this.$route.query.type);
                         }

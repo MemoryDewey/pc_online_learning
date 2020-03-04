@@ -8,7 +8,7 @@
                             class="avatar"
                             enctype="multipart/form-data"
                             name="avatar"
-                            action="/api/profile/personal/avatar"
+                            action="/api/profile/avatar"
                             :show-file-list="false"
                             :on-success="handleAvatarSuccess"
                             :headers="headers"
@@ -21,7 +21,7 @@
                 </td>
                 <td class="top-line">
                     <el-upload
-                            action="/api/profile/personal/avatar"
+                            action="/api/profile/avatar"
                             name="avatar"
                             :on-success="handleAvatarSuccess"
                             :before-upload="beforeAvatarUpload"
@@ -99,7 +99,7 @@
             <tr>
                 <td class="setting-title">手机</td>
                 <td v-if="informationForm.mobile === ''">
-                    <router-link class="btn btn-normal" to="/passport/register">点击绑定</router-link>
+                    <router-link class="btn btn-normal" to="/">点击绑定</router-link>
                 </td>
                 <td v-else>
                     <div class="set-up">
@@ -184,7 +184,7 @@
                 </div>
                 <div class="input-area">
                     <label class="second">
-                        <input v-model="dialogForm.verify" type="text" placeholder="验证码"></input>
+                        <input v-model="emailDialogInfo.verifyCode" type="text" placeholder="验证码"></input>
                         <font-awesome-icon icon="shield-alt"></font-awesome-icon>
                         <a :class="{'btn-send':true,disable:(!emailDialogInfo.sendButton || emailDialogInfo.sending)}"
                            @click="sendVerifyCode('bindEmail')"
@@ -252,7 +252,7 @@
                 this.informationForm.realName = data.realName;
                 this.informationForm.sex = data.sex;
                 this.informationForm.mobile = data.mobile;
-                this.informationForm.birthday = data.birthday === null ? '' : data.birthday;
+                this.informationForm.birthday = data.birthday === null ? '' : new Date(data.birthday);
                 this.informationForm.email = data.email === null ? '' : data.email;
                 this.imageUrl = data.avatarUrl === null ? '' : `${data.avatarUrl}`;
             }
@@ -361,16 +361,19 @@
             },
             /* 绑定邮箱 */
             async bindEmailSubmit() {
-                if (this.dialogForm.account === '') Message.error('请输入邮箱');
-                else if (this.dialogForm.verify === '') Message.error('请输入验证码');
+                if (this.emailDialogInfo.account === '') Message.error('请输入邮箱');
+                else if (this.emailDialogInfo.verifyCode === '') Message.error('请输入验证码');
                 else {
-                    let response = await addEmail(this.dialogForm);
+                    let response = await addEmail({
+                        account: this.emailDialogInfo.account,
+                        verifyCode: this.emailDialogInfo.verifyCode
+                    });
                     if (response) {
-                        this.dialogForm.account = '';
-                        this.dialogForm.verify = '';
+                        this.emailDialogInfo.account = '';
+                        this.emailDialogInfo.verifyCode = '';
                         this.informationForm.email = response.email;
                         Message.success(response.msg);
-                        this.dialogFormVisible = false;
+                        this.emailDialog = false;
                     }
                 }
             },

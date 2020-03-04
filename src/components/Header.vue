@@ -193,9 +193,9 @@
                         this.$store.commit('login', {
                             level: response.level
                         });
-                        this.avatarUrl = `${response.data.avatarUrl}`;
+                        this.avatarUrl = `${response.info.avatarUrl}`;
                         this.$store.commit('changeAvatarUrl', this.avatarUrl);
-                        this.nickname = response.data.nickname;
+                        this.nickname = response.info.nickname;
                         this.$store.commit('changeNickname', this.nickname);
                     } else if (localStorage.getItem('token')) localStorage.removeItem('token');
                 }
@@ -205,7 +205,7 @@
                 this.dialogType = this.dialogType === 'login' ? 'register' : 'login';
             },
             // 打开dialog
-            openDialog(type){
+            openDialog(type) {
                 this.dialogType = type;
                 this.dialogShow = true;
             },
@@ -221,7 +221,7 @@
         async created() {
             this.checkLoginState();
             let response = await getCourseSystem();
-            if (response) this.courseSystem = response.data;
+            if (response) this.courseSystem = response;
         }
     }
 </script>

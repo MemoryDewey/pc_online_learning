@@ -9,7 +9,7 @@
                     <!--课程详情 S-->
                     <div class="study-img-text">
                         <div class="study-img-left">
-                            <el-image v-if="course.info['courseImage']" :src="course.info['courseImage']">
+                            <el-image v-if="course.info.image" :src="course.info.image">
                                 <template slot="error">
                                     <img src="../../assets/image/load-error.jpg" alt>
                                 </template>
@@ -19,14 +19,17 @@
                             <h1 class="text-title">{{bread.courseName}}</h1>
                             <div class="enroll-info">
                                 <div class="enroll-study-info">
-                                    <div class="teacher-name">授课教师：{{course.details['teacherName']}}</div>
-                                    <div class="workload">课程安排：{{course.details['courseArrange']}}</div>
+                                    <div class="teacher-name">授课教师：{{
+                                        course.details.teacher?course.details.teacher.nickname:''
+                                        }}
+                                    </div>
+                                    <div class="workload">课程安排：{{course.details.arrange}}</div>
                                     <div class="study-time clearfix">
                                         <div style="float: left"><i class="far fa-calendar-alt"></i>
-                                            开课时间:{{course.details['startTime']}}
+                                            开课时间:{{formatTime(course.details.start)}}
                                         </div>
                                         <div style="float: right"><i class="far fa-calendar-alt"></i>
-                                            结课时间:{{course.details['finishTime']}}
+                                            结课时间:{{formatTime(course.details.finish)}}
                                         </div>
                                     </div>
                                 </div>
@@ -34,7 +37,7 @@
                                     <div class="study-apply">
                                         <span>已有{{applyCount}}人报名</span>
                                         <el-divider direction="vertical"></el-divider>
-                                        <span>好评度 {{courseRate*10}}%</span>
+                                        <span>好评度 {{courseRate}}%</span>
                                         <div style="float: right">
                                             <span class="collection" :style="{color:collection?'#409eff':'#999'}"
                                                   @click="collectCourse">
@@ -49,13 +52,13 @@
                                                 @changePrice="changeCoursePrice"></count-down>
                                     <div v-show="applyButtonLoading" class="enroll-apply-btn">
                                         <router-link v-if="hadApply" tag="div"
-                                                     :to="`/course/${this.$route.params.courseID}`">
+                                                     :to="`/course/${this.$route.params.id}`">
                                             <el-button type="primary">已报名，进入学习</el-button>
                                         </router-link>
                                         <el-button v-else-if="bstApplyBtn" type="info" :loading="true">
                                             账单确认中...
                                         </el-button>
-                                        <el-button type="primary" v-else-if="course.info['price']===0"
+                                        <el-button type="primary" v-else-if="course.info.price===0"
                                                    @click="applyFree">免费报名
                                         </el-button>
                                         <el-button v-else type="primary" @click="buyCourseDialogOpen">立即购买</el-button>
@@ -90,7 +93,7 @@
                                     </div>
                                     <div class="details-content">
                                         <div class="details-text">
-                                            <p v-html="replaceTrim(course.info['courseDescription'])"></p>
+                                            <p v-html="replaceTrim(course.info.description)"></p>
                                         </div>
                                     </div>
                                     <div class="details-title">
@@ -99,10 +102,10 @@
                                     </div>
                                     <div class="details-content">
                                         <div class="details-text">
-                                            <p v-html="replaceTrim(course.details['detail'])"></p>
+                                            <p v-html="replaceTrim(course.details.detail)"></p>
                                         </div>
                                         <div class="details-image">
-                                            <img v-if="course.details['coverUrl']" :src="course.details['coverUrl']"
+                                            <img v-if="course.details.coverUrl" :src="course.details.coverUrl"
                                                  alt>
                                         </div>
                                     </div>
@@ -199,6 +202,7 @@
     } from "@/api/course";
     import {getWalletInfo, getBstBalance} from '@/api/wallet'
     import wsClient from 'socket.io-client'
+    import moment from 'moment'
 
     export default {
         name: "Information",
@@ -243,7 +247,7 @@
             //报名课程
             applyFree() {
                 if (this.$store.state.loginState) {
-                    applyFree({courseID: this.$route.params.courseID}).then(response => {
+                    applyFree({id: this.$route.params.id}).then(response => {
                         if (response) {
                             this.hadApply = true;
                             this.applyCount = response.applyCount;
@@ -275,30 +279,30 @@
             },
             //跳转到课程页
             async gotoExam() {
-                let response = await examCheck({courseID: this.$route.params.courseID});
+                let response = await examCheck({id: this.$route.params.id});
                 if (response) {
-                    let url = this.$router.resolve({path: `/course/${this.$route.params.courseID}/exam`});
+                    let url = this.$router.resolve({path: `/course/${this.$route.params.id}/exam`});
                     window.open(url.href, "_blank")
                 }
             },
             //获取课程基本信息
             async getInfo() {
-                let response = await getInfo({courseID: this.$route.params.courseID});
+                let response = await getInfo({id: this.$route.params.id});
                 if (response) {
                     this.$set(this.course, 'info', response.course.info);
-                    this.$set(this.course, 'details', response.course.details);
+                    this.$set(this.course, 'details', response.course.detail);
                     let course = this.course;
                     this.price = this.course.info.price;
-                    this.courseRate = course.info['favorableRate'] * 10;
-                    this.applyCount = course.info.applyCount;
+                    this.courseRate = course.info.rate * 10000 / 100;
+                    this.applyCount = course.info.apply;
                     this.collection = response.collection;
                     this.$set(this.comment, 'courseRate', this.courseRate);
                     this.$set(this.comment, 'courseName', course.info.courseName);
-                    this.setBread(course.info.systemName, course.info['systemID'], course.info.typeName,
-                        course.info['typeID'], course.info.courseName
+                    this.setBread(course.info.system.name, course.info.system.id,
+                        course.info.type.name, course.info.type.id, course.info.name
                     );
-                    this.video.form = course.info['courseForm'];
-                    document.title = course.info.courseName;
+                    this.video.form = course.info.form;
+                    document.title = course.info.name;
                 }
             },
             replaceTrim(text) {
@@ -306,11 +310,11 @@
             },
             //获取其他信息
             async getClass() {
-                let response = await checkApply({courseID: this.$route.params.courseID});
+                let response = await checkApply({id: this.$route.params.id});
                 this.applyButtonLoading = true;
                 this.hadApply = response.code === 1000;
                 this.file.apply = this.hadApply;
-                response = await getExamTime({courseID: this.$route.params.courseID});
+                response = await getExamTime({id: this.$route.params.id});
                 this.examTime = response.time;
             },
             //购买课程Dialog
@@ -359,7 +363,7 @@
             async byBst() {
                 if (parseFloat(this.bstPrice) > parseFloat(this.bstBalance)) Message.error('BST余额不足，请充值');
                 else {
-                    let res = await checkBstStatue({courseID: this.$route.params.courseID});
+                    let res = await checkBstStatue({id: this.$route.params.id});
                     if (res) {
                         const loading = this.$loading({
                             lock: true,
@@ -367,7 +371,7 @@
                             spinner: 'el-icon-loading',
                             background: 'rgba(0, 0, 0, 0.7)'
                         });
-                        await applyChargeByBst({courseID: this.$route.params.courseID});
+                        await applyChargeByBst({id: this.$route.params.id});
                         const socket = wsClient.connect(`${location.host}`);
                         socket.emit('buyCourseByBst');
                         socket.on('message', data => {
@@ -389,7 +393,7 @@
                 if (parseFloat(this.walletInfo.balance) < parseFloat(this.price))
                     Message.error('余额不足，请充值');
                 else {
-                    let res = await applyCourseByCash({courseID: this.$route.params.courseID});
+                    let res = await applyCourseByCash({id: this.$route.params.id});
                     if (res) {
                         Message.success(res.msg);
                         this.hadApply = true;
@@ -402,18 +406,22 @@
                 const value = this.collection ? 0 : 1;
                 if (!localStorage.getItem('token')) Message.warning('需要登录才能收藏该课程');
                 else {
-                    const res = await collectCourse({courseID: this.$route.params.courseID, value});
+                    const res = await collectCourse({id: this.$route.params.id, value});
                     if (res) {
                         Message.success(res.msg);
                         this.collection = !this.collection;
                     }
                 }
+            },
+            // 格式化时间
+            formatTime(time) {
+                return moment(time).format('YYYY-MM-DD')
             }
         },
         async created() {
             await this.getInfo();
             if (this.$store.state.loginState || localStorage.getItem('token')) {
-                let res = await checkBstConfirmation({courseID: this.$route.params.courseID});
+                let res = await checkBstConfirmation({id: this.$route.params.id});
                 if (res) {
                     this.bstApplyBtn = res.code === 1003;
                     if (res.code === 1000) this.hadApply = true;

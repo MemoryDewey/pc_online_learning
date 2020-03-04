@@ -49,8 +49,7 @@
                                     </div>
                                     <div class="bottom clearfix" v-if="!examFinished">
                                         <label>
-                                            <input class="info-button setting-save" value="提交"
-                                                   @click="submitExam"></input>
+                                            <button class="info-button setting-save" @click="submitExam">提交</button>
                                         </label>
                                     </div>
                                 </div>
@@ -81,10 +80,10 @@
         },
         methods: {
             //获取试卷
-            async getExam(courseID) {
+            async getExam(id) {
                 this.courseExam = [];
                 this.radio = [];
-                let response = await getExam({courseID});
+                let response = await getExam({id});
                 if (response) {
                     if (response.exam !== false) {
                         this.hasExam = true;
@@ -111,13 +110,13 @@
                 }).then(async () => {
                     console.log(this.radio);
                     let response = await addExam({
-                        courseID: this.$route.params.courseID,
+                        id: this.$route.params.id,
                         answer: this.radio,
-                        exam: {type: 'exam', id: this.$route.params.courseID},
+                        exam: {type: 'exam', id: this.$route.params.id},
                     });
                     if (response) {
                         Message.success(response.msg);
-                        this.getExam(this.$route.params.courseID);
+                        this.getExam(this.$route.params.id);
                     }
                 }).catch(() => {
                     Message.info("已取消操作");
@@ -125,11 +124,11 @@
             }
         },
         created() {
-            this.getExam(this.$route.params.courseID);
+            this.getExam(this.$route.params.id);
         },
         beforeRouteEnter(to, from, next) {
             next((vm => {
-                checkApply({courseID: vm.$route.params.courseID}).then(response => {
+                checkApply({id: vm.$route.params.id}).then(response => {
                     if (!response) vm.$router.push('/');
                 })
             }));

@@ -17,23 +17,23 @@
                 </div>
             </div>
         </div>
-        <div class="flex-list-item" v-else v-for="course in courses" :key="course['courseID']">
+        <div class="flex-list-item" v-else v-for="course in courses" :key="course.id">
             <div class="flex-row content">
                 <div class="flex-cell first cover">
-                    <router-link :to="`/course/${course['courseID']}`">
-                        <el-image :src="course['courseImage']">
+                    <router-link :to="`/course/${course.id}/information`">
+                        <el-image :src="course.image">
                             <template slot="error">
                                 <img src="../../assets/image/load-error.jpg" alt>
                             </template>
                         </el-image>
-                        <div class="title">{{course['courseName']}}</div>
+                        <div class="title">{{course.name}}</div>
                     </router-link>
                 </div>
                 <div class="flex-cell first" style="color: #00a1d6">
-                    {{course['price']===0?'免费':`${course['price']} 课程币`}}
+                    {{course.price===0?'免费':`${course.price} 课程币`}}
                 </div>
                 <div class="flex-cell">
-                    <a class="btn-operate" @click="collectCourse(course['courseID'])">取消收藏</a>
+                    <a class="btn-operate" @click="collectCourse(course.id)">取消收藏</a>
                 </div>
             </div>
         </div>
@@ -67,8 +67,8 @@
                     this.courses = res.courses;
                 }
             },
-            async collectCourse(courseID) {
-                const res = await collectCourse({courseID, value: 0});
+            async collectCourse(id) {
+                const res = await collectCourse({id, value: 0});
                 if (res) {
                     Message.success(res.msg);
                     this.getCourse(1);

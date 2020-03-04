@@ -43,17 +43,17 @@
             <!--列表存在 S-->
             <div class="flex-list-item" v-else>
                 <div class="flex-row content" v-for="f in file" :key="f.fileID">
-                    <div class="flex-cell">{{f.fileName}}</div>
+                    <div class="flex-cell">{{f.name}}</div>
                     <div class="flex-cell" style="text-align: center;color: #67c23a;">
-                        {{f['CourseChapter.CourseInformation.courseName']}}
+                        {{f.courseName}}
                     </div>
                     <div class="flex-cell" style="text-align: center;color: #67c23a;">
-                        {{f['CourseChapter.chapterName']}}
+                        {{f.chapterName}}
                     </div>
-                    <div class="flex-cell time">{{f.fileType}}</div>
-                    <div class="flex-cell gold">{{f.fileSize > 1024*1024 ? `${(f.fileSize / (1024 *
+                    <div class="flex-cell time">{{f.type}}</div>
+                    <div class="flex-cell gold">{{f.size > 1024*1024 ? `${(f.size / (1024 *
                         1024)).toFixed(2)}MB` :
-                        `${(f.fileSize / 1024).toFixed(2)}KB`}}
+                        `${(f.size / 1024).toFixed(2)}KB`}}
                     </div>
                     <div class="flex-cell operating" v-if="f.deletedAt===null">
                         <a class="btn-operate mark"
@@ -87,7 +87,7 @@
                     <el-form-item label="文件名称" prop="name">
                         <el-input v-model="ruleForm.name">
                             <template slot="append" v-if="dialogFormInfo.type==='add'">
-                                <el-upload ref="upload" action="/api/teacher/course/file/add"
+                                <el-upload ref="upload" action="/api/teacher/file"
                                            :auto-upload="false" :show-file-list="false" :data="ruleForm"
                                            :headers="headers"
                                            :on-change="chooseFile" :on-success="handleSuccess">
@@ -111,14 +111,14 @@
                     </el-form-item>
                     <el-form-item label="所属课程" prop="course">
                         <el-select v-model="ruleForm.course" placeholder="请选择课程" value="" @change="getChapter">
-                            <el-option v-for="cos in course" :key="cos.courseID"
-                                       :label="cos.courseName" :value="cos.courseID"></el-option>
+                            <el-option v-for="cos in course" :key="cos.id"
+                                       :label="cos.name" :value="cos.id"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="所属章节" prop="chapter">
                         <el-select v-model="ruleForm.chapter" placeholder="请选择章节" value="">
-                            <el-option v-for="cpt in chapter" :key="cpt.chapterID"
-                                       :label="cpt.chapterName" :value="cpt.chapterID"></el-option>
+                            <el-option v-for="cpt in chapter" :key="cpt.id"
+                                       :label="cpt.name" :value="cpt.id"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item>
@@ -185,11 +185,11 @@
         },
         methods: {
             /* 获取文件信息 */
-            async getFile(page, type, content) {
+            async getFile(page, type, search) {
                 this.currentPage = page;
                 let res = type === '' ?
                     await getFile({page}) :
-                    await getFile({page, type, content});
+                    await getFile({page, type, search});
                 if (res) {
                     this.file = res.file;
                     this.pageSum = res.pageSum;
@@ -258,14 +258,13 @@
                 this.getCourse();
             },
             /* 获取课程章节 */
-            async getChapter(courseID) {
-                let res = await getChapter({courseID});
+            async getChapter(id) {
+                let res = await getChapter({id});
                 if (res) this.chapter = res.chapter;
             },
             /* 获取课程 */
             async getCourse() {
-                let res = await getCourse();
-                this.course = res.course;
+                this.course = await getCourse();
             },
             /* 选择文件 */
             chooseFile(file) {
@@ -334,7 +333,7 @@
                 if (this.$refs[formName] !== undefined)
                     this.$refs[formName].resetFields();
             },
-            //从课程中删除成员
+            //删除文件
             deleteFile(val, force) {
                 let msg = force ? '确定删除该文件（不可恢复）？' : '确定删除该文件（可恢复）？';
                 MessageBox.confirm(msg, '提示', {
@@ -343,9 +342,7 @@
                     type: 'warning'
                 }).then(async () => {
                     let res = await deleteFile({
-                        course: val['CourseChapter.CourseInformation.courseID'],
-                        chapter: val['CourseChapter.chapterID'],
-                        id: val['fileID'],
+                        id: val.id,
                         force
                     });
                     if (res) {
@@ -362,14 +359,14 @@
                 this.dialogFormVisible = true;
                 this.dialogFormInfo.title = "更新文件";
                 this.dialogFormInfo.type = "update";
-                this.dialogFormInfo.id = val['fileID'];
+                this.dialogFormInfo.id = val.id;
                 this.getCourse();
-                this.ruleForm.name = val['fileName'];
-                this.ruleForm.course = val['CourseChapter.CourseInformation.courseID'];
+                this.ruleForm.name = val.name;
+                this.ruleForm.course = val.courseId;
                 await this.getChapter(this.ruleForm.course);
-                this.ruleForm.chapter = val['CourseChapter.chapterID'];
-                this.ruleForm.type = val['fileType'];
-                this.ruleForm.size = val['fileSize'];
+                this.ruleForm.chapter = val.chapterId;
+                this.ruleForm.type = val.type;
+                this.ruleForm.size = val.size;
             },
             /* 恢复文件 */
             async recoverFile(val) {
@@ -378,11 +375,7 @@
                     cancelButtonText: '取消',
                     type: 'info'
                 }).then(async () => {
-                    let res = await recoverFile({
-                        course: val['CourseChapter.CourseInformation.courseID'],
-                        chapter: val['CourseChapter.chapterID'],
-                        id: val['fileID'],
-                    });
+                    let res = await recoverFile({id: val.id});
                     if (res) {
                         Message.success(res.msg);
                         this.getFile(1, '', null);

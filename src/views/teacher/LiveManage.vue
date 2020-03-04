@@ -35,8 +35,8 @@
                     </el-form-item>
                     <el-form-item label="所属课程" prop="course">
                         <el-select v-model="ruleForm.course" placeholder="请选择课程" value="">
-                            <el-option v-for="cos in course" :key="cos.courseID"
-                                       :label="cos.courseName" :value="cos.courseID"/>
+                            <el-option v-for="cos in course" :key="cos.id"
+                                       :label="cos.name" :value="cos.id"/>
                         </el-select>
                     </el-form-item>
                     <el-form-item>
@@ -54,8 +54,8 @@
 <script>
     import {Message} from 'element-ui'
     import moment from 'moment'
-    import {getLive, setLive, getLiveCourse} from '@/api/course-manage'
-    import {saveAs} from 'file-saver'
+    import {getLive, setLive, getLiveCourse, downloadHelp} from '@/api/course-manage'
+    import FileSaver from "file-saver"
 
     export default {
         name: "LiveManage",
@@ -96,11 +96,11 @@
                     let data = res.live;
                     for (let live of data) {
                         this.tableData.push({
-                            course: live['CourseInformation.CourseName'],
+                            course: live.courseName,
                             title: live.title,
                             pushUrl: live.pushUrl,
                             pushName: live.pushName,
-                            time: moment(live.txTime).format('YYYY-MM-DD HH:mm:ss')
+                            time: live.time
                         })
                     }
                     this.pageSum = res.pageSum;
@@ -120,7 +120,7 @@
                 this.$refs['ruleForm'].validate(async valid => {
                     if (valid) {
                         let res = await setLive({
-                            title: this.ruleForm.title, courseID: this.ruleForm.course
+                            title: this.ruleForm.title, id: this.ruleForm.course
                         });
                         if (res) {
                             Message.success(res.msg);
@@ -136,8 +136,9 @@
                 this.course = res.course;
             },
             /* 下载文件 */
-            downloadHelp() {
-                saveAs(`${process.env.VUE_APP_BASE_API}/teacher/course/live/help`);
+            async downloadHelp() {
+                const res = await downloadHelp();
+                FileSaver.saveAs(res);
             }
         },
         async created() {

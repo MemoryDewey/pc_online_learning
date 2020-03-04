@@ -73,22 +73,22 @@
             exercise: {type: Object, require: true}
         },
         watch: {
-            'exercise.videoID'(val) {
+            'exercise.videoId'(val) {
                 this.changeExercise(val);
             }
         },
         methods: {
             /**
              * 改变视频时，课后习题也改变
-             * @param videoID
+             * @param videoId
              */
-            async changeExercise(videoID) {
+            async changeExercise(videoId) {
                 this.courseExercise = [];
                 this.radio = [];
-                if (videoID !== undefined) {
+                if (videoId !== undefined) {
                     let response = await getExercise({
-                        videoID,
-                        courseID: this.$route.params.courseID
+                        videoId,
+                        courseId: this.$route.params.id
                     });
                     if (response) if (response.exam !== false) {
                         this.hasExercise = true;
@@ -118,11 +118,11 @@
                     let response = await addExam({
                         courseID: this.$route.params.courseID,
                         answer: this.radio,
-                        exam: {type: 'exercise', id: this.exercise.videoID},
+                        exam: {type: 'exercise', id: this.exercise.videoId},
                     });
                     if (response) {
                         Message.success(response.msg);
-                        this.changeExercise(this.exercise.videoID);
+                        this.changeExercise(this.exercise.videoId);
                     }
                 }).catch(() => {
                     Message.info("已取消操作");
@@ -130,7 +130,7 @@
             }
         },
         created() {
-            if (this.$route.params.videoID !== undefined) this.changeExercise(this.$route.params.videoID);
+            if (this.$route.params.videoId !== undefined) this.changeExercise(this.$route.params.videoId);
         }
     }
 </script>

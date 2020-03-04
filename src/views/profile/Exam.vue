@@ -30,7 +30,7 @@
             </div>
             <div class="flex-row content">
                 <div class="flex-cell first cover">
-                    <router-link :to="`/course/${course['courseID']}`">
+                    <router-link :to="`/course/${course['courseID']}/information`">
                         <el-image :src="course.image">
                             <template slot="error">
                                 <img src="../../assets/image/load-error.jpg" alt>

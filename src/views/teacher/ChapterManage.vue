@@ -51,8 +51,8 @@
                 </el-form-item>
                 <el-form-item label="选择课程">
                     <el-select v-model="formInline.course" placeholder="选择课程" value="">
-                        <el-option v-for="cos in course" :key="cos.courseID"
-                                   :label="cos.courseName" :value="cos.courseID">
+                        <el-option v-for="cos in course" :key="cos.id"
+                                   :label="cos.name" :value="cos.id">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -117,11 +117,11 @@
                     this.pageSum = res.pageSum;
                     for (let chapter of data)
                         this.tableData.push({
-                            id: chapter['chapterID'],
+                            id: chapter['chapterId'],
                             name: chapter['chapterName'],
-                            course: chapter['CourseInformation.courseName'],
-                            cid: chapter['CourseInformation.CourseDetail.courseID'],
-                            delete: chapter['deletedAt']
+                            course: chapter['courseName'],
+                            cid: chapter['courseId'],
+                            delete: chapter['delete']
                         })
                 }
             },
@@ -148,8 +148,7 @@
             },
             /* 获取课程 */
             async getCourse() {
-                let response = await getCourse();
-                this.course = response.course;
+                this.course = await getCourse();
             },
             /* 添加章节 */
             addChapter() {
@@ -176,7 +175,7 @@
             async addChapterSubmit() {
                 if (this.checkInput()) {
                     let res = await addChapter({
-                        courseID: this.formInline.course, name: this.formInline.chapter
+                        courseId: this.formInline.course, name: this.formInline.chapter
                     });
                     if (res) {
                         Message.success(res.msg);
@@ -188,21 +187,21 @@
                 }
             },
             /* 更新章节 */
-            updateChapter(chapterID, chapterName, courseID) {
+            updateChapter(chapterId, chapterName, courseId) {
                 this.getCourse();
                 this.formInline.chapter = chapterName;
-                this.formInline.course = courseID;
+                this.formInline.course = courseId;
                 this.dialogFormInfo.title = "编辑章节";
                 this.dialogFormInfo.type = "update";
-                this.dialogFormInfo.id = chapterID;
+                this.dialogFormInfo.id = chapterId;
                 this.dialogFormVisible = true;
             },
             /* 更新章节提交 */
             async updateChapterSubmit() {
                 if (this.checkInput()) {
                     let res = await updateChapter({
-                        courseID: this.formInline.course, name: this.formInline.chapter,
-                        chapterID: this.dialogFormInfo.id
+                        courseId: this.formInline.course, name: this.formInline.chapter,
+                        chapterId: this.dialogFormInfo.id
                     });
                     if (res) {
                         Message.success(res.msg);
@@ -214,13 +213,13 @@
                 }
             },
             /* 删除章节 */
-            deleteChapter(chapterID) {
+            deleteChapter(id) {
                 MessageBox.confirm('确定从该课程中删除该章节？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(async () => {
-                    let res = await deleteChapter({chapterID});
+                    let res = await deleteChapter({id});
                     if (res) {
                         Message.success(res.msg);
                         this.getChapter(1, '');
@@ -230,8 +229,8 @@
                 })
             },
             /* 还原章节 */
-            async recoverChapter(chapterID) {
-                let res = await recoverChapter({chapterID});
+            async recoverChapter(id) {
+                let res = await recoverChapter({id});
                 if (res) {
                     Message.success(res.msg);
                     this.getChapter(1, '');

@@ -95,12 +95,12 @@
                                     <div class="text">该分类下无课程</div>
                                 </div>
                             </div>
-                            <div class="study-item" v-for="course in courses" :key="course.courseID"
-                                 @click="gotoCourseInfo(`/course/${course.courseID}/information`)">
+                            <div class="study-item" v-for="course in courses" :key="course.id"
+                                 @click="gotoCourseInfo(`/course/${course.id}/information`)">
                                 <!--图片-->
                                 <div class="left">
                                     <div class="c-img">
-                                        <el-image :src="course.courseImage" lazy>
+                                        <el-image :src="course.image" lazy>
                                             <template slot="error">
                                                 <img src="../../assets/image/load-error.jpg" alt>
                                             </template>
@@ -112,7 +112,7 @@
                                     <div class="info">
                                         <!--标题-->
                                         <div class="title">
-                                            <a><span class="text">{{course['courseName']}}</span></a>
+                                            <a><span class="text">{{course.name}}</span></a>
                                             <a class="price free" v-if="course.price===0">免费</a>
                                             <template v-else>
                                                 <a class="price charge">{{
@@ -127,15 +127,15 @@
                                         </div>
                                         <!--授课老师/机构-->
                                         <div class="teacher"><a>
-                                            {{course['CourseDetail']['UserInformation'].nickname}}
+                                            {{course.detail.teacher.nickname}}
                                         </a></div>
                                         <!--描述-->
-                                        <div class="description">{{course['courseDescription']}}</div>
+                                        <div class="description">{{course.description}}</div>
                                         <!--细节-->
                                         <div class="detail">
-                                            <span class="hot"><font-awesome-icon icon="user"></font-awesome-icon>{{course['applyCount']}}人已报名</span>
+                                            <span class="hot"><font-awesome-icon icon="user"></font-awesome-icon>{{course.apply}}人已报名</span>
                                             <div class="praise">
-                                                好评度 {{`${course['favorableRate']*100}%`}}
+                                                好评度 {{`${course.rate*100}%`}}
                                             </div>
                                         </div>
                                     </div>
@@ -157,22 +157,22 @@
                     <h2 class="top">热门推荐</h2>
                     <ul class="study-card-list">
                         <li class="study-card-item" v-for="recommend in recommendCourse"
-                            :key="recommend.courseID"
-                            @click="gotoCourseInfo(`/course/${recommend.courseID}/information`)">
+                            :key="recommend.id"
+                            @click="gotoCourseInfo(`/course/${recommend.id}/information`)">
                             <a class="item-img-link">
-                                <el-image :src="recommend.courseImage" lazy>
+                                <el-image :src="recommend.image" lazy>
                                     <template slot="error">
                                         <img src="../../assets/image/load-error.jpg" alt>
                                     </template>
                                 </el-image>
                             </a>
                             <h4 class="item-title">
-                                <a class="item-title-link">{{recommend.courseName}}</a>
+                                <a class="item-title-link">{{recommend.name}}</a>
                             </h4>
                             <div class="item-info">
-                                <span class="price charge" v-if="recommend['price']>0">{{recommend.price}} 课程币</span>
+                                <span class="price charge" v-if="recommend.price>0">{{recommend.price}} 课程币</span>
                                 <span class="price free" v-else>免费</span>
-                                <span class="praise">{{recommend['applyCount']}}人报名</span>
+                                <span class="praise">{{recommend.apply}}人报名</span>
                             </div>
                         </li>
                     </ul>
@@ -288,7 +288,7 @@
             let response;
             /* 获取推荐课程 */
             response = await getRecommend();
-            if (response) this.recommendCourse = response.course;
+            if (response) this.recommendCourse = response;
             /* 获取课程 */
             let params = this.$route.query;
             params.search = this.$route.params.search ? this.$route.params.search : undefined;

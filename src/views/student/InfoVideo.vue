@@ -7,7 +7,7 @@
             </div>
             <div class="tabs-item-list">
                 <a class="tabs-study-item" v-for="video in chapter.video"
-                   :key="video.id" @click="gotoVideo(video.id,video.ware,video.url)">
+                   :key="video.id" @click="gotoVideo(video.id,video.wareUrl,video.videoUrl)">
                     <font-awesome-icon icon="play-circle"></font-awesome-icon>
                     <p class="study-item-title">
                         <span :title="video.name" class="text">{{video.name}}</span>
@@ -66,7 +66,7 @@
             //获取直播课程信息
             async getLive() {
                 if (this.video.form === 'L') {
-                    let response = await getLive({courseID: this.$route.params.courseID});
+                    let response = await getLive({id: this.$route.params.id});
                     if (response) {
                         if (response.live) {
                             this.live.name = response.title;
@@ -78,17 +78,17 @@
             },
             //获取视频信息
             async getVideo() {
-                let response = await getVideo({courseID: this.$route.params.courseID});
+                let response = await getVideo({id: this.$route.params.id});
                 if (response) this.courseChapter = response.data;
             },
             //跳转到视频页
-            gotoVideo(videoID, ware, videoUrl) {
+            gotoVideo(videoId, ware, videoUrl) {
                 if (!this.apply) Message.warning('需要报名后才能学习该课程哦');
                 else this.$router.push({
                     name: 'CourseVideo',
                     params: {
-                        courseID: this.$route.params.courseID,
-                        ware, videoID, videoUrl
+                        id: this.$route.params.id,
+                        ware, videoId, videoUrl
                     }
                 })
             },
@@ -99,7 +99,7 @@
                     this.$router.push({
                         name: 'CourseVideo',
                         params: {
-                            courseID: this.$route.params.courseID,
+                            id: this.$route.params.id,
                             live: "true"
                         },
                     });

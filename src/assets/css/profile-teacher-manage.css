@@ -122,6 +122,7 @@
 .manage-view .flex-list-item .content .title {
   line-height: 20px;
   color: #000;
+  max-width: 121px;
 }
 .profile-view .flex-list-item .content .price,
 .manage-view .flex-list-item .content .price {
@@ -283,4 +284,4 @@
 .teacher-manage .inner-center .main .input-with-select .el-input-group__prepend {
   background-color: #fff;
 }
-/*# sourceMappingURL=profile-manage-manage.css.map */
+/*# sourceMappingURL=profile-teacher-manage.css.map */

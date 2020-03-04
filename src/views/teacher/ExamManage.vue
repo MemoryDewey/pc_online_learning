@@ -79,16 +79,16 @@
                     <el-form-item label="所属课程" prop="course" v-if="ruleForm.type && !isUpdate">
                         <el-select v-model="ruleForm.course" placeholder="选择课程" value=""
                                    @change="getVideo(ruleForm.type,ruleForm.course)">
-                            <el-option v-for="cos in course" :key="cos.courseID"
-                                       :label="cos.courseName" :value="cos.courseID"
-                                       :disabled="cos.CourseExam!==null && ruleForm.type==='exam'"></el-option>
+                            <el-option v-for="cos in course" :key="cos.id"
+                                       :label="cos.name" :value="cos.id"
+                                       :disabled="cos.exam!==null && ruleForm.type==='exam'"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="所属视频" prop="video" v-if="ruleForm.type==='exercise' && !isUpdate">
                         <el-select v-model="ruleForm.video" placeholder="选择视频" value="">
-                            <el-option v-for="v in video" :key="v.videoID"
-                                       :label="v.videoName" :value="v.videoID"
-                                       :disabled="v.CourseExercise!==null"></el-option>
+                            <el-option v-for="v in video" :key="v.id"
+                                       :label="v.name" :value="v.id"
+                                       :disabled="v.exercise!==null"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="考试时间" required v-if="ruleForm.type === 'exam'">
@@ -134,7 +134,7 @@
                 video: [],
                 tableData: [],
                 dynamicForm: {question: []},
-                ruleForm: {type: null, startTime: null, endTime: null, course: null, video: null,},
+                ruleForm: {type: null, startTime: new Date(), endTime: new Date(), course: null, video: null,},
                 rules: {
                     type: [
                         {required: true, message: '请选择考试类型', trigger: 'change'}
@@ -166,27 +166,18 @@
                     for (let paper of data) {
                         const type = this.searchType === 'exam' ? "期末测验" : "课后测验";
                         const name = this.searchType === 'exam' ?
-                            paper['CourseExam']['CourseInformation'].courseName :
-                            paper['CourseExercise']['CourseVideo'].videoName;
-                        const course = this.searchType === 'exam' ?
-                            paper['CourseExam']['CourseInformation'].courseID :
-                            paper['CourseExercise']['CourseVideo']['CourseChapter']
-                                ['CourseInformation'].courseID;
+                            paper.courseName :
+                            paper.videoName;
+                        const course = paper.courseId;
                         const video = this.searchType === 'exam' ? null :
-                            paper['CourseExercise']['CourseVideo'].videoID;
-                        const startTime = this.searchType === 'exam' ?
-                            paper['CourseExam'].startTime :
-                            paper['CourseExercise']['CourseVideo']['CourseChapter']
-                                ['CourseInformation']['CourseDetail'].startTime;
-                        const endTime = this.searchType === 'exam' ?
-                            paper['CourseExam'].endTime :
-                            paper['CourseExercise']['CourseVideo']['CourseChapter']
-                                ['CourseInformation']['CourseDetail'].finishTime;
-                        const paperID = paper.paperID;
-                        const question = paper['question'];
-                        const answer = paper['answer'];
+                            paper.videoId;
+                        const startTime = paper.startTime;
+                        const endTime = paper.endTime;
+                        const paperId = paper.id;
+                        const question = paper.question;
+                        const answer = paper.answer;
                         this.tableData.push({
-                            type, name, startTime, endTime, paperID,
+                            type, name, startTime, endTime, paperId,
                             question, answer, course, video
                         })
                     }
@@ -211,10 +202,10 @@
                 this.course = response.course;
             },
             /* 获取视频 */
-            async getVideo(type, course) {
+            async getVideo(type, id) {
                 this.video = [];
                 if (type === "exercise") {
-                    let response = await getCourseVideo({course});
+                    let response = await getCourseVideo({id});
                     this.video = response.video;
                 }
             },
@@ -284,7 +275,7 @@
                     endTime: val.video ? null : new Date(val.endTime),
                     course: val.course,
                     video: val.video,
-                    paperID: val.paperID
+                    id: val.paperId
                 };
                 this.dialogFormVisible = true;
                 this.dialogFormInfo.title = "更新试题";

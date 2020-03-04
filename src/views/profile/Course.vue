@@ -29,27 +29,27 @@
         <!--课程存在 S-->
         <div class="flex-list-item" v-else v-for="course in courses" :key="course['courseID']">
             <div class="flex-row head">
-                <div class="time">{{course['joinTime']}}</div>
+                <div class="time">{{course.time}}</div>
             </div>
             <div class="flex-row content">
                 <div class="flex-cell first cover">
-                    <router-link :to="`/course/${course['courseID']}`">
+                    <router-link :to="`/course/${course.id}/information`">
                         <el-image :src="course.image">
                             <template slot="error">
                                 <img src="../../assets/image/load-error.jpg" alt>
                             </template>
                         </el-image>
-                        <div class="title">{{course['courseName']}}</div>
+                        <div class="title">{{course.name}}</div>
                     </router-link>
                 </div>
-                <div class="flex-cell price">{{course['price']===0?'免费':`${course['price']} 课程币`}}</div>
+                <div class="flex-cell price">{{course.price===0?'免费':`${course.price} 课程币`}}</div>
                 <div class="flex-cell state">已报名</div>
-                <div class="flex-cell score">{{course['score']}}</div>
+                <div class="flex-cell score">{{course.score}}</div>
                 <div class="flex-cell operating">
-                    <a class="btn-operate" @click="openDialog(course['courseID'])">
+                    <a class="btn-operate" @click="openDialog(course.id)">
                         评价课程
                     </a>
-                    <a class="btn-operate" v-if="course['price']===0" @click="cancelCourse(course['courseID'])">
+                    <a class="btn-operate" v-if="course.price===0" @click="cancelCourse(course.id)">
                         取消报名
                     </a>
                 </div>
@@ -151,16 +151,16 @@
                 } else this.dialogFormInfo.qualified = true;
             },
             //打开评论框
-            openDialog(courseID) {
+            openDialog(id) {
                 this.dialogVisible = true;
-                this.dialogCourseID = courseID;
+                this.dialogCourseID = id;
             },
             //提交评论
-            async submitComment(courseID) {
+            async submitComment(id) {
                 this.checkInput();
                 if (this.dialogFormInfo.qualified) {
                     let response = await addComment({
-                        courseID,
+                        id,
                         star: this.dialogFormInfo.rateValue,
                         comment: this.dialogFormInfo.text
                     });
@@ -171,13 +171,13 @@
                 }
             },
             //取消报名
-            async cancelCourse(courseID) {
+            async cancelCourse(id) {
                 MessageBox.confirm('确定取消报名该节课程？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(async () => {
-                    let response = await cancelFree({courseID});
+                    let response = await cancelFree({id});
                     if (response) {
                         Message.success(response.msg);
                         this.getCourse(1);

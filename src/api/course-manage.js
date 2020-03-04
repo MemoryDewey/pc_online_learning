@@ -1,52 +1,50 @@
-import {get, post} from '../utils/request';
+import {get, post, del, put, download} from '../utils/request';
 
-export const getStudent = params => get('/teacher/course/student', params);
-export const addStudent = data => post('/teacher/course/student/add', data);
-export const deleteStudent = data => post('/teacher/course/student/delete', data);
-export const addCertificate = data => post('/teacher/course/student/certificate', data);
+export const getStudent = params => get('/teacher/student', params);
+export const addStudent = data => post('/teacher/student', data);
+export const deleteStudent = data => del('/teacher/student', data);
+export const addCertificate = data => post('/teacher/student/certificate', data);
 
-
-
-export const getCourse = () => get('/teacher/course');
-export const getCourseInfo = params => get('/teacher/course/info', params);
-export const updateCourseInfo = data => post('/teacher/course/info/update', data);
-export const deleteCourse = data => post('/teacher/course/info/delete', data);
-export const recoverCourse = data => post('/teacher/course/info/recover', data);
-export const setCourseDiscount = data => post('/teacher/course/info/discount', data);
+export const getCourse = () => get('/teacher/course/all');
+export const getCourseInfo = params => get('/teacher/course', params);
+export const updateCourseInfo = data => put('/teacher/course', data);
+export const deleteCourse = data => del('/teacher/course', data);
+export const recoverCourse = data => post('/teacher/course/recover', data);
+export const setCourseDiscount = data => post('/teacher/course/discount', data);
 
 
-export const getChapter = params => get('/teacher/course/chapter-course', params);
-export const getChapterInfo = params => get('/teacher/course/chapter', params);
-export const addChapter = data => post('/teacher/course/chapter/add', data);
-export const deleteChapter = data => post('/teacher/course/chapter/delete', data);
-export const updateChapter = data => post('/teacher/course/chapter/update', data);
-export const recoverChapter = data => post('/teacher/course/chapter/recover', data);
+export const getChapter = params => get('/teacher/chapter/course', params);
+export const getChapterInfo = params => get('/teacher/chapter', params);
+export const addChapter = data => post('/teacher/chapter', data);
+export const deleteChapter = data => del('/teacher/chapter', data);
+export const updateChapter = data => put('/teacher/chapter', data);
+export const recoverChapter = data => post('/teacher/chapter/recover', data);
 
 
-export const getVideo = params => get('/teacher/course/video', params);
-export const getSignature = () => get('/teacher/course/video/signature');
-export const addVideo = data => post('/teacher/course/video/add', data);
-export const updateVideo = data => post('/teacher/course/video/update', data);
-export const deleteVideo = data => post('/teacher/course/video/delete', data);
-export const checkVideo = data => post('/teacher/course/video/check', data);
-
-export const getLive = params => get('/teacher/course/live', params);
-export const setLive = data => post('/teacher/course/live/add', data);
-export const getLiveCourse = () => get('/teacher/course/live-course');
+export const getVideo = params => get('/teacher/video', params);
+export const getSignature = () => get('/teacher/video/signature');
+export const addVideo = data => post('/teacher/video', data);
+export const updateVideo = data => put('/teacher/video', data);
+export const deleteVideo = data => del('/teacher/video', data);
+export const checkVideo = params => get('/teacher/video/check', params);
+export const deleteWare = data => del('/teacher/video/ware', data);
 
 
-export const deleteWare = data => post('/teacher/course/ware/delete', data);
+export const getLive = params => get('/teacher/live', params);
+export const setLive = data => post('/teacher/live', data);
+export const getLiveCourse = () => get('/teacher/live/course');
+export const downloadHelp = () => download('/teacher/live/help');
 
 
-export const getFile = params => get('/teacher/course/file', params);
-export const updateFile = data => post('/teacher/course/file/update', data);
-export const deleteFile = data => post('/teacher/course/file/delete', data);
-export const recoverFile = data => post('/teacher/course/file/recover', data);
+export const getFile = params => get('/teacher/file', params);
+export const updateFile = data => put('/teacher/file', data);
+export const deleteFile = data => del('/teacher/file', data);
+export const recoverFile = data => post('/teacher/file/recover', data);
 
 
-export const getPaper = params => get('/teacher/course/paper', params);
-export const addPaper = data => post('/teacher/course/paper/add', data);
-export const updatePaper = data => post('/teacher/course/paper/update', data);
-export const getCoursePaper = () => get('/teacher/course/course-paper');
-export const getCourseVideo = params => get('/teacher/course/video-course-paper', params);
+export const getPaper = params => get('/teacher/paper', params);
+export const addPaper = data => post('/teacher/paper', data);
+export const updatePaper = data => put('/teacher/paper', data);
+export const getCoursePaper = () => get('/teacher/paper/course');
+export const getCourseVideo = params => get('/teacher/paper/video', params);
 

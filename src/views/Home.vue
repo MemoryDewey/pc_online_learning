@@ -24,19 +24,19 @@
                     </div>
                     <div class="course-fee" v-if="courseFee">
                         <ul class="clear">
-                            <li v-for="course in chargeCourse" :key="course.courseID">
-                                <router-link :to="{path:`/course/${course.courseID}/information`}">
-                                    <el-image :src="course.courseImage" lazy>
+                            <li v-for="course in chargeCourse" :key="course.id">
+                                <router-link :to="{path:`/course/${course.id}/information`}">
+                                    <el-image :src="course.image" lazy>
                                         <template slot="error">
                                             <img src="../assets/image/load-error.jpg" alt>
                                         </template>
                                         <div slot="placeholder" class="image-slot"></div>
                                     </el-image>
-                                    <div class="course-title">{{course.courseName}}</div>
+                                    <div class="course-title">{{course.name}}</div>
                                     <div class="course-info clear">
                                         <div style="float: left;color: #e85308;">{{course.price}} 课程币</div>
                                         <div class="apply-num">
-                                            {{course.applyCount}}人已报名
+                                            {{course.apply}}人已报名
                                         </div>
                                     </div>
                                 </router-link>
@@ -45,18 +45,18 @@
                     </div>
                     <div class="course-fee" v-if="!courseFee">
                         <ul class="clear">
-                            <li v-for="course in freeCourse" :key="course.courseID">
-                                <router-link :to="{path:`/course/${course.courseID}/information`}">
-                                    <el-image :src="course.courseImage" lazy>
+                            <li v-for="course in freeCourse" :key="course.id">
+                                <router-link :to="{path:`/course/${course.id}/information`}">
+                                    <el-image :src="course.image" lazy>
                                         <template slot="error">
                                             <img src="../assets/image/load-error.jpg" alt>
                                         </template>
                                         <div slot="placeholder" class="image-slot"></div>
                                     </el-image>
-                                    <div class="course-title">{{course.courseName}}</div>
+                                    <div class="course-title">{{course.name}}</div>
                                     <div class="course-info clear">
                                         <div style="float: left;color: #42c02e;">免费</div>
-                                        <div class="apply-num">{{course.applyCount}}人已报名</div>
+                                        <div class="apply-num">{{course.apply}}人已报名</div>
                                     </div>
                                 </router-link>
                             </li>

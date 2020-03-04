@@ -46,13 +46,13 @@
                 <div class="flex-row content" v-for="student in info">
                     <div class="flex-cell state">{{student.nickname}}</div>
                     <div class="flex-cell state">{{student.courseName}}</div>
-                    <div class="flex-cell time">{{formatDate(student.createdAt)}}</div>
+                    <div class="flex-cell time">{{formatDate(student.time)}}</div>
                     <div class="flex-cell score">{{student.score}}</div>
                     <div class="flex-cell operating">
                         <a class="btn-operate mark"
-                           @click="certificateDialog(student.userID,student.courseID)">颁发证书</a>
+                           @click="certificateDialog(student.userId,student.courseId)">颁发证书</a>
                         <a class="btn-operate delete"
-                           @click="deleteStudent(student.courseID,student.userID)">删除成员</a>
+                           @click="deleteStudent(student.courseId,student.userId)">删除成员</a>
                     </div>
                 </div>
             </div>
@@ -75,8 +75,8 @@
                 </el-form-item>
                 <el-form-item label="选择课程">
                     <el-select v-model="formInline.course" placeholder="选择课程" value="">
-                        <el-option v-for="cos in course" :key="cos.courseID"
-                                   :label="cos.courseName" :value="cos.courseID">
+                        <el-option v-for="cos in course" :key="cos.id"
+                                   :label="cos.name" :value="cos.id">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -94,7 +94,7 @@
                     <el-input v-model="certificateDialogForm.score" placeholder="成绩（0-100）"/>
                 </el-form-item>
                 <el-form-item label="证书编号">
-                    <el-input v-model="certificateDialogForm.certificateID" placeholder="请输入证书编号"/>
+                    <el-input v-model="certificateDialogForm.certificate" placeholder="请输入证书编号"/>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="addCertificate">添加</el-button>
@@ -137,9 +137,9 @@
                 certificateDialogShow: false,
                 certificateDialogForm: {
                     score: '',
-                    certificateID: '',
-                    courseID: '',
-                    userID: '',
+                    certificate: '',
+                    courseId: '',
+                    studentId: '',
                 },
                 course: []
             }
@@ -192,7 +192,7 @@
                 if (this.formInline.user === '') Message.warning('请输入学员账号');
                 else if (this.formInline.course === '') Message.warning('请选择课程');
                 else {
-                    addStudent({courseID: this.formInline.course, studentID: this.formInline.user}).then(res => {
+                    addStudent({courseId: this.formInline.course, phone: this.formInline.user}).then(res => {
                         if (res) {
                             Message.success(res.msg);
                             this.getStudent(1, '0', null);
@@ -204,13 +204,13 @@
                 }
             },
             //从课程中删除成员
-            deleteStudent(courseID, userID) {
+            deleteStudent(courseId, studentId) {
                 MessageBox.confirm('确定从该课程中删除该成员？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    deleteStudent({courseID, userID}).then(res => {
+                    deleteStudent({courseId, studentId}).then(res => {
                         if (res) {
                             Message.success(res.msg);
                             this.getStudent(1, '0', null);
@@ -221,10 +221,10 @@
                 })
             },
             //打开添加证书dialog
-            certificateDialog(userID, courseID) {
+            certificateDialog(userId, courseId) {
                 this.certificateDialogShow = true;
-                this.certificateDialogForm.courseID = courseID;
-                this.certificateDialogForm.userID = userID;
+                this.certificateDialogForm.courseId = courseId;
+                this.certificateDialogForm.studentId = userId;
             },
             //添加证书
             addCertificate() {

@@ -22,18 +22,18 @@
                     </div>
                 </div>
                 <div class="flex-list-item" v-else v-for="course in rmbCourses"
-                     :key="course['productID']">
+                     :key="course.productId">
                     <div class="flex-row head">
-                        <div class="time">{{course['createdAt']}}</div>
+                        <div class="time">{{course.time}}</div>
                     </div>
                     <div class="flex-row content">
                         <div class="flex-cell first cover">
-                            <el-image :src="course['CourseInformation'].courseImage">
+                            <el-image :src="course.image">
                                 <template slot="error">
                                     <img src="../../assets/image/commodity-error.jpg" alt>
                                 </template>
                             </el-image>
-                            <div class="title">{{course['CourseInformation'].courseName}}</div>
+                            <div class="title">{{course.name}}</div>
                         </div>
                         <div class="flex-cell first state">{{course.amount}} 课程币</div>
                     </div>
@@ -66,21 +66,21 @@
                     </div>
                 </div>
                 <div class="flex-list-item" v-else v-for="course in bstCourses"
-                     :key="course['productID']">
+                     :key="course.productId">
                     <div class="flex-row head">
-                        <div class="time">{{course['createdAt']}}</div>
+                        <div class="time">{{course.time}}</div>
                     </div>
                     <div class="flex-row content">
                         <div class="flex-cell first cover">
-                            <el-image :src="course['CourseInformation'].courseImage">
+                            <el-image :src="course.image">
                                 <template slot="error">
                                     <img src="../../assets/image/commodity-error.jpg" alt>
                                 </template>
                             </el-image>
-                            <div class="title">{{course['CourseInformation'].courseName}}</div>
+                            <div class="title">{{course.name}}</div>
                         </div>
                         <div class="flex-cell first state">{{course.amount}} BST</div>
-                        <div class="flex-cell first hash">{{course['txHash']}}</div>
+                        <div class="flex-cell first hash">{{course.txHash}}</div>
                     </div>
                 </div>
                 <div class="sort-page">

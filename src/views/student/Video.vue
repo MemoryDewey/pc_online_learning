@@ -71,9 +71,9 @@
                                             <h4 class="chapter-title">{{chapter.name}}</h4>
                                             <ol>
                                                 <li v-for="video in chapter.video" class="video-item" :key="video.id"
-                                                    :class="{selected:videoID===video.id && replay}"
+                                                    :class="{selected:videoId===video.id && replay}"
                                                     :id="`video-item-${video.id}`"
-                                                    @click="changeVideo(video.id,video.name,video.url,video.ware)">
+                                                    @click="changeVideo(video.id,video.name,video.videoUrl,video.wareUrl)">
                                                     <div class="video-item-prefix">
                                                         <span class="video-item-number">{{video.number}}</span>
                                                     </div>
@@ -145,14 +145,14 @@
                 applyCount: 0,
                 courseName: null,
                 courseChapter: null,
-                videoID: 0,
+                videoId: 0,
                 videoName: null,
                 showVideo: true,
                 videoUrl: null,
                 wareUrl: null,
                 //传给子组件
                 exercise: {
-                    videoID: 0,
+                    videoId: 0,
                     videoName: null
                 },
                 bread: {
@@ -173,13 +173,13 @@
         },
         methods: {
             //改变视频时触发
-            changeVideo(videoID, videoName, url, ware) {
+            changeVideo(videoId, videoName, url, wareUrl) {
                 this.replay = true;
-                this.videoID = videoID;
+                this.videoId = videoId;
                 this.videoName = videoName;
                 this.videoUrl = url;
-                this.wareUrl = ware;
-                this.exercise = {videoID, videoName}
+                this.wareUrl = wareUrl;
+                this.exercise = {videoId, videoName}
             },
             //改变为直播时触发
             changeLive() {
@@ -189,25 +189,25 @@
             },
             //获取课程信息
             async getInfo() {
-                let response = await getInfo({courseID: this.$route.params.courseID});
+                let response = await getInfo({id: this.$route.params.id});
                 if (response) {
                     let course = response.course;
-                    this.courseRate = course.info['favorableRate'] * 100;
-                    this.applyCount = course.info.applyCount;
-                    this.courseName = course.info.courseName;
-                    this.bread.systemName = course.info.systemName;
-                    this.bread.systemUrl = `/course/list?system=${course.info['systemID']}`;
-                    this.bread.typeName = course.info.typeName;
-                    this.bread.typeUrl = `/course/list?system=${course.info['systemID']}&type=${course.info['typeID']}`;
-                    this.bread.courseName = course.info.courseName;
-                    this.bread.courseUrl = `/course/${this.$route.params.courseID}/information`;
-                    this.live.exist = course.info.courseForm === 'L';
-                    document.title = course.info.courseName;
+                    this.courseRate = course.info.rate * 10000 / 100;
+                    this.applyCount = course.info.apply;
+                    this.courseName = course.info.name;
+                    this.bread.systemName = course.info.system.name;
+                    this.bread.systemUrl = `/course/list?system=${course.info.system.id}`;
+                    this.bread.typeName = course.info.type.name;
+                    this.bread.typeUrl = `/course/list?system=${course.info.system.id}&type=${course.info.type.id}`;
+                    this.bread.courseName = course.info.name;
+                    this.bread.courseUrl = `/course/${this.$route.params.id}/information`;
+                    this.live.exist = course.info.form === 'L';
+                    document.title = course.info.name;
                 }
             },
             //获取视频
             async getVideo() {
-                let response = await getVideo({courseID: this.$route.params.courseID});
+                let response = await getVideo({id: this.$route.params.id});
                 if (response) {
                     this.courseChapter = response.data;
                     for (let chapter of this.courseChapter) {
@@ -217,22 +217,22 @@
                         }
                     }
                     if ((this.courseChapter.length === 0 || this.$route.params.live)
-                        && this.$route.params.videoID === undefined) return;
+                        && this.$route.params.videoId === undefined) return;
                     else this.replay = true;
-                    this.exercise = {videoID: this.videoID, videoName: this.videoName};
-                    if (this.courseChapter[0].video.length > 0 && this.videoID === undefined) {
-                        this.videoID = this.courseChapter[0].video[0].id;
+                    this.exercise = {videoId: this.videoId, videoName: this.videoName};
+                    if (this.courseChapter[0].video.length > 0 && this.videoId === undefined) {
+                        this.videoId = this.courseChapter[0].video[0].id;
                         this.videoName = this.courseChapter[0].video[0].name;
-                        this.videoUrl = this.courseChapter[0].video[0].url;
-                        this.wareUrl = this.courseChapter[0].video[0].ware;
-                        this.exercise = {videoID: this.videoID, videoName: this.videoName}
+                        this.videoUrl = this.courseChapter[0].video[0].videoUrl;
+                        this.wareUrl = this.courseChapter[0].video[0].wareUrl;
+                        this.exercise = {videoId: this.videoId, videoName: this.videoName}
                     }
                 }
             },
             //获取直播课程信息
             async getLive() {
                 if (this.live.exist) {
-                    let res = await getLive({courseID: this.$route.params.courseID});
+                    let res = await getLive({id: this.$route.params.id});
                     if (res.code === 1000) {
                         if (res.live) {
                             this.live.title = res.title;
@@ -261,7 +261,7 @@
             }
         },
         async created() {
-            this.videoID = this.$route.params.videoID;
+            this.videoId = this.$route.params.videoId;
             this.wareUrl = this.$route.params.ware;
             this.videoUrl = this.$route.params.videoUrl;
             if (this.$route.params.live) this.live.state = true;
@@ -275,7 +275,7 @@
             } catch (e) {
                 console.log(e);
             }
-            document.getElementById(`video-item-${this.videoID}`).scrollIntoView();
+            document.getElementById(`video-item-${this.videoId}`).scrollIntoView();
             window.scrollTo(0, 0);
         }
     }
