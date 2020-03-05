@@ -1,5 +1,5 @@
 <template>
-    <header class="header-wrap">
+    <header class="header-wrap" id="header">
         <!--第一排布局 S-->
         <div class="top-wrap">
             <div class="main-header clearfix">

@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" style="overflow:auto !important;">
         <app-header :page="name" v-if="name!=='resetPassword'"></app-header>
         <router-view @setHeader="setHeader"/>
         <app-footer v-if="name!=='resetPassword'"></app-footer>
@@ -20,6 +20,9 @@
                 activeIndex: '1',
                 name: '',
             }
+        },
+        beforeUpdate() {
+            document.getElementById('header').scrollIntoView()
         },
         methods: {
             setHeader(name) {

@@ -276,7 +276,7 @@
                 console.log(e);
             }
             document.getElementById(`video-item-${this.videoId}`).scrollIntoView();
-            window.scrollTo(0, 0);
+            document.getElementById('header').scrollIntoView()
         }
     }
 </script>

@@ -38,8 +38,7 @@ router.beforeEach((to, from, next) => {
                     if (res.code === 1000) {
                         if (to.meta.title) document.title = to.meta.title;
                         next();
-                    }
-                    else {
+                    } else {
                         Message.info('请登录后再进行该操作');
                         next('/');
                     }
