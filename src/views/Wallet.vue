@@ -226,7 +226,7 @@
             },
             async bindBstAddress() {
                 let res = await getKey();
-                let publicKey = res.key;
+                let publicKey = res.publicKey;
                 if (!publicKey) Message.error('请求错误');
                 else this.$prompt('请输入您的BST钱包私钥', '绑定/更换BST钱包地址', {
                     confirmButtonText: '确定',
