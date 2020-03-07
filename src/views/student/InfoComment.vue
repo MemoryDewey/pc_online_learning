@@ -193,7 +193,7 @@
             async getComment(page, filter) {
                 let response = await getComment({id: this.$route.params.id, page, filter});
                 if (response) {
-                    this.comments = response;
+                    this.comments = response.comments;
                 }
             },
             //获取评论总数
